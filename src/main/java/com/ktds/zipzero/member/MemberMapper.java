@@ -2,14 +2,11 @@ package com.ktds.zipzero.member;
 
 import org.apache.ibatis.annotations.Select;
 
-public class MemberMapper {
+public interface MemberMapper {
     @Select("")
-    public void login(MemberDTO memberDTO){
-
-    };
+    public void login(MemberDTO memberDTO);
 
     @Select("")
-    public void logout(MemberDTO memberDTO){
-
-    };
+    public void logout(MemberDTO memberDTO);
+    
 }

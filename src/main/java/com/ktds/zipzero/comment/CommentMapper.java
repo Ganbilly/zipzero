@@ -7,25 +7,17 @@ import org.apache.ibatis.annotations.Select;
 import com.ktds.zipzero.all.PageDTO;
 import com.ktds.zipzero.payment.PaymentDTO;
 
-public class CommentMapper {
+public interface CommentMapper {
     
     @Select("")
-    void insert(CommentDTO commentDTO) {
-
-    }
+    void insert(CommentDTO commentDTO);
 
     @Select("")
-    void delete(CommentDTO commentDTO) {
-
-    }
+    void delete(CommentDTO commentDTO);
 
     @Select("")
-    List<CommentDTO> getPage(PaymentDTO paymentDTO, PageDTO pageDTO) {
-        return null;
-    }
+    List<CommentDTO> getPage(PaymentDTO paymentDTO, PageDTO pageDTO);
 
     @Select("")
-    void modify(CommentDTO commentDTO) {
-
-    }
+    void modify(CommentDTO commentDTO);
 }

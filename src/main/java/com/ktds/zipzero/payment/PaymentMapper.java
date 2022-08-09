@@ -7,41 +7,27 @@ import org.apache.ibatis.annotations.Select;
 import com.ktds.zipzero.all.PageDTO;
 import com.ktds.zipzero.member.MemberDTO;
 
-public class PaymentMapper {
+public interface PaymentMapper {
     
     @Select("")
-    List<PaymentDTO> getUserPage(PaymentDTO paymentDTO, PageDTO pageDTO){
-        return null;
-    }
+    List<PaymentDTO> getUserPage(PaymentDTO paymentDTO, PageDTO pageDTO);
     
     @Select("")
-    List<PaymentDTO> getAdminPage(PaymentDTO paymentDTO, PageDTO pageDTO0){
-        return null;
-    }
+    List<PaymentDTO> getAdminPage(PaymentDTO paymentDTO, PageDTO pageDTO0);
 
     @Select("")
-    PaymentDTO getUserDetail(PaymentDTO paymentDTO){
-        return null;
-    }
+    PaymentDTO getUserDetail(PaymentDTO paymentDTO);
 
     @Select("")
-    PaymentDTO getAdminDetail(PaymentDTO paymentDTO){
-        return null;
-    }
+    PaymentDTO getAdminDetail(PaymentDTO paymentDTO);
 
     @Select("")
-    void registPayment(PaymentDTO paymentDTO){
-        
-    }
+    void registPayment(PaymentDTO paymentDTO);
 
     @Select("")
-    void deletePayment(PaymentDTO DTO, MemberDTO memberDTO){
-        
-    }
+    void deletePayment(PaymentDTO DTO, MemberDTO memberDTO);
 
     @Select("")
-    void modifyPayment(PaymentDTO paymentDTO, MemberDTO memberDTO){
-        
-    }
+    void modifyPayment(PaymentDTO paymentDTO, MemberDTO memberDTO);
 
 }
