@@ -30,7 +30,11 @@ public class PaymentDTO {
 
     private boolean p_check;
 
+    private Long p_curstate;
 
+    private Long p_finstate;
+
+    
     private StateDTO stateDTO;
 
     private MemberDTO memberDTO;
