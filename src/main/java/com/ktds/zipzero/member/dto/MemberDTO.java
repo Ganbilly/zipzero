@@ -1,14 +1,14 @@
-package com.ktds.zipzero.member;
+package com.ktds.zipzero.member.dto;
 
 import lombok.Data;
 
 @Data
 public class MemberDTO {
-    private Long m_id;
+    private Long mid;
     
-    private String m_pw;
-    private String m_name;
-    private boolean m_cekck;
+    private String mpw;
+    private String mname;
+    private boolean mcekck;
 
     private AuthDTO authDTO;
     private HeadQuaterDTO headQuaterDTO;
