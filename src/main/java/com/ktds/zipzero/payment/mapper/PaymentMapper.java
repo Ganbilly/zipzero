@@ -18,15 +18,21 @@ public interface PaymentMapper {
     @Select("")
     List<PaymentDTO> getAdminPage(PaymentDTO paymentDTO, PageDTO pageDTO);
 
+
+    
     @Select("")
     PaymentDTO getUserDetail(PaymentDTO paymentDTO);
 
     @Select("select * from tbl_payment where p_id = #{pid}")
     PaymentDTO getAdminDetail(PaymentDTO paymentDTO);
 
-    @Select("")
+    /*
+     * 만든사람 : 이은성(2022-08-10)
+     * 최종수정 : 이은성(2022-08-10)
+     * 기능 : 영수증 등록
+     */
     void registPayment(PaymentDTO paymentDTO);
-
+    
     @Select("")
     void deletePayment(PaymentDTO DTO, MemberDTO memberDTO);
 

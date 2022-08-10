@@ -9,4 +9,9 @@
       select * from tbl_payment
     </select>
 
+    <insert id="registPayment">
+      INSERT INTO tbl_payment (p_name, p_time, p_regdate, p_moddate, p_storename, p_totalprice,  p_cardtype, p_receipt, m_id, s_id, p_check, ptype_code)  
+      VALUES (#{pname}, #{ptime}, #{pregdate}, #{pmoddate}, #{pstorename}, #{ptotalprice}, #{pcardtype}, #{preceipt},#{mid}, #{sid}, #{pcheck}, #{ptypecode});
+    </insert>
+
     </mapper>

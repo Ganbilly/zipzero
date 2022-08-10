@@ -10,5 +10,11 @@ public interface MemberMapper {
 
     @Select("")
     public void logout(MemberDTO memberDTO);
-    
+
+    /*
+     * 만든사람 : 이은성(2022-08-10)
+     * 최종수정 : 이은성(2022-08-10)
+     * 기능 : ID로 MemberDTO 찾아서 반환
+     */
+    public MemberDTO getMemberById(Long mid);
 }
