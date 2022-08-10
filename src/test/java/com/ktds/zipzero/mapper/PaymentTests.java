@@ -13,8 +13,7 @@ import lombok.extern.log4j.Log4j2;
 
 @SpringBootTest
 @Log4j2
-public class PaymentMapperTests {
-    
+public class PaymentTests {
     @Autowired(required = false)
     PaymentMapper mapper;
 
@@ -23,6 +22,7 @@ public class PaymentMapperTests {
         mapper.getListTest().forEach(payment -> log.info(payment));
     }
     
+    @Test
     public void testGetUserPage() {
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setMid(1L);
