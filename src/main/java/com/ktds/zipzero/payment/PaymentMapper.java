@@ -9,6 +9,10 @@ import com.ktds.zipzero.member.MemberDTO;
 
 public interface PaymentMapper {
     
+    List<PaymentDTO> getListTest();
+
+    @Select("select * from tbl_payment")
+
     List<PaymentDTO> getUserPage(PaymentDTO paymentDTO, PageDTO pageDTO);
     
     @Select("")
