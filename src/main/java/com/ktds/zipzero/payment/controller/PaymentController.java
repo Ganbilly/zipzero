@@ -16,15 +16,16 @@ import com.ktds.zipzero.payment.dto.PaymentDTO;
 import com.ktds.zipzero.payment.mapper.PaymentMapper;
 import com.ktds.zipzero.payment.service.PaymentService;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @Controller
 @RequestMapping("/payment")
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Log4j2
 public class PaymentController {
-    private final PaymentService paymentService;
+    private PaymentService paymentService;
 
     @GetMapping("/userlist")
     public String paymentList(Model model, @RequestParam(value = "mid") long mid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
