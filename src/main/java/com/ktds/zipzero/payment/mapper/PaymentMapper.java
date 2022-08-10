@@ -16,7 +16,7 @@ public interface PaymentMapper {
     List<PaymentDTO> getUserPage(@Param("payment") PaymentDTO paymentDTO, @Param("pageDTO") PageDTO pageDTO);
     
     @Select("")
-    List<PaymentDTO> getAdminPage(PaymentDTO paymentDTO, PageDTO pageDTO0);
+    List<PaymentDTO> getAdminPage(PaymentDTO paymentDTO, PageDTO pageDTO);
 
     @Select("")
     PaymentDTO getUserDetail(PaymentDTO paymentDTO);
