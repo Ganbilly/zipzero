@@ -8,10 +8,10 @@ public class MemberDTO {
     
     private String mpw;
     private String mname;
-    private boolean mcekck;
+    private boolean mcheck;
 
     private AuthDTO authDTO;
-    private HeadQuaterDTO headQuaterDTO;
+    private HeadQuarterDTO headQuaterDTO;
     private DepartmentDTO departmentDTO;
     private TeamDTO teamDTO;
 
