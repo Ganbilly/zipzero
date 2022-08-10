@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.ktds.zipzero.payment.mapper.PaymentMapper;
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.member.dto.MemberDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
+import com.ktds.zipzero.payment.mapper.PaymentMapper;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -22,6 +22,7 @@ public class PaymentMapperTests {
     public void getList(){
         mapper.getListTest().forEach(payment -> log.info(payment));
     }
+    
     public void testGetUserPage() {
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setMid(1L);

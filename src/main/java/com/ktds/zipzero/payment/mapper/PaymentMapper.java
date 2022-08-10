@@ -12,8 +12,6 @@ import com.ktds.zipzero.payment.dto.PaymentDTO;
 public interface PaymentMapper {
     List<PaymentDTO> getListTest();
 
-    @Select("select * from tbl_payment")
-
     @Select("select * from tbl_payment where m_id = #{payment.memberDTO.mid}")
     List<PaymentDTO> getUserPage(@Param("payment") PaymentDTO paymentDTO, @Param("pageDTO") PageDTO pageDTO);
     
