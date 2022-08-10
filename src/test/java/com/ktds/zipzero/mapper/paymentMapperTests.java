@@ -17,10 +17,9 @@ public class PaymentMapperTests {
     
     @Autowired(required = false)
     PaymentMapper mapper;
-
     @Test
-    public void getList(){
-        mapper.getListTest().forEach(payment -> log.info(payment));
+    public void getListTest(){
+        mapper.getPaymentList().forEach(payment -> log.info(payment));
     }
     
     public void testGetUserPage() {

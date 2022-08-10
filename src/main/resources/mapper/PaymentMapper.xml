@@ -4,9 +4,15 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
   <mapper namespace="com.ktds.zipzero.payment.mapper.PaymentMapper">
-
-    <select id="getListTest" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
-      select * from tbl_payment order by bno desc limit 10
+    <select id="getPaymentList" resultType="com.ktds.zipzero.payment.PaymentDTO">
+      select
+        p.p_id          AS paymentId
+       ,p.pcard_type    AS paymentCard
+       ,p.p_name        AS paymentName
+       ,p.ptype_code    AS paymentType
+       ,p.p_time        AS paymentTime 
+      from tbl_payment AS p
+      order by bno desc limit 10;
     </select>
 
-    </mapper>
+  </mapper>

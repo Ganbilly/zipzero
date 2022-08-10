@@ -8,5 +8,28 @@
 </head>
 <body>
     <h1>userlist</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>분류</th>
+                <th>제목</th>
+                <th>상태</th>
+                <th>날짜</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${not #lists.isEmpty(paymentList)}" th:each="l : ${paymentList}">
+                <td th:text="${l.paymentId}"></td>
+                <td th:text="${l.paymentCard}"></td>
+                <td th:text="${l.paymentName}"></td>
+                <td th:text="${l.paymentType}"></td>
+                <td th:text="${l.paymentTime}"></td>
+            </tr>
+            <tr th:unless="${not #lists.isEmpty(paymentList)}">
+                <td colspan="7">등록된 회원의 정보가 없습니다.</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

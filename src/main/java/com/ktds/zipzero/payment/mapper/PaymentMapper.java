@@ -10,7 +10,12 @@ import com.ktds.zipzero.member.dto.MemberDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 
 public interface PaymentMapper {
-    List<PaymentDTO> getListTest();
+    //영수증 전체목록 조회
+    public List<PaymentDTO> getPaymentList();
+
+
+
+
 
     @Select("select * from tbl_payment where m_id = #{payment.memberDTO.mid}")
     List<PaymentDTO> getUserPage(@Param("payment") PaymentDTO paymentDTO, @Param("pageDTO") PageDTO pageDTO);

@@ -1,59 +1,82 @@
-package com.ktds.zipzero.payment.controller;
+// package com.ktds.zipzero.payment.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+// import java.util.List;
 
-import lombok.extern.log4j.Log4j2;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
+// import org.springframework.stereotype.Controller;
+// import org.springframework.ui.Model;
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@Log4j2
-@RequestMapping("/payment")
-public class PaymentController {   
+// import com.ktds.zipzero.payment.dto.PaymentDTO;
+// import com.ktds.zipzero.payment.service.PaymentService;
 
-    @GetMapping("/userlist")
-    public void paymentUserList(){
-        log.info("userList");
-    }
+// import lombok.extern.log4j.Log4j2;
 
-    @PostMapping("/regist")
-    public void paymentRegist(){
-        log.info("paymentRegist");
-    }
+// @Controller
+// @Log4j2
+// @RequestMapping("/payment")
+// public class PaymentController {  
 
-    @GetMapping("/adminlist")
-    public void paymentAdminList(){
-        log.info("adminList");
-    }
+//     private static final Logger log = LoggerFactory.getLogger(PaymentController.class);
+    
+//     private PaymentService paymentService;
 
-    @GetMapping("/adminmanage")
-    public void paymentAdminManage(){
-        log.info("adminManage");
-    }
+//     public PaymentController(PaymentService paymentService) {
+//         this.paymentService = paymentService;
+//     }
 
-    @GetMapping("/userdetail")
-    public void paymentUserDetail(){
-        log.info("UserDetail");
-    }
+//     @GetMapping("/userlist")
+//     public String paymentUserList(Model model){
 
-    @GetMapping("/admindetail")
-    public void paymentAdminDetail(){
-        log.info("AdminDetail");
-    }
+//         // log.info("userList");
+//         List<PaymentDTO> paymentList = paymentService.getPaymentList();
 
-    @PostMapping("/modify")
-    public void paymentModify(){
-        log.info("Modify");
-    }
+//         model.addAttribute("title", "영수증목록조회");
+//         model.addAttribute("영수증목록조회", paymentList);
 
-    @PostMapping("/delete")
-    public void paymentDelete(){
-        log.info("Delete");
-    }
+//         return "payment/userlist";
+//     }
 
-    @GetMapping("/chart")
-    public void paymentChart(){
-        log.info("chart");
-    }
-}
+//     @PostMapping("/regist")
+//     public void paymentRegist(){
+//         log.info("paymentRegist");
+//     }
+
+//     @GetMapping("/adminlist")
+//     public void paymentAdminList(){
+//         log.info("adminList");
+//     }
+
+//     @GetMapping("/adminmanage")
+//     public void paymentAdminManage(){
+//         log.info("adminManage");
+//     }
+
+//     @GetMapping("/userdetail")
+//     public void paymentUserDetail(){
+//         log.info("UserDetail");
+//     }
+
+//     @GetMapping("/admindetail")
+//     public void paymentAdminDetail(){
+//         log.info("AdminDetail");
+//     }
+
+//     @PostMapping("/modify")
+//     public void paymentModify(){
+//         log.info("Modify");
+//     }
+
+//     @PostMapping("/delete")
+//     public void paymentDelete(){
+//         log.info("Delete");
+//     }
+
+//     @GetMapping("/chart")
+//     public void paymentChart(){
+//         log.info("chart");
+//     }
+// }
