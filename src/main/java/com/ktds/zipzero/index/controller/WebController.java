@@ -1,4 +1,4 @@
-package com.ktds.zipzero.index;
+package com.ktds.zipzero.index.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @AllArgsConstructor
 public class WebController {
 
-    @GetMapping("/")
+    @GetMapping("/index")
     public String main(){
 
         return "index";
