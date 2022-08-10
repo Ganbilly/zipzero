@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ktds.zipzero.all.dto.PageDTO;
+import com.ktds.zipzero.member.mapper.MemberMapper;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 import com.ktds.zipzero.payment.mapper.PaymentMapper;
 
@@ -17,7 +18,10 @@ import lombok.extern.log4j.Log4j2;
 public class PaymentTests {
     @Autowired(required = false)
     PaymentMapper paymentMapper;
-    
+
+    @Autowired(required = false)
+    MemberMapper memberMapper;
+
     /*
      * 만든 사람 : 정문경
      * 최종 수정 : 정문경
@@ -25,13 +29,14 @@ public class PaymentTests {
      */
     @Test
     public void testGetPage() {
+
         PaymentDTO paymentDTO = new PaymentDTO();
         paymentDTO.setMid(2L);
-
         PageDTO pageDTO = new PageDTO();
         pageDTO.setPage(1);
         pageDTO.setSize(10);
         paymentMapper.getPage(paymentDTO, pageDTO);
+
     }
 
     /*
@@ -42,10 +47,38 @@ public class PaymentTests {
     @Test
     public void testGetDetail() {
         PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setPid(3L);
-        log.info(paymentMapper.getDetail(paymentDTO));
+        paymentDTO.setPid(2L);
+        log.info(paymentMapper.getAdminDetail(paymentDTO));
     }
 
+
+    /*
+     * 만든사람 : 이은성
+     * 최종수정 : 이은성
+     * 기능 : paymentRegist 테스트
+    */
+    @Test
+    public void testRegistPayment(){
+        PaymentDTO paymentDTO = new PaymentDTO();
+
+        paymentDTO.setPname("test입니다");
+        paymentDTO.setPtime(LocalDateTime.now());
+        paymentDTO.setPregdate(LocalDateTime.now());
+        paymentDTO.setPmoddate(LocalDateTime.now());
+        paymentDTO.setPstorename("양갈비집");
+        paymentDTO.setPtotalprice(100000L);
+        paymentDTO.setPcardtype(1);
+        paymentDTO.setPreceipt("test.png");
+        paymentDTO.setMid(1L);
+        paymentDTO.setSid(2L);
+        paymentDTO.setPtypecode(1L);
+        paymentDTO.setPcurstate(1L);
+        paymentDTO.setPfinstate(1L);
+
+
+        paymentMapper.registPayment(paymentDTO);
+        log.info(paymentMapper.getDetail(paymentDTO));
+    }
     /*
      * 만든 사람 : 정문경
      * 최종 수정 : 정문경
@@ -58,11 +91,6 @@ public class PaymentTests {
         paymentMapper.deletePayment(paymentDTO);
     }
 
-    /*
-     * 만든 사람 : 정문경
-     * 최종 수정 : 정문경
-     * 기능 : db의 영수증 데이터를 paymentDTO로 변경
-     */
     @Test
     public void testModifyPayment() {
         PaymentDTO paymentDTO = new PaymentDTO();

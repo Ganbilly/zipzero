@@ -13,6 +13,11 @@
     limit #{page.skip}, #{page.size}
   </select>
 
+  <insert id="registPayment">
+    INSERT INTO tbl_payment (p_name, p_time, p_regdate, p_moddate, p_storename, p_totalprice,  p_cardtype, p_receipt, m_id, s_id, p_check, ptype_code, p_curstate, p_finstate)  
+    VALUES (#{pname}, #{ptime}, #{pregdate}, #{pmoddate}, #{pstorename}, #{ptotalprice}, #{pcardtype}, #{preceipt},#{mid}, #{sid}, #{pcheck}, #{ptypecode}, #{pcurstate}, #{pfinstate})
+  </insert>
+
   <select id="getDetail" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
     select * from tbl_payment where p_id = #{pid}
   </select>
