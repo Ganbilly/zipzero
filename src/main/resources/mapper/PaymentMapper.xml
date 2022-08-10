@@ -6,7 +6,7 @@
   <mapper namespace="com.ktds.zipzero.payment.mapper.PaymentMapper">
 
     <select id="getListTest" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
-      select * from tbl_payment order by bno desc limit 10
+      select * from tbl_payment
     </select>
 
     </mapper>
