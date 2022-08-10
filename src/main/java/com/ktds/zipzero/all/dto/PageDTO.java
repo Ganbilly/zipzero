@@ -20,7 +20,7 @@ public class PageDTO {
     @Builder.Default
     int size = 10;
 
-    int getSkip() {
+    public int getSkip() {
         return (page - 1) * size;
     }
 }

@@ -29,14 +29,8 @@ public class PaymentTests {
      */
     @Test
     public void testGetPage() {
-
-        PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setMid(2L);
-        PageDTO pageDTO = new PageDTO();
-        pageDTO.setPage(1);
-        pageDTO.setSize(10);
-        paymentMapper.getPage(paymentDTO, pageDTO);
-
+        PageDTO pageDTO = PageDTO.builder().page(1).size(10).build();
+        paymentMapper.getPage(2L, pageDTO.getSkip(), pageDTO.getSize());
     }
 
     /*

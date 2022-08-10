@@ -6,11 +6,17 @@
 <mapper namespace="com.ktds.zipzero.payment.mapper.PaymentMapper">
 
   <select id="getPage" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
-    select p_id as pid, p_cardtype as pcardtype, p_name as pname, p_time as ptime
-    from tbl_payment pay
-    where pay.m_id = #{payment.mid}
-    order by p_id desc
-    limit #{page.skip}, #{page.size}
+    select
+      p_id as pid, p_cardtype as pcardtype, p_name as pname,
+      p_time as ptime, p_curstate as pcurstate
+    from
+      tbl_payment
+    where
+      m_id = #{mid}
+    order by
+      p_id desc
+    limit
+      #{skip}, #{size}
   </select>
 
   <insert id="registPayment">
@@ -19,7 +25,16 @@
   </insert>
 
   <select id="getDetail" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
-    select * from tbl_payment where p_id = #{pid}
+    select
+      p_id as pid, p_name as pname, p_time as ptime,
+      p_regdate as pregdate, p_moddate as pmoddate,
+      p_storename as pstorename, p_totalprice as ptotalprice,
+      p_cardtype as pcardtype, p_receipt as preceipt,
+      p_curstate as pcurstate, p_finstate as pfinstate
+    from
+      tbl_payment
+    where
+      p_id = #{pid}
   </select>
 
   <update id="deletePayment">
@@ -44,5 +59,19 @@
     where
       p_id = #{pid}
   </update>
+
+  <select id="getPaymentById" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
+    select
+      p_id as pid, p_name as pname, p_time as ptime,
+      p_regdate as pregdate, p_moddate as pmoddate,
+      p_storename as pstorename, p_totalprice as ptotalprice,
+      p_cardtype as pcardtype, p_receipt as preceipt,
+      p_curstate as pcurstate, p_finstate as pfinstate,
+      s_id as sid, m_id as mid, ptype_code as ptypecode
+    from
+      tbl_payment
+    where
+      p_id = #{pid}
+  </select>
 
 </mapper>

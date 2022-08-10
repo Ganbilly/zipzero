@@ -19,7 +19,7 @@ public class PaymentDTO {
     private Long ptotalprice;
     private Integer pcardtype;
     private String preceipt;
-    private boolean pcheck;
+    private int pcheck;
     private Long pcurstate;
     private Long pfinstate;
 
