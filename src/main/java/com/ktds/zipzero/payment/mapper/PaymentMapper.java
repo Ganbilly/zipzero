@@ -18,8 +18,7 @@ public interface PaymentMapper {
     @Select("")
     void registPayment(PaymentDTO paymentDTO);
 
-    @Select("")
-    void deletePayment(PaymentDTO DTO, MemberDTO memberDTO);
+    void deletePayment(@Param("payment") PaymentDTO paymentDTO, @Param("member") MemberDTO memberDTO);
 
     @Select("")
     void modifyPayment(PaymentDTO paymentDTO, MemberDTO memberDTO);

@@ -13,4 +13,8 @@
     select * from tbl_payment where p_id = #{pid}
   </select>
 
+  <select id="deletePayment" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
+    select * from tbl_payment where p_id = #{pid}
+  </select>
+
 </mapper>
