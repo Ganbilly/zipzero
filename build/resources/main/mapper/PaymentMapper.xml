@@ -9,11 +9,6 @@
     select * from tbl_payment where m_id = #{payment.memberDTO.mid} and p_check = 0
   </select>
 
-  <insert id="registPayment">
-    INSERT INTO tbl_payment (p_name, p_time, p_regdate, p_moddate, p_storename, p_totalprice,  p_cardtype, p_receipt, m_id, s_id, p_check, ptype_code, p_curstate, p_finstate)  
-    VALUES (#{pname}, #{ptime}, #{pregdate}, #{pmoddate}, #{pstorename}, #{ptotalprice}, #{pcardtype}, #{preceipt},#{mid}, #{sid}, #{pcheck}, #{ptypecode}, #{pcurstate}, #{pfinstate})
-  </insert>
-
   <select id="getDetail" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
     select * from tbl_payment where p_id = #{pid}
   </select>
@@ -35,8 +30,8 @@
       p_receipt = #{preceipt}, <!-- 영수증 -->
       p_curstate = 2, <!-- 결제 상태 -->
       p_finstate = #{pfinstate}, <!-- 최정 결제 상태 -->
-      s_id = #{sid}, <!-- 상태아이디 -->
-      ptype_code = #{ptypecode} <!-- 회원아이디 -->
+      s_id = #{stateDTO.sid}, <!-- 상태아이디 -->
+      ptype_code = #{paytypeDTO.ptypecode} <!-- 회원아이디 -->
     where
       p_id = #{pid}
   </update>

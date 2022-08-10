@@ -2,9 +2,6 @@ package com.ktds.zipzero.comment.dto;
 
 import java.time.LocalDateTime;
 
-import com.ktds.zipzero.member.dto.MemberDTO;
-import com.ktds.zipzero.payment.dto.PaymentDTO;
-
 import lombok.Data;
 
 @Data
@@ -16,6 +13,6 @@ public class CommentDTO {
     private LocalDateTime cmoddate;
     private boolean ccheck;
 
-    private MemberDTO memberDTO;
-    private PaymentDTO paymentDTO;
+    private Long mid;
+    private Long pid;
 }

@@ -10,9 +10,8 @@ public class MemberDTO {
     private String mname;
     private boolean mcheck;
   
-    private Long aid;
+    private Long authid;
     private Long hqid;
-    private Long did;
-    private Long tid;
-
+    private Long deptid;
+    private Long teamid;
 }

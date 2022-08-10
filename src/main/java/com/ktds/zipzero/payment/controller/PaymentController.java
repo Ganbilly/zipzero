@@ -1,23 +1,37 @@
 package com.ktds.zipzero.payment.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ktds.zipzero.all.dto.PageDTO;
+import com.ktds.zipzero.payment.dto.PaymentDTO;
+import com.ktds.zipzero.payment.service.PaymentService;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @Controller
-@Log4j2
 @RequestMapping("/payment")
-public class PaymentController {   
+@RequiredArgsConstructor
+@Log4j2
+public class PaymentController {
+    private final PaymentService paymentService;
 
     @GetMapping("/userlist")
-    public void paymentUserList(){
-        log.info("userList");
+    public String paymentList(Model model, PaymentDTO paymentDTO, PageDTO pageDTO){
+        log.info("paymentList");
+        List<PaymentDTO> paymentList = paymentService.getPaymentList(paymentDTO, pageDTO);
+
+        model.addAttribute("paymentList", paymentList);
+        
+        return "payment";
     }
 
-    @PostMapping("/regist")
+    /*@PostMapping("/regist")
     public void paymentRegist(){
         log.info("paymentRegist");
     }
@@ -55,5 +69,5 @@ public class PaymentController {
     @GetMapping("/chart")
     public void paymentChart(){
         log.info("chart");
-    }
+    }*/
 }

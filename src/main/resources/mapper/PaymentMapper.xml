@@ -23,13 +23,22 @@
   </update>
 
   <update id="modifyPayment">
-    update tbl_payment set p_name = #{pname}, <!-- 결제내역 -->
-      p_time = #{ptime}, p_moddate = #{pmoddate}, <!-- 결제시각, 결제건수정시간 -->
-      p_storename = #{pstorename}, p_totalprice = #{ptotalprice}, <!-- 결제상호명, 결제총액 -->
-      p_cardtype = #{pcardtype}, p_receipt = #{preceipt}, p_curstate = 2, <!-- 결제카드유형, 영수증, 삭제여부, 결제 상태 -->
-      p_finstate = #{pfinstate}, s_id = #{stateDTO.sid}, <!-- 최정 결제 상태, 상태아이디 -->
-      ptype_code = #{paytypeDTO.ptypecode} <!-- 회원아이디 -->
-    where p_id = #{pid}
+    update
+      tbl_payment
+    set
+      p_name = #{pname}, <!-- 결제내역 -->
+      p_time = #{ptime}, <!-- 결제시각 -->
+      p_moddate = #{pmoddate}, <!-- 결제건수정시간 -->
+      p_storename = #{pstorename}, <!-- 결제상호명 -->
+      p_totalprice = #{ptotalprice}, <!-- 결제총액 -->
+      p_cardtype = #{pcardtype}, <!-- 결제카드유형 -->
+      p_receipt = #{preceipt}, <!-- 영수증 -->
+      p_curstate = 2, <!-- 결제 상태 -->
+      p_finstate = #{pfinstate}, <!-- 최정 결제 상태 -->
+      s_id = #{sid}, <!-- 상태아이디 -->
+      ptype_code = #{ptypecode} <!-- 회원아이디 -->
+    where
+      p_id = #{pid}
   </update>
 
 </mapper>

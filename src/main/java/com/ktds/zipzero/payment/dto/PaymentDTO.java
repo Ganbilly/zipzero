@@ -17,12 +17,11 @@ public class PaymentDTO {
     private LocalDateTime pmoddate;
     private String pstorename;
     private Long ptotalprice;
-    private int pcardtype;
+    private Integer pcardtype;
     private String preceipt;
     private boolean pcheck;
     private Long pcurstate;
     private Long pfinstate;
-
 
     private Long sid;
     private Long mid;
