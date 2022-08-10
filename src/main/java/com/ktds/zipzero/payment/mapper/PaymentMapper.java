@@ -13,21 +13,9 @@ public interface PaymentMapper {
     //영수증 전체목록 조회
     public List<PaymentDTO> getPaymentList();
 
+    List<PaymentDTO> getPage(@Param("payment") PaymentDTO paymentDTO, @Param("pageDTO") PageDTO pageDTO);
 
-
-
-
-    @Select("select * from tbl_payment where m_id = #{payment.memberDTO.mid}")
-    List<PaymentDTO> getUserPage(@Param("payment") PaymentDTO paymentDTO, @Param("pageDTO") PageDTO pageDTO);
-    
-    @Select("")
-    List<PaymentDTO> getAdminPage(PaymentDTO paymentDTO, PageDTO pageDTO);
-
-    @Select("")
-    PaymentDTO getUserDetail(PaymentDTO paymentDTO);
-
-    @Select("select * from tbl_payment where p_id = #{pid}")
-    PaymentDTO getAdminDetail(PaymentDTO paymentDTO);
+    PaymentDTO getDetail(PaymentDTO paymentDTO);
 
     @Select("")
     void registPayment(PaymentDTO paymentDTO);

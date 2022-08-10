@@ -1,18 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktds.zipzero.payment.mapper.PaymentMapper">
+
+  <select id="getPage" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
+    select * from tbl_payment where m_id = #{payment.memberDTO.mid}
+  </select>
+
+  <select id="getDetail" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
+    select * from tbl_payment where p_id = #{pid}
+  </select>
 
   <mapper namespace="com.ktds.zipzero.payment.mapper.PaymentMapper">
-    <select id="getPaymentList" resultType="com.ktds.zipzero.payment.PaymentDTO">
-      select
-        p.p_id          AS paymentId
-       ,p.pcard_type    AS paymentCard
-       ,p.p_name        AS paymentName
-       ,p.ptype_code    AS paymentType
-       ,p.p_time        AS paymentTime 
-      from tbl_payment AS p
-      order by bno desc limit 10;
-    </select>
+  <select id="getPaymentList" resultType="com.ktds.zipzero.payment.PaymentDTO">
+    select
+      p.p_id          AS paymentId
+      ,p.pcard_type    AS paymentCard
+      ,p.p_name        AS paymentName
+      ,p.ptype_code    AS paymentType
+      ,p.p_time        AS paymentTime 
+    from tbl_payment AS p
+    order by bno desc limit 10;
+  </select>
 
-  </mapper>
+</mapper>
