@@ -9,10 +9,10 @@ public class MemberDTO {
     private String mpw;
     private String mname;
     private boolean mcheck;
-
-    private AuthDTO authDTO;
-    private HeadQuarterDTO headQuaterDTO;
-    private DepartmentDTO departmentDTO;
-    private TeamDTO teamDTO;
+  
+    private Long aid;
+    private Long hqid;
+    private Long did;
+    private Long tid;
 
 }

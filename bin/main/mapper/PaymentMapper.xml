@@ -3,15 +3,33 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-  <mapper namespace="com.ktds.zipzero.payment.mapper.PaymentMapper">
+<mapper namespace="com.ktds.zipzero.payment.mapper.PaymentMapper">
 
-    <select id="getListTest" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
-      select * from tbl_payment
-    </select>
+  <select id="getPage" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
+    select * from tbl_payment where m_id = #{payment.memberDTO.mid} and p_check = 0
+  </select>
 
-    <insert id="registPayment">
-      INSERT INTO tbl_payment (p_name, p_time, p_regdate, p_moddate, p_storename, p_totalprice,  p_cardtype, p_receipt, m_id, s_id, p_check, ptype_code)  
-      VALUES (#{pname}, #{ptime}, #{pregdate}, #{pmoddate}, #{pstorename}, #{ptotalprice}, #{pcardtype}, #{preceipt},#{mid}, #{sid}, #{pcheck}, #{ptypecode});
-    </insert>
+  <insert id="registPayment">
+    INSERT INTO tbl_payment (p_name, p_time, p_regdate, p_moddate, p_storename, p_totalprice,  p_cardtype, p_receipt, m_id, s_id, p_check, ptype_code, p_curstate, p_finstate)  
+    VALUES (#{pname}, #{ptime}, #{pregdate}, #{pmoddate}, #{pstorename}, #{ptotalprice}, #{pcardtype}, #{preceipt},#{mid}, #{sid}, #{pcheck}, #{ptypecode}, #{pcurstate}, #{pfinstate})
+  </insert>
 
-    </mapper>
+  <select id="getDetail" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
+    select * from tbl_payment where p_id = #{pid}
+  </select>
+
+  <update id="deletePayment">
+    update tbl_payment set p_check = 0 where p_id = #{pid}
+  </update>
+
+  <update id="modifyPayment">
+    update tbl_payment set p_name = #{pname}, <!-- 결제내역 -->
+      p_time = #{ptime}, p_moddate = #{pmoddate}, <!-- 결제시각, 결제건수정시간 -->
+      p_storename = #{pstorename}, p_totalprice = #{ptotalprice}, <!-- 결제상호명, 결제총액 -->
+      p_cardtype = #{pcardtype}, p_receipt = #{preceipt}, p_curstate = 2, <!-- 결제카드유형, 영수증, 삭제여부, 결제 상태 -->
+      p_finstate = #{pfinstate}, s_id = #{stateDTO.sid}, <!-- 최정 결제 상태, 상태아이디 -->
+      ptype_code = #{paytypeDTO.ptypecode} <!-- 회원아이디 -->
+    where p_id = #{pid}
+  </update>
+
+</mapper>

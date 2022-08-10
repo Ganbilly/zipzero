@@ -6,6 +6,5 @@ import lombok.Data;
 public class PaytypeDTO {
     
     private Long ptypecode;
-
     private String ptypename;
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="ko">
+
+<body id="page-top" class="sidebar-toggled">
+    <div id="wrapper">
+        <!-- 각 화면 컨텐츠 -->
+        <sidebar th:replace="~{fragments/sidebar :: sidebar}" />
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <header th:replace="~{fragments/header :: header}" />
+                <th:block layout:fragment="content" />
+            </div>
+            <footer th:replace="~{fragments/footer :: footer}" />
+        </div>
+    </div>
+</body>
+
+
+</html>

@@ -20,7 +20,6 @@ public class MemberTests {
     @Test
     public void getMemberByIdTests(){
         Long id = 3L;
-        MemberDTO memberDTO = new MemberDTO();
         log.info(mapper.getMemberById(id));
 
     }

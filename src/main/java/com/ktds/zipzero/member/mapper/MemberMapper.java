@@ -1,9 +1,11 @@
 package com.ktds.zipzero.member.mapper;
 
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import com.ktds.zipzero.member.dto.MemberDTO;
 
+@Repository
 public interface MemberMapper {
     @Select("")
     public void login(MemberDTO memberDTO);
