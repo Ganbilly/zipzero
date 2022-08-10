@@ -9,7 +9,6 @@ import com.ktds.zipzero.member.MemberDTO;
 
 public interface PaymentMapper {
     
-    @Select("")
     List<PaymentDTO> getUserPage(PaymentDTO paymentDTO, PageDTO pageDTO);
     
     @Select("")
@@ -18,7 +17,7 @@ public interface PaymentMapper {
     @Select("")
     PaymentDTO getUserDetail(PaymentDTO paymentDTO);
 
-    @Select("")
+    @Select("select * from tbl_payment where p_id = #{p_id}")
     PaymentDTO getAdminDetail(PaymentDTO paymentDTO);
 
     @Select("")
