@@ -20,7 +20,7 @@ public class PaymentMapperTests {
 
     @Test
     public void getList(){
-        mapper.getListTest().forEach(payment -> log.info(payment));
+        mapper.getList().forEach(payment -> log.info(payment));
     }
     
     public void testGetUserPage() {

@@ -11,6 +11,7 @@ import lombok.ToString;
 public class PageDTO {
     @Builder.Default
     int page = 1;
+    @Builder.Default
     int size = 10;
 
     int getSkip() {
