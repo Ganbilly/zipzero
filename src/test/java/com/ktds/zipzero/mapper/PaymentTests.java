@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.member.dto.MemberDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
@@ -49,7 +50,7 @@ public class PaymentTests {
     @Test
     public void testGetDetail() {
         PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setPid(2L);
+        paymentDTO.setPid(3L);
         log.info(mapper.getDetail(paymentDTO));
     }
 
