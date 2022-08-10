@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ktds.zipzero.all.dto.PageDTO;
-import com.ktds.zipzero.member.dto.MemberDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
-import com.ktds.zipzero.payment.dto.PaytypeDTO;
-import com.ktds.zipzero.payment.dto.StateDTO;
 import com.ktds.zipzero.payment.mapper.PaymentMapper;
 
 import lombok.extern.log4j.Log4j2;

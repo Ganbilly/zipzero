@@ -28,7 +28,7 @@ public class PaymentController {
 
         model.addAttribute("paymentList", paymentList);
         
-        return "payment";
+        return "payment/userlist";
     }
 
     /*@PostMapping("/regist")

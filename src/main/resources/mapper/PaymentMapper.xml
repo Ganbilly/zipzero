@@ -6,11 +6,11 @@
 <mapper namespace="com.ktds.zipzero.payment.mapper.PaymentMapper">
 
   <select id="getPage" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
-    SELECT *
-    FROM tbl_payment pay
-    WHERE pay.m_id = #{payment.mid}
-    ORDER BY p_id DESC
-    LIMIT #{page.skip}, #{page.size}
+    select p_id as pid, p_cardtype as pcardtype, p_name as pname, p_time as ptime
+    from tbl_payment pay
+    where pay.m_id = #{payment.mid}
+    order by p_id desc
+    limit #{page.skip}, #{page.size}
   </select>
 
   <select id="getDetail" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
