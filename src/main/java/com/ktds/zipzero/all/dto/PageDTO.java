@@ -1,4 +1,4 @@
-package com.ktds.zipzero.all;
+package com.ktds.zipzero.all.dto;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,6 +1,8 @@
-package com.ktds.zipzero.member;
+package com.ktds.zipzero.member.mapper;
 
 import org.apache.ibatis.annotations.Select;
+
+import com.ktds.zipzero.member.dto.MemberDTO;
 
 public interface MemberMapper {
     @Select("")

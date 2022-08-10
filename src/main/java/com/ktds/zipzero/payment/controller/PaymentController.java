@@ -1,4 +1,4 @@
-package com.ktds.zipzero.payment;
+package com.ktds.zipzero.payment.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
