@@ -16,14 +16,9 @@ import lombok.extern.log4j.Log4j2;
 public class PaymentTests {
     @Autowired(required = false)
     PaymentMapper mapper;
-
-    @Test
-    public void getList(){
-        mapper.getListTest().forEach(payment -> log.info(payment));
-    }
     
     @Test
-    public void testGetUserPage() {
+    public void testGetPage() {
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setMid(1L);
 
@@ -34,13 +29,14 @@ public class PaymentTests {
         PageDTO pageDTO = new PageDTO();
         pageDTO.setPage(1);
         pageDTO.setSize(10);
-        mapper.getUserPage(paymentDTO, pageDTO);
+        mapper.getPage(paymentDTO, pageDTO);
     }
 
     @Test
-    public void testGetAdminDetail() {
+    public void testGetDetail() {
         PaymentDTO paymentDTO = new PaymentDTO();
         paymentDTO.setPid(2L);
-        log.info(mapper.getAdminDetail(paymentDTO));
+        log.info(mapper.getDetail(paymentDTO));
     }
+
 }

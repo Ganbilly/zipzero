@@ -10,19 +10,10 @@ import com.ktds.zipzero.member.dto.MemberDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 
 public interface PaymentMapper {
-    List<PaymentDTO> getListTest();
 
-    @Select("select * from tbl_payment where m_id = #{payment.memberDTO.mid}")
-    List<PaymentDTO> getUserPage(@Param("payment") PaymentDTO paymentDTO, @Param("pageDTO") PageDTO pageDTO);
-    
-    @Select("")
-    List<PaymentDTO> getAdminPage(PaymentDTO paymentDTO, PageDTO pageDTO);
+    List<PaymentDTO> getPage(@Param("payment") PaymentDTO paymentDTO, @Param("pageDTO") PageDTO pageDTO);
 
-    @Select("")
-    PaymentDTO getUserDetail(PaymentDTO paymentDTO);
-
-    @Select("select * from tbl_payment where p_id = #{pid}")
-    PaymentDTO getAdminDetail(PaymentDTO paymentDTO);
+    PaymentDTO getDetail(PaymentDTO paymentDTO);
 
     @Select("")
     void registPayment(PaymentDTO paymentDTO);
