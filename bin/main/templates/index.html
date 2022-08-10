@@ -1,70 +1,166 @@
 <!DOCTYPE html>
-<html lang="en"
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout/layout}"
-    th:with="metaTitle='게시판'"> 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Zip Zero</title>
-
-    <!-- Custom fonts for this template-->
-    <link th:href="@{/bootstrap/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css"/>
-
-    <!-- Custom styles for this template-->
-    <link th:href="@{/bootstrap/css/sb-admin-2.min.css}" rel="stylesheet"/>
-
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
 
 <body id="page-top">
 
     <th:block layout:fragment="content">
-    <div>
-
         <!-- Begin Page Content -->
         <div class="container-fluid">
-            <!-- Content Row -->
-            <div>
+            <!-- 신청관리 게시판 -->
+            <h1 class="h3 mb-2 text-gray-800">Dashboard</h1>
+            <p class="mb-4">최신 상태 확인하셈</p>
 
-                <!-- Area Chart -->
-                <div >
-                    <div class="card shadow">
-                        <!-- Card Header - Dropdown -->
-                        <div
-                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">신청관리</h6>
-                        </div>
-                        <!-- Card Body -->
-                        <div class="card-body">
-                            <div>
-                                게시판 들어감
-                                사원과 관리자 게시판 다르게 보여야 할듯~
-                                최신글 보이게 하기
-                            </div>
-                        </div>
+            <div class="card shadow" style="margin-bottom: 50px;">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">신청관리(최신순 최대 5개 출력)</h6>
+                    <a href="#"> 더보기 </a>
+                </div>
+                <!-- Card Body -->
+
+                <div class="card-body">
+                    <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                        aria-describedby="dataTable_info">
+                        <table class="table my-0 " id="dataTable" style="text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th width="100">번호</th>
+                                    <th width="10">분류</th>
+                                    <th width="500">제목</th>
+                                    <th width="10">상태</th>
+                                    <th width="50">날짜</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2</td>
+                                    <td>법인</td>
+                                    <td>Seoul rain ttt</td>
+                                    <td>완료</td>
+                                    <td>2008/11/28</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>법인</td>
+                                    <td>Tokyo</td>
+                                    <td>반려</td>
+                                    <td>2008/11/28</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
             </div>
 
+            <hr style="margin-bottom: 50px;">
+
+            <div class="card shadow" style="margin-bottom: 50px;">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style="background-color: #00308f;">
+                    <h6 class="m-0 font-weight-bold" style="color: #fff;">청구신청(최신순 최대 5개 출력)</h6>
+                    <a style="color: #fff;" href="#"> 더보기 </a>
+                </div>
+                <!-- Card Body -->
+
+                <div class="card-body">
+                    <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                        aria-describedby="dataTable_info">
+                        <table class="table my-0 " id="dataTable" style="text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th width="100">번호</th>
+                                    <th width="10">분류</th>
+                                    <th width="500">제목</th>
+                                    <th width="10">상태</th>
+                                    <th width="50">날짜</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2</td>
+                                    <td>법인</td>
+                                    <td>Seoul rain ttt</td>
+                                    <td>완료</td>
+                                    <td>2008/11/28</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>법인</td>
+                                    <td>Tokyo</td>
+                                    <td>반려</td>
+                                    <td>2008/11/28</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
+
+        <div class="container-fluid">
+            <!-- 신청 게시판 -->
+            <div class="card shadow" style="margin-bottom: 50px;">
+                <!-- Card Body -->
+
+                <div class="card-body">
+                    <p style="font-size : 30px ; padding: 20px;">게시물 제목</p>
+                    <hr style="padding:3px">
+
+                    <div class="float-container">
+                        <div class="row double">
+                            <div class="column-2 left" style="width: 200px; height:200px; background-color: #00308f;">
+                                <label for="inputContent" class="col-sm-2 col-form-label"><strong>이미지 첨부</strong></label>
+                                <div class="col-sm-10">
+                                    <input type="file" name="ab_img" id='ab_img' accept="image/*" onchange="show_img(event);" multiple>
+                                    <div class="col" style='height:auto'>
+                                        <div id="img_zip" style="width:auto; height:auto; float:left; margin-top:20px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="column-2 right" style="width: 200px; height:200px; background-color: #5c6679;">
+                                <label for="inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
+                                <div class="col-sm-10">
+                                    <textarea type="text" name="content" class="form-control" id="inputContent"  style='height:300px' required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+
+                    <form action="/post" method="post" enctype="multipart/form-data">
+                        <div class="form-group row">
+                            
+                            
+                        </div>
+                        <div class="form-group row">
+                            
+                            
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-auto mr-auto"></div>
+                            <div class="col-auto">
+                                <input class="btn btn-primary" type="submit" role="button" value="신청">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row" style='margin-top:10px'>
+                        <div class="col-auto mr-auto"></div>
+                        <div class="col-auto" >
+                            <button class="btn btn-danger" onclick="location.href='/authmanaged/'">취소</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
     </th:block>
-
-    <!-- Bootstrap core JavaScript-->
-    <script th:src="@{/bootstrap/vendor/jquery/jquery.min.js}"></script>
-    <script th:src="@{/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script th:src="@{/bootstrap/vendor/jquery-easing/jquery.easing.min.js}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script th:src="@{/bootstrap/js/sb-admin-2.min.js}"></script>
 
 
 </body>
