@@ -24,7 +24,7 @@ public class PaymentDTO {
 
     private Long ptotalprice;
 
-    private boolean pcardtype;
+    private Integer pcardtype;
 
     private String preceipt;
 
