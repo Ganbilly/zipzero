@@ -35,9 +35,9 @@ public class PaymentDTO {
     private Long pfinstate;
 
     
-    private StateDTO stateDTO;
+    private Long sid;
 
-    private MemberDTO memberDTO;
+    private Long mid;
 
-    private PaytypeDTO paytypeDTO;
+    private Long ptypecode;
 }

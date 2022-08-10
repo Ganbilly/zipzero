@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.member.dto.MemberDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
@@ -20,7 +19,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class PaymentTests {
     @Autowired(required = false)
-    PaymentMapper mapper;
+    PaymentMapper paymentMapper;
     
     /*
      * 만든 사람 : 정문경
@@ -29,17 +28,13 @@ public class PaymentTests {
      */
     @Test
     public void testGetPage() {
-        MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setMid(1L);
-
         PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setPid(1L);
-        paymentDTO.setMemberDTO(memberDTO);
+        paymentDTO.setMid(2L);
 
         PageDTO pageDTO = new PageDTO();
         pageDTO.setPage(1);
         pageDTO.setSize(10);
-        mapper.getPage(paymentDTO, pageDTO);
+        paymentMapper.getPage(paymentDTO, pageDTO);
     }
 
     /*
@@ -51,7 +46,7 @@ public class PaymentTests {
     public void testGetDetail() {
         PaymentDTO paymentDTO = new PaymentDTO();
         paymentDTO.setPid(3L);
-        log.info(mapper.getDetail(paymentDTO));
+        log.info(paymentMapper.getDetail(paymentDTO));
     }
 
     /*
@@ -63,7 +58,7 @@ public class PaymentTests {
     public void testDeletePayment() {
         PaymentDTO paymentDTO = new PaymentDTO();
         paymentDTO.setPid(2L);
-        mapper.deletePayment(paymentDTO);
+        paymentMapper.deletePayment(paymentDTO);
     }
 
     /*
@@ -83,16 +78,9 @@ public class PaymentTests {
         paymentDTO.setPreceipt("p_receipt"); // 영수증
         paymentDTO.setPcurstate(1L); // 삭제여부
         paymentDTO.setPfinstate(3L); // 최종결제상태
-
-        StateDTO stateDTO = new StateDTO();
-        stateDTO.setSid(3L);
-        paymentDTO.setStateDTO(stateDTO); // 상태아이디
-
-        PaytypeDTO paytypeDTO = new PaytypeDTO();
-        paytypeDTO.setPtypecode(2L);
-        paymentDTO.setPaytypeDTO(paytypeDTO); // 회원아이디
-        
+        paymentDTO.setSid(3L); // 상태아이디
+        paymentDTO.setPtypecode(2L); // 회원아이디
         paymentDTO.setPid(2L);
-        mapper.modifyPayment(paymentDTO);
+        paymentMapper.modifyPayment(paymentDTO);
     }
 }

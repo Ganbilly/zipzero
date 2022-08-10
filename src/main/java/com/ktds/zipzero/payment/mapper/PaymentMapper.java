@@ -9,7 +9,7 @@ import com.ktds.zipzero.payment.dto.PaymentDTO;
 
 public interface PaymentMapper {
 
-    List<PaymentDTO> getPage(@Param("payment") PaymentDTO paymentDTO, @Param("pageDTO") PageDTO pageDTO);
+    public List<PaymentDTO> getPage(@Param("payment") PaymentDTO paymentDTO, @Param("page") PageDTO pageDTO);
 
     PaymentDTO getDetail(PaymentDTO paymentDTO);
 

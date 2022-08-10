@@ -6,7 +6,11 @@
 <mapper namespace="com.ktds.zipzero.payment.mapper.PaymentMapper">
 
   <select id="getPage" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
-    select * from tbl_payment where m_id = #{payment.memberDTO.mid} and p_check = 0
+    SELECT *
+    FROM tbl_payment pay
+    WHERE pay.m_id = #{payment.mid}
+    ORDER BY p_id DESC
+    LIMIT #{page.skip}, #{page.size}
   </select>
 
   <select id="getDetail" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
@@ -30,8 +34,8 @@
       p_receipt = #{preceipt}, <!-- 영수증 -->
       p_curstate = 2, <!-- 결제 상태 -->
       p_finstate = #{pfinstate}, <!-- 최정 결제 상태 -->
-      s_id = #{stateDTO.sid}, <!-- 상태아이디 -->
-      ptype_code = #{paytypeDTO.ptypecode} <!-- 회원아이디 -->
+      s_id = #{sid}, <!-- 상태아이디 -->
+      ptype_code = #{ptypecode} <!-- 회원아이디 -->
     where
       p_id = #{pid}
   </update>

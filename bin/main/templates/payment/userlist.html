@@ -7,6 +7,30 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>[[${}]]</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>분류</th>
+                <th>제목</th>
+                <th>날짜</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${not #lists.isEmpty(paymentList)}" th:each="l:${paymentList}">
+                <td th:text="${l.pid}"></td>
+                <td th:text="${l.pcardtype}"></td>
+                <td th:text="${l.pname}"></td>
+                <td th:text="${l.ptime}"></td>
+            </tr>
+            <tr th:unless="${not #lists.isEmpty(paymentList)}">
+                <td colspan="7">등록된 회원의 정보가 없습니다.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${not #lists.isEmpty(paymentList)}" th:each="l : ${paymentList}">
+        <td th:text="${l.pid}"></td>
+    </div>
 </body>
 </html>
