@@ -57,23 +57,18 @@ public class PaymentController {
     @PostMapping("/regist")
     public void postPaymentRegist(PaymentDTO paymentDTO, TimeDTO timeDTO){
 
-        /* 
-         * service로옮길부분
-         */
-        // log.info(paymentDTO.toString());
-        // LocalDateTime t = LocalDateTime.parse(timeDTO.getTime());
-        // paymentDTO.setPtime(t);
-        // paymentDTO.setPregdate(LocalDateTime.now());
-        // paymentDTO.setPmoddate(LocalDateTime.now());
-        // paymentDTO.setPreceipt("test.jpg");
-        // paymentDTO.setPcheck(0);
-        // paymentDTO.setPcurstate(1L);
-        // paymentDTO.setPfinstate(1L);
-        // paymentDTO.setSid(1L);
-        // paymentDTO.setMid(1L);
-        // paymentDTO.setPtypecode(0L);
+        LocalDateTime t = LocalDateTime.parse(timeDTO.getTime());
+        paymentDTO.setPtime(t);
+        paymentDTO.setPregdate(LocalDateTime.now());
+        paymentDTO.setPmoddate(LocalDateTime.now());
+        paymentDTO.setPreceipt("test.jpg");
+        paymentDTO.setPcheck(0);
+        paymentDTO.setPcurstate(1L);
+        paymentDTO.setPfinstate(1L);
+        paymentDTO.setSid(1L);
+        paymentDTO.setMid(1L);
 
-        // paymentMapper.registPayment(paymentDTO);
+        paymentService.registPayment(paymentDTO);
     }
     
 
