@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -70,19 +72,44 @@ class ZipzeroApplicationTests {
 
 			int responseCode = con.getResponseCode();
 			BufferedReader br;
+			DataInputStream din = null;
 			if (responseCode == 200) {
-				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+				//br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+				din = new DataInputStream(con.getInputStream());
+
 			} else {
 				br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
 			}
-			String inputLine;
-			StringBuffer response = new StringBuffer();
-			while ((inputLine = br.readLine()) != null) {
-				response.append(inputLine);
-			}
-			br.close();
 
-			System.out.println(response);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+			byte[] buffer = new byte[1024*8];
+
+			try{
+			while(true){
+
+				int count = din.read(buffer);
+				
+				if(count == -1) { break;}
+
+				bos.write(buffer,0,count);
+
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		log.info(new String(bos.toByteArray()));
+
+			// String inputLine;
+			// StringBuffer response = new StringBuffer();
+			// while ((inputLine = br.readUTF()) != null) {
+			// 	response.append(inputLine);
+			// }
+			// br.close();
+
+			//System.out.println(response);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
