@@ -17,6 +17,24 @@
                     <h6 class="m-0 font-weight-bold text-primary">신청 관리하기</h6>
                 </div>
                 <!-- Card Body -->
+                <select name="pcardtype" form="listForm">
+                    <option value="0">법인</option>
+                    <option value="1">개인</option>
+                </select>
+
+                <form th:action="@{/payment/adminlist}" th:object="${filterDTO}" method="post" id="listForm">
+                    <input type="date" name="startTime"/>
+                    <input type="date" name="endTime"/>
+                    <input type="text" name="memberDTO.hq" placeholder="본부"/>
+                    <input type="text" name="memberDTO.dept" placeholder="담당"/>
+                    <input type="text" name="memberDTO.team" placeholder="팀"/>
+                    <input type="text" name="memberDTO.mid" placeholder="사번"/>
+                    <input type="text" name="memberDTO.mname" placeholder="이름"/>
+                    <input type="text" name="paymentDTO.pname" placeholder="제목"/>
+                    <input type="text" name="paymentDTO.ptotalprice" placeholder="금액"/>
+                    <input type="submit" value="검색"/>
+                </form>
+
                 <table border="1">
                     <thead>
                         <tr>

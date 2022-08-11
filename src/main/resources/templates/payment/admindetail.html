@@ -18,18 +18,31 @@
                     <h6 class="m-0 font-weight-bold text-primary">신청 관리하기</h6>
                 </div>
                 <!-- Card Body -->
-                <form th:action="@{/adminlist}" th:object="${paymentDTO}" method="post"> <!-- userlist : url, paymentDTO : 전달할 변수 -->
-                    <input type="text" th:value="${payment.pid}"/>
-                    <input type="text" th:value="${payment.pname}"/>
-                    <input type="text" th:value="${payment.ptime}"/>
-                    <input type="text" th:value="${payment.pregdate}"/>
-                    <input type="text" th:value="${payment.pmoddate}"/>
-                    <input type="text" th:value="${payment.pstorename}"/>
-                    <input type="text" th:value="${payment.ptotalprice}"/>
-                    <input type="text" th:value="${payment.pcardtype}"/>
-                    <input type="text" th:value="${payment.preceipt}"/>
-                    <input type="text" th:value="${payment.pcurstate}"/>
-                    <input type="text" th:value="${payment.pfinstate}"/>
+                <td th:text="${payment.pid}"></td>
+                <td th:text="${payment.pname}"></td>
+                <td th:text="${payment.ptime}"></td>
+                <td th:text="${payment.pregdate}"></td>
+                <td th:text="${payment.pstorename}"></td>
+                <td th:text="${payment.ptotalprice}"></td>
+                <td th:text="${payment.pcardtype}"></td>
+                <td th:text="${payment.preceipt}"></td>
+                <td th:text="${payment.pcurstate}"></td>
+                <td th:text="${payment.pfinstate}"></td>
+                <td th:text="${payment.ptypecode}"></td>
+
+                <form th:action="@{/payment/adminmanage}" method="post">
+                    <input type="submit" value="승인">
+                    <input type="hidden" name="pid" th:value="${payment.pid}">
+                </form>
+
+                <form th:action="@{/payment/admindetail}" method="get">
+                    <input type="submit" value="반려">
+                    <input type="hidden" name="pid" th:value="${payment.pid}">
+                </form>
+
+                <form th:action="@{/payment/adminlist}" method="get">
+                    <input type="submit" value="돌아가기">
+                    <input type="hidden" name="mid" th:value="${payment.mid}">
                 </form>
 
                 <div class="card-body">

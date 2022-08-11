@@ -1,7 +1,6 @@
 package com.ktds.zipzero.payment.controller;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.all.dto.TimeDTO;
+import com.ktds.zipzero.payment.dto.FilterDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 import com.ktds.zipzero.payment.service.PaymentService;
 
@@ -50,7 +50,7 @@ public class PaymentController {
     public String paymentModifyResult(Model model, @ModelAttribute("paymentDTO") PaymentDTO paymentDTO) {
         log.info("PaymentModifyResult");
         paymentDTO.setPmoddate(LocalDateTime.now());
-        paymentDTO.setSid(1L);
+        paymentDTO.setSid(3L);
         paymentDTO.setPcheck(1);
         paymentService.modifyPayment(paymentDTO);
         
@@ -80,6 +80,26 @@ public class PaymentController {
         model.addAttribute("paymentList", paymentList);
         
         return "payment/adminlist";
+    }
+
+    @PostMapping("/adminlist")
+    public String adminPaymentListFilter(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO){
+        log.info("PaymentListFilter");
+        
+        return "payment/adminlist";
+    }
+
+    @PostMapping("/adminmanage")
+    public String adminPaymentManage(Model model, long pid) {
+        log.info("AdminManage");
+        log.info("============  pid : " + pid);
+        PaymentDTO paymentDTO = paymentService.getPaymentDetail(pid);
+        paymentDTO.setSid(1L);
+        paymentService.modifyPayment(paymentDTO);
+
+        model.addAttribute("mid", paymentDTO.getMid());
+        
+        return "redirect:adminlist";
     }
     
     /*
