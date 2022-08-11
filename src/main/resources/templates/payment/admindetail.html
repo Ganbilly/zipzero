@@ -1,24 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdminDetail</title>
-</head>
-<body>
-    <form th:action="@{/adminlist}" th:object="${paymentDTO}" method="post"> <!-- userlist : url, paymentDTO : 전달할 변수 -->
-        <input type="text" th:value="${payment.pid}"/>
-        <input type="text" th:value="${payment.pname}"/>
-        <input type="text" th:value="${payment.ptime}"/>
-        <input type="text" th:value="${payment.pregdate}"/>
-        <input type="text" th:value="${payment.pmoddate}"/>
-        <input type="text" th:value="${payment.pstorename}"/>
-        <input type="text" th:value="${payment.ptotalprice}"/>
-        <input type="text" th:value="${payment.pcardtype}"/>
-        <input type="text" th:value="${payment.preceipt}"/>
-        <input type="text" th:value="${payment.pcurstate}"/>
-        <input type="text" th:value="${payment.pfinstate}"/>
-    </form>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<body id="page-top">
+
+    <th:block layout:fragment="content">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            <!-- 신청관리 게시판 -->
+            <h1 class="h3 mb-2 text-gray-800">관리자 상세 페이지</h1>
+            <p class="mb-4">영수증 신청 관리</p>
+
+            <!-- 신청관리 게시판 -->
+            <div class="card shadow" style="margin-bottom: 50px;">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">신청 관리하기</h6>
+                </div>
+                <!-- Card Body -->
+                <form th:action="@{/adminlist}" th:object="${paymentDTO}" method="post"> <!-- userlist : url, paymentDTO : 전달할 변수 -->
+                    <input type="text" th:value="${payment.pid}"/>
+                    <input type="text" th:value="${payment.pname}"/>
+                    <input type="text" th:value="${payment.ptime}"/>
+                    <input type="text" th:value="${payment.pregdate}"/>
+                    <input type="text" th:value="${payment.pmoddate}"/>
+                    <input type="text" th:value="${payment.pstorename}"/>
+                    <input type="text" th:value="${payment.ptotalprice}"/>
+                    <input type="text" th:value="${payment.pcardtype}"/>
+                    <input type="text" th:value="${payment.preceipt}"/>
+                    <input type="text" th:value="${payment.pcurstate}"/>
+                    <input type="text" th:value="${payment.pfinstate}"/>
+                </form>
+
+                <div class="card-body">
+                    <p style="font-size : 13px ;">게시물을 확인하고 승인하세요</p>
+                    <hr style="padding:3px">
+
+                </div>
+            </div>
+
+        </div>
+    </th:block>
 </body>
+
 </html>
