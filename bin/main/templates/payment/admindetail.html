@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>AdminDetail</title>
 </head>
 <body>
-    <h1>admindetail</h1>
+    <form th:action="@{/adminlist}" th:object="${paymentDTO}" method="post"> <!-- userlist : url, paymentDTO : 전달할 변수 -->
+        <input type="text" th:value="${payment.pid}"/>
+        <input type="text" th:value="${payment.pname}"/>
+        <input type="text" th:value="${payment.ptime}"/>
+        <input type="text" th:value="${payment.pregdate}"/>
+        <input type="text" th:value="${payment.pmoddate}"/>
+        <input type="text" th:value="${payment.pstorename}"/>
+        <input type="text" th:value="${payment.ptotalprice}"/>
+        <input type="text" th:value="${payment.pcardtype}"/>
+        <input type="text" th:value="${payment.preceipt}"/>
+        <input type="text" th:value="${payment.pcurstate}"/>
+        <input type="text" th:value="${payment.pfinstate}"/>
+    </form>
 </body>
 </html>

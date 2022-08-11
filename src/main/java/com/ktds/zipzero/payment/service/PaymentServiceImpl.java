@@ -31,7 +31,18 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentDTO getPaymentDetail(long pid) {
-        PaymentDTO ppayment = paymentMapper.getPaymentById(pid);
-        return ppayment;
+        return paymentMapper.getPaymentByPid(pid);
     }
+
+    @Override
+    public List<PaymentDTO> getPaymentListByPid(long pid, int skip, int size) {
+        return paymentMapper.getPageByPid(pid, skip, size);
+    }
+
+    @Override
+    public void modifyPayment(PaymentDTO paymentDTO) {
+        paymentMapper.modifyPayment(paymentDTO);
+    }
+
+    
 }

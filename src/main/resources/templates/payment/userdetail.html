@@ -4,19 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>UserDetail</title>
 </head>
 <body>
-    <h1>[[${payment.pid}]]</h1>
-    <h1>[[${payment.pname}]]</h1>
-    <h1>[[${payment.ptime}]]</h1>
-    <h1>[[${payment.pregdate}]]</h1>
-    <h1>[[${payment.pmoddate}]]</h1>
-    <h1>[[${payment.pstorename}]]</h1>
-    <h1>[[${payment.ptotalprice}]]</h1>
-    <h1>[[${payment.pcardtype}]]</h1>
-    <h1>[[${payment.preceipt}]]</h1>
-    <h1>[[${payment.pcurstate}]]</h1>
-    <h1>[[${payment.pfinstate}]]</h1>
+    <td th:text="${payment.pid}"></td>
+    <td th:text="${payment.pname}"></td>
+    <td th:text="${payment.ptime}"></td>
+    <td th:text="${payment.pregdate}"></td>
+    <td th:text="${payment.pstorename}"></td>
+    <td th:text="${payment.ptotalprice}"></td>
+    <td th:text="${payment.pcardtype}"></td>
+    <td th:text="${payment.preceipt}"></td>
+    <td th:text="${payment.pcurstate}"></td>
+    <td th:text="${payment.pfinstate}"></td>
+    <td th:text="${payment.ptypecode}"></td>
+
+    <form th:action="@{/payment/modify}" method="post">
+        <input type="submit" value="수정">
+        <input type="hidden" name="pid" th:value="${payment.pid}">
+    </form>
+
+    <form th:action="@{/payment/delete}" method="post">
+        <input type="submit" value="삭제">
+        <input type="hidden" name="pid" th:value="${payment.pid}">
+    </form>
+
+    <form th:action="@{/payment/userlist}" method="get">
+        <input type="submit" value="목록으로">
+        <input type="hidden" name="mid" th:value="${payment.mid}"/>
+    </form>
 </body>
 </html>

@@ -5,14 +5,14 @@
 
 <mapper namespace="com.ktds.zipzero.payment.mapper.PaymentMapper">
 
-  <select id="getPage" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
+  <select id="getPage" resultType="PaymentDTO">
     select
       p_id as pid, p_cardtype as pcardtype, p_name as pname,
       p_time as ptime, p_curstate as pcurstate
     from
       tbl_payment
     where
-      m_id = #{mid}
+      m_id = #{mid} and p_check = 1
     order by
       p_id desc
     limit
@@ -24,7 +24,7 @@
     VALUES (#{pname}, #{ptime}, #{pregdate}, #{pmoddate}, #{pstorename}, #{ptotalprice}, #{pcardtype}, #{preceipt},#{mid}, #{sid}, #{pcheck}, #{ptypecode}, #{pcurstate}, #{pfinstate})
   </insert>
 
-  <select id="getDetail" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
+  <select id="getDetail" resultType="PaymentDTO">
     select
       p_id as pid, p_name as pname, p_time as ptime,
       p_regdate as pregdate, p_moddate as pmoddate,
@@ -53,14 +53,15 @@
       p_cardtype = #{pcardtype}, <!-- 결제카드유형 -->
       p_receipt = #{preceipt}, <!-- 영수증 -->
       p_curstate = 2, <!-- 결제 상태 -->
-      p_finstate = #{pfinstate}, <!-- 최정 결제 상태 -->
+      p_finstate = #{pfinstate}, <!-- 최종 결제 상태 -->
+      p_check = #{pcheck}, <!-- 삭제 여부 -->
       s_id = #{sid}, <!-- 상태아이디 -->
-      ptype_code = #{ptypecode} <!-- 회원아이디 -->
+      ptype_code = #{ptypecode} <!-- 결제 종류 -->
     where
       p_id = #{pid}
   </update>
 
-  <select id="getPaymentById" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
+  <select id="getPaymentByPid" resultType="PaymentDTO">
     select
       p_id as pid, p_name as pname, p_time as ptime,
       p_regdate as pregdate, p_moddate as pmoddate,
@@ -72,6 +73,18 @@
       tbl_payment
     where
       p_id = #{pid}
+  </select>
+
+  <select id="getPageByPid" resultType="PaymentDTO">
+    select
+      p_id as pid, p_cardtype as pcardtype, p_name as pname,
+      p_time as ptime, p_curstate as pcurstate
+    from
+      tbl_payment
+    where
+      m_id = (select m_id from tbl_payment where p_id = #{pid})
+    limit
+      #{skip}, #{size}
   </select>
 
 </mapper>
