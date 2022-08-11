@@ -6,18 +6,20 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.all.dto.TimeDTO;
+import com.ktds.zipzero.payment.dto.FilterDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
+
 
 import com.ktds.zipzero.payment.service.PaymentService;
 
 import lombok.AllArgsConstructor;
-
 import lombok.extern.log4j.Log4j2;
 
 @Controller
@@ -30,14 +32,78 @@ public class PaymentController {
  
  
     @GetMapping("/userlist")
-    public String paymentList(Model model, @RequestParam(value = "mid") long mid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
-        log.info("paymentList");
+    public String userPaymentList(Model model, @RequestParam(value = "mid") long mid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
+        log.info("PaymentList");
         PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
         List<PaymentDTO> paymentList = paymentService.getPaymentList(mid, pageDTO.getSkip(), size);
 
         model.addAttribute("paymentList", paymentList);
         
         return "payment/userlist";
+    }
+
+    @PostMapping("/modify")
+    public String paymentModify(Model model, @ModelAttribute("pid") long pid) {
+        log.info("PaymentModify");
+        model.addAttribute("payment", paymentService.getPaymentDetail(pid));
+
+        return "payment/modify";
+    }
+    
+    @PostMapping("/modifyresult")
+    public String paymentModifyResult(Model model, @ModelAttribute("paymentDTO") PaymentDTO paymentDTO) {
+        log.info("PaymentModifyResult");
+        paymentDTO.setPmoddate(LocalDateTime.now());
+        paymentDTO.setSid(3L);
+        paymentDTO.setPcheck(1);
+        paymentService.modifyPayment(paymentDTO);
+        
+        model.addAttribute("mid", paymentService.getPaymentDetail(paymentDTO.getPid()).getMid());
+
+        return "redirect:userlist";
+    }
+
+    @PostMapping("/delete")
+    public String paymentDelete(Model model, long pid) {
+        log.info("PaymentDelete");
+        PaymentDTO paymentDTO = paymentService.getPaymentDetail(pid);
+        paymentDTO.setPcheck(0);
+        paymentService.modifyPayment(paymentDTO);
+
+        model.addAttribute("mid", paymentDTO.getMid());
+
+        return "redirect:userlist";
+    }
+
+    @GetMapping("/adminlist")
+    public String adminPaymentList(Model model, @RequestParam(value = "mid") long mid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
+        log.info("PaymentList");
+        PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
+        List<PaymentDTO> paymentList = paymentService.getPaymentList(mid, pageDTO.getSkip(), size);
+
+        model.addAttribute("paymentList", paymentList);
+        
+        return "payment/adminlist";
+    }
+
+    @PostMapping("/adminlist")
+    public String adminPaymentListFilter(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO){
+        log.info("PaymentListFilter");
+        
+        return "payment/adminlist";
+    }
+
+    @PostMapping("/adminmanage")
+    public String adminPaymentManage(Model model, long pid) {
+        log.info("AdminManage");
+        log.info("============  pid : " + pid);
+        PaymentDTO paymentDTO = paymentService.getPaymentDetail(pid);
+        paymentDTO.setSid(1L);
+        paymentService.modifyPayment(paymentDTO);
+
+        model.addAttribute("mid", paymentDTO.getMid());
+        
+        return "redirect:adminlist";
     }
     
     /*
@@ -109,22 +175,23 @@ public class PaymentController {
     // }
     // */
     @GetMapping("/userdetail")
-    public String paymentUserDetail(Model model, @RequestParam(value = "pid") long pid){
+    public String userDetail(Model model, @RequestParam(value = "pid") long pid){
         log.info("UserDetail");
         
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
 
         return "payment/userdetail";
     }
-
+    
     @GetMapping("/admindetail")
-    public String paymentAdminDetail(Model model, @RequestParam(value = "pid") long pid){
-        log.info("AdminDetail");
-
+    public String adminDetail(Model model, @RequestParam(value = "pid") long pid){
+        log.info("AdminrDetail");
+        
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
 
         return "payment/admindetail";
     }
+
     /*
     @PostMapping("/modify")
     public void paymentModify(){

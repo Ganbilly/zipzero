@@ -15,6 +15,10 @@ public interface PaymentService {
 
     public PaymentDTO getPaymentDetail(long pid);
 
+    public List<PaymentDTO> getPaymentListByPid(long pid, int skip, int size);
+
+    public void modifyPayment(PaymentDTO paymentDTO);
+
     /*
     * 만든 사람 : 이은성(2022-08-11)
     * 최종 수정 : 이은성(2022-08-11)
