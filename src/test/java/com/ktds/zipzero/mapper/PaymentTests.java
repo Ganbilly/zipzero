@@ -22,6 +22,20 @@ public class PaymentTests {
     @Autowired(required = false)
     MemberMapper memberMapper;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /*
      * 만든 사람 : 정문경
      * 최종 수정 : 정문경
@@ -38,12 +52,15 @@ public class PaymentTests {
      * 최종 수정 : 정문경
      * 기능 : pid가 맞는 영수증 정보 가져옴
      */
-    @Test
-    public void testGetDetail() {
-        PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setPid(2L);
-        log.info(paymentMapper.getAdminDetail(paymentDTO));
-    }
+    // @Test
+    // public void testGetDetail() {
+    //     PaymentDTO paymentDTO = new PaymentDTO();
+    //     paymentDTO.setPid(2L);
+    //     log.info(paymentMapper.getAdminDetail(paymentDTO));
+    // }
+
+  
+
 
 
     /*

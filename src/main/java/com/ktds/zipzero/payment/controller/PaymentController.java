@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.all.dto.TimeDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
-import com.ktds.zipzero.payment.mapper.PaymentMapper;
+
 import com.ktds.zipzero.payment.service.PaymentService;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+
 import lombok.extern.log4j.Log4j2;
 
 @Controller
@@ -27,6 +27,8 @@ import lombok.extern.log4j.Log4j2;
 public class PaymentController {
     private PaymentService paymentService;
 
+ 
+ 
     @GetMapping("/userlist")
     public String paymentList(Model model, @RequestParam(value = "mid") long mid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
         log.info("paymentList");
@@ -78,23 +80,34 @@ public class PaymentController {
     
 
 
-    /*
-    @GetMapping("/adminlist")
-    public String paymentAdminList(Model model, @RequestParam(value = "mid") long mid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
-        log.info("paymentList");
-        PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
-        List<PaymentDTO> paymentList = paymentService.getPaymentList(mid, pageDTO.getSkip(), size);
+    //예림test
+    // @GetMapping("/adminlist")
+    // public String paymentAdminList(Model model, @RequestParam(value = "mid") long mid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
+    //     log.info("paymentList");
+    //     PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
+    //     List<PaymentDTO> paymentList = paymentService.getPaymentList(mid, pageDTO.getSkip(), size);
 
-        model.addAttribute("paymentList", paymentList);
+    //     model.addAttribute("paymentList", paymentList);
         
-        return "payment/adminlist";
+    //     return "payment/adminlist";
+    // }
+    
+    //예림test
+    @GetMapping("/admintest")
+    public String adminlist(Model model, @RequestParam(value = "mid") long mid){
+        log.info("admintest");
+        
+        model.addAttribute("adminpaymentList", paymentService.getAuthList(mid));
+     
+
+
+        return "payment/admintest";
     }
-    /*
-    @GetMapping("/adminmanage")
-    public void paymentAdminManage(){
-        log.info("adminManage");
-    }
-    */
+    // @GetMapping("/adminmanage")
+    // public void paymentAdminManage(){
+    //     log.info("adminManage");
+    // }
+    // */
     @GetMapping("/userdetail")
     public String paymentUserDetail(Model model, @RequestParam(value = "pid") long pid){
         log.info("UserDetail");

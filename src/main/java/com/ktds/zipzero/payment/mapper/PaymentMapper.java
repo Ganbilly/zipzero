@@ -16,8 +16,15 @@ public interface PaymentMapper {
     */
     
     PaymentDTO getUserDetail(PaymentDTO paymentDTO);
+    
+        /* 
+     * 만든사람 : 김예림(2022-08-11)
+     * 최종수정 : 
+     * 기능 : 직급별 조회
+    */
+    //PaymentDTO getAdminDetail(PaymentDTO paymentDTO);
 
-    PaymentDTO getAdminDetail(PaymentDTO paymentDTO);
+    public PaymentDTO getAdminDetail(Long mid);
 
     /*
      * 만든사람 : 이은성(2022-08-10)
@@ -45,4 +52,7 @@ public interface PaymentMapper {
      * 기능 : 영수증 가져오기
      */
     public PaymentDTO getPaymentById(Long pid);
+
+    public List<PaymentDTO> getMidListByAuth(Long mid);
+   
 }

@@ -21,4 +21,11 @@ public interface PaymentService {
     * 기능 : 페이먼트 등록
     */
     public void registPayment(PaymentDTO paymentDTO);
+
+
+    public List<PaymentDTO> getAuthList(long mid);
+
+
+  
+
 }

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ktds.zipzero.payment.dto.PaymentDTO;
+import com.ktds.zipzero.member.dto.MemberDTO;
 import com.ktds.zipzero.payment.mapper.PaymentMapper;
+import com.ktds.zipzero.member.mapper.MemberMapper;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -22,6 +24,7 @@ import lombok.extern.log4j.Log4j2;
 public class PaymentServiceImpl implements PaymentService {
     @Setter(onMethod_ = @Autowired)
     private PaymentMapper paymentMapper;
+
     
     @Override
     public List<PaymentDTO> getPaymentList(long mid, int skip, int size) {
@@ -44,4 +47,16 @@ public class PaymentServiceImpl implements PaymentService {
     public void registPayment(PaymentDTO paymentDTO) {
         paymentMapper.registPayment(paymentDTO);
     }
+
+     
+
+
+
+    @Override
+    public List<PaymentDTO> getAuthList(long mid){
+        List<PaymentDTO> adminpaymentList = paymentMapper.getMidListByAuth(mid);
+        return adminpaymentList;
+
+    }
+ 
 }

@@ -23,4 +23,9 @@ public class MemberTests {
         log.info(mapper.getMemberById(id));
 
     }
+
+    
+
+
+ 
 }
