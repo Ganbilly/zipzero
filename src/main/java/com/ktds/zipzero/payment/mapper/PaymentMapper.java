@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.ktds.zipzero.all.dto.PageDTO;
+import com.ktds.zipzero.comment.dto.CommentDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 
 public interface PaymentMapper {
@@ -32,6 +33,8 @@ public interface PaymentMapper {
      * 기능 : 페이지 가져오기, 영수증 삭제, 영수증 수정
      */
     public List<PaymentDTO> getPage(@Param("mid") long mid, @Param("skip") int skip, @Param("size") int size);
+
+    // public List<CommentDTO> getComment(@Param("cid") long cid, @Param("skip") int skip, @Param("size") int size);    
 
     void registPayment(PaymentDTO paymentDTO);
 

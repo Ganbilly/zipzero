@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.all.dto.TimeDTO;
+import com.ktds.zipzero.comment.service.CommentService;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 import com.ktds.zipzero.payment.mapper.PaymentMapper;
 import com.ktds.zipzero.payment.service.PaymentService;
@@ -25,7 +26,9 @@ import lombok.extern.log4j.Log4j2;
 @AllArgsConstructor
 @Log4j2
 public class PaymentController {
-    private PaymentService paymentService;
+
+    private final PaymentService paymentService;
+    private final CommentService commentService;
 
     @GetMapping("/userlist")
     public String paymentList(Model model, @RequestParam(value = "mid") long mid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
@@ -100,6 +103,8 @@ public class PaymentController {
         log.info("UserDetail");
         
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
+
+        model.addAttribute("comments", commentService.getCommentList(pid, 0, 100));
 
         return "payment/userdetail";
     }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktds.zipzero.comment.mapper.CommentMapper">
+
+  <select id="getPage" resultType="com.ktds.zipzero.comment.dto.CommentDTO">
+    select
+      c_content as ccontent, c_moddate as cmoddate
+    from
+      tbl_comment
+    where
+      p_id = #{pid}
+    order by
+      c_regdate desc
+    limit
+      #{skip}, #{size}
+  </select>
+</mapper>
