@@ -51,7 +51,7 @@ public class PaymentTests {
      */
     @Test
     public void testGetFilterPage() {
-        FilterDTO filterDTO = FilterDTO.builder().endTime(LocalDate.now()).mid(3L).build();
+        FilterDTO filterDTO = FilterDTO.builder().endTime(LocalDate.now()).mid("3").build();
         List<FilterDTO> filterList = paymentMapper.getAdminPage(filterDTO, 0, 10);
         filterList.forEach(f -> log.info(f));
     }
