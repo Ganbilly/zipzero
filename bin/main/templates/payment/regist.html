@@ -17,7 +17,8 @@
                 <div class="card-body">
                     <div class="float-container">
                         <form method="post" action="/payment/regist">
-                            <input type="text" name="title" class="form-control" id="inputTitle" placeholder="제목"
+                            <input class="form-control" type="hidden" name="mid" th:value="1"/>
+                            <input type="text" name="pname" class="form-control" id="pname" placeholder="제목"
                                 style="height:50px;">
                             <hr style="padding:3px">
                             <div class="row double" style="margin: auto;display: flex; justify-content: center; margin-bottom: 50px;">
@@ -38,7 +39,7 @@
                                     <div class="form-group row" style="width: 600px;">
                                         <label class="col-lg-3 col-form-label form-control-label">카드 유형</label>
                                         <div class="col-lg-9">
-                                            <select class="form-control" name="pcardtype">
+                                            <select class="form-control" name="ptypecode">
                                                 <option value="0" >법인</option>
                                                 <option value="1" >개인</option>
                                             </select>
@@ -69,7 +70,7 @@
                                     <div class="form-group row" style="width: 600px;">
                                         <label class="col-lg-3 col-form-label form-control-label">상호</label>
                                         <div class="col-lg-9">
-                                            <input class="form-control" type="text" name="pname" />
+                                            <input class="form-control" type="text" name="pstorename" />
                                         </div>
                                     </div>
     
