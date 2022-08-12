@@ -14,8 +14,7 @@
       p_id = #{pid} and c_check = '1'
     order by
       c_regdate desc
-    limit
-      #{skip}, #{size}
+    
   </select>
 
   <insert id="write">
@@ -31,5 +30,14 @@
     )
   </insert>
 
+  <update id="modifyComment">
+    UPDATE 
+      tbl_comment
+    SET
+      c_content = #{ccontent},
+      c_moddate = Now()
+    WHERE 
+      c_id = #{cid}
+  </update>
 
 </mapper>

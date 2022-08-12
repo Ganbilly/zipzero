@@ -10,6 +10,6 @@ public interface CommentService {
 
     public List<CommentDTO> getCommentList(long pid, int skip, int size);
         
-    
+    public void modifyComment(CommentDTO commentDTO);
 
 }

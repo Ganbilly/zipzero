@@ -1,11 +1,13 @@
 package com.ktds.zipzero.comment.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,22 +43,37 @@ public class CommentController {
     }
 
     @GetMapping("/list")
-    public String getCommentList(Model model, @RequestParam(value = "pid") long pid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
+    public String getCommentList(Model model, @RequestParam(value = "pid") long pid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "100") int size){
         
         
         log.info("commentList");
         PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
         List<CommentDTO> commentList = commentService.getCommentList(pid, pageDTO.getSkip(), size);
 
-        model.addAttribute("commentList", commentService.getCommentList(pid, 1, 5));
+        model.addAttribute("commentList", commentService.getCommentList(pid, 1, 100));
         
         return "comment/list";
     }
 
 
-    @GetMapping("/modify")
-    public void commentModify() {
+    @PostMapping("/modify")
+    public String commentModify(Model model, @ModelAttribute("pid") long pid) {
+
+        model.addAttribute("comments", commentService.getCommentList(pid, 1, 5));
+
+        return "comment/modify";
+    }
+
+    @PostMapping("/modifyresult")
+    public String paymentModifyResult(Model model, @ModelAttribute("paymentDTO") CommentDTO commentDTO) {
+        log.info("PaymentModifyResult");
+        commentDTO.setCmoddate(LocalDateTime.now());
+        commentDTO.setCcontent("안녕하세요");
+        commentService.modifyComment(commentDTO);
         
+        // model.addAttribute("mid", commentService.getPaymentDetail(commentDTO.getPid()).getMid());
+
+        return "redirect:userlist";
     }
     
 }

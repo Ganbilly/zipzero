@@ -20,6 +20,6 @@ public interface CommentMapper {
     
     public List<CommentDTO> getCommentList(@Param("pid") long pid, @Param("skip") int skip, @Param("size") int size);
 
-    @Select("")
-    void modify(CommentDTO commentDTO);
+    
+    void modifyComment(CommentDTO commentDTO);
 }

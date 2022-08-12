@@ -27,8 +27,76 @@
             </div>
 
         </div>
+
+
+
+        <form th:action="@{/comment/modify}" method="post">
+            <input type="submit" value="수정" class="btn btn-primary"
+                style="width: 150px; margin:20px;">
+            <input type="hidden" name="pid" th:value="${payment.pid}">
+        </form>
+
+        <form th:action="@{/comment/delete}" method="post">
+            <input type="submit" value="삭제" class="btn btn-danger"
+                style="width: 150px; margin:20px;">
+            <input type="hidden" name="pid" th:value="${payment.pid}">
+        </form>
+
+        <button class ="registerBtn">댓글 등록</button>
+
+
+
+    
+    <div class="modal registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Register Reply</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Reply Text</span>
+                        <input type="text" class="form-control replyText" >
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Replyer</span>
+                        <input type="text" class="form-control replyer" >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary registerBtn">Register</button>
+                    <button type="button" class="btn btn-outline-dark closeRegisterBtn" >Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </th:block>
 
+
+    <script layout:fragment="scriptFragment">
+
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    
+        //댓글 등록 모달
+        const registerModal = new bootstrap.Modal(document.querySelector(".registerModal"))
+        //registerModel
+        const registerBtn = document.querySelector(".registerBtn")
+        const replyText = document.querySelector(".replyText")
+        const replyer = document.querySelector(".replyer")
+        const closeRegisterBtn = document.querySelector(".closeRegisterBtn")
+    
+        document.querySelector(".registerBtn").addEventListener("click",() => {
+    
+            alert("AAA")
+    
+            registerModal.show()
+    
+        },false);
+    
+    </script>
+    
 
 </body>
 

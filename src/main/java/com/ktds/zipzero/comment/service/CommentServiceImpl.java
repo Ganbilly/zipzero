@@ -14,6 +14,7 @@ import lombok.Setter;
 @Service
 @AllArgsConstructor
 public class CommentServiceImpl implements CommentService{
+
     @Setter(onMethod_ = @Autowired)
     private CommentMapper commentMapper;
 
@@ -31,5 +32,13 @@ public class CommentServiceImpl implements CommentService{
 
         return false;
     }
+
+    @Override
+    public void modifyComment(CommentDTO commentDTO){
+        commentMapper.modifyComment(commentDTO);
+    }
+
+
+   
     
 }
