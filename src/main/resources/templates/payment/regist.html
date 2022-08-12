@@ -16,13 +16,8 @@
 
                 <div class="card-body">
                     <div class="float-container">
-                        <form method="post" action="/payment/registadd" >
-                            <input class="form-control" type="hidden" name="mid" th:value="1"/>
-                            <input type="text" name="pname" class="form-control" id="pname" placeholder="제목"
-                                style="height:50px;">
-                            <hr style="padding:3px">
-                            <div class="row double" style="margin: auto;display: flex; justify-content: center; margin-bottom: 50px;">
-                                <div class="column-2 left"
+
+                        <div class="column-2 left"
                                     style="width: 500px; height:600px; background-color: #00308f; margin-right: 50px;">
                                     <div>
                                         <img th:src="@{/bootstrap/img/logo.png}">
@@ -33,6 +28,13 @@
                                         <button id="btndel" class="btn btn-success uploadBtn">인식</button>
                                     </div>
                                 </div>
+                        <form method="post" action="/payment/registadd" >
+                            <input class="form-control" type="hidden" name="mid" th:value="1"/>
+                            <input type="text" name="pname" class="form-control" id="pname" placeholder="제목"
+                                style="height:50px;">
+                            <hr style="padding:3px">
+                        <div class="row double" style="margin: auto;display: flex; justify-content: center; margin-bottom: 50px;">
+                                
 
                                 <div class="row" style="width: 600px; height:300px;">
                                     <input class="form-control" type="hidden" name="mid" th:value="1"/>
