@@ -5,9 +5,7 @@
 
 <mapper namespace="com.ktds.zipzero.payment.mapper.PaymentMapper">
 
-
-  <select id="getPage" resultType="PaymentDTO">
-
+  <select id="getUserPage" resultType="PaymentDTO">
     select
       p_id as pid, p_cardtype as pcardtype, p_name as pname,
       p_time as ptime, p_curstate as pcurstate
@@ -17,6 +15,81 @@
       m_id = #{mid} and p_check = 1
     order by
       p_id desc
+    limit
+      #{skip}, #{size}
+  </select>
+
+  <select id="getAdminPage" resultType="FilterDTO">
+    select
+      tbl_payment.m_id as mid, hq_name as hq, dept_name as dept, team_name as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice, s_name as sname
+    from
+      tbl_payment
+    join
+      tbl_member
+    on
+      tbl_payment.m_id = tbl_member.m_id
+    join tbl_headquarter on tbl_headquarter.hq_id = tbl_member.hq_id
+    join tbl_department on tbl_department.dept_id = tbl_member.dept_id
+    join tbl_team on tbl_team.team_id = tbl_member.team_id
+    join tbl_state on tbl_state.s_id = tbl_payment.s_id
+    WHERE
+      1=1
+      <if test="filter.hq != ''">
+        AND hq_name LIKE concat('%', #{filter.hq}, '%')
+      </if>
+      <if test="filter.dept != ''">
+        AND dept_name LIKE concat('%', #{filter.dept}, '%')
+      </if>
+      <if test="filter.team != ''">
+        AND team_name LIKE concat('%', #{filter.team}, '%')
+      </if>
+      <if test="filter.mname != ''">
+        AND m_name LIKE concat('%', #{filter.mname}, '%')
+      </if>
+      AND (#{filter.pcardtype} = 2 OR p_cardtype = #{filter.pcardtype})
+      <if test="filter.pname != ''">
+        AND p_name LIKE concat('%', #{filter.pname}, '%')
+      </if>
+      <if test="filter.mid != ''">
+        AND tbl_payment.m_id = #{filter.mid}
+      </if>
+      <if test="filter.sname != ''">
+        AND s_name like #{filter.sname}
+      </if>
+      <choose>
+        <when test="filter.minptotalprice == '' and filter.maxptotalprice == ''">
+          AND 1=1
+        </when>
+        <when test="filter.minptotalprice != '' and filter.maxptotalprice == ''">
+          AND p_totalprice >= #{filter.minptotalprice}
+        </when>
+        <when test="filter.minptotalprice == '' and filter.maxptotalprice != ''">
+          <![CDATA[
+            AND p_totalprice <= #{filter.maxptotalprice}
+          ]]>
+        </when>
+        <otherwise>
+          AND (p_totalprice BETWEEN #{filter.minptotalprice} AND #{filter.maxptotalprice})
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="filter.startTime == null and filter.endTime == null">
+          AND 1=1
+        </when>
+        <when test="filter.startTime != null and filter.endTime == null">
+          AND (p_time BETWEEN #{filter.startTime} AND '9999-12-31')
+        </when>
+        <when test="filter.startTime == null and filter.endTime != null">
+          <![CDATA[
+            AND (p_time BETWEEN '1000-01-01' AND #{filter.endTime})
+          ]]>
+        </when>
+        <otherwise>
+          AND (p_time BETWEEN #{filter.startTime} AND #{filter.endTime})
+        </otherwise>
+      </choose>
+    order by
+      p_time desc
     limit
       #{skip}, #{size}
   </select>
@@ -77,6 +150,11 @@
       p_id = #{pid}
   </select>
 
+  <select id="getMidByPid" resultType="long">
+    select m_id from tbl_payment
+    where p_id = #{pid}
+  </select>
+
 
     <!-- 본인 소속의 모든 직원들 영수증 내역 조회 쿼리문 -->
     <select id="getMidListByAuth" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
@@ -125,5 +203,19 @@
       #{skip}, #{size}
 
   </select>
+
+  <select id="getMnameByMid" resultType="String">
+    select
+      m_name
+    from
+      tbl_member
+    where
+      m_id = #{mid}
+  </select>
+
+  <insert id="registComment">
+    INSERT INTO tbl_comment (c_content, c_regdate, c_moddate, p_id, m_id, c_check)
+    VALUES (#{comment.ccontent}, #{comment.cregdate}, #{comment.cmoddate}, #{comment.pid}, #{comment.mid}, #{comment.ccheck})
+  </insert>
 
 </mapper>

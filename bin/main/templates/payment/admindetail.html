@@ -78,7 +78,7 @@
                 <td th:text="${payment.pfinstate}"></td>
                 <td th:text="${payment.ptypecode}"></td> -->
 
-                <form th:action="@{/payment/adminmanage}" method="post">
+                <form th:action="@{/payment/adminsuccess}" method="post">
                     <input type="submit" value="승인">
                     <input type="hidden" name="pid" th:value="${payment.pid}">
                 </form>
@@ -88,7 +88,7 @@
                     <input type="hidden" name="pid" th:value="${payment.pid}">
                 </form>
 
-                <form th:action="@{/payment/adminlist}" method="get">
+                <form th:action="@{/payment/adminmanage}" method="get">
                     <input type="submit" value="돌아가기">
                     <input type="hidden" name="mid" th:value="${payment.mid}">
                 </form>
@@ -100,8 +100,39 @@
                 </div>
             </div>
 
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
+                모달 생성
+            </button>
+            
+            <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel">반려 사유 작성</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form th:action="@{/payment/adminmanage}" method="post">
+                            <div class="modal-body">
+                                <input type="text" name="ccontent">
+                                <input type="hidden" name="pid" th:value="${payment.pid}">
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="등록">
+                                <input type="button" data-dismiss="modal" value="취소">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </th:block>
 </body>
 
 </html>
+
+<!-- Button trigger modal -->
+  
+  
