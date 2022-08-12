@@ -141,6 +141,42 @@
       p_id = #{pid}
   </select>
 
+
+    <!-- 본인 소속의 모든 직원들 영수증 내역 조회 쿼리문 -->
+    <select id="getMidListByAuth" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
+      SELECT   p_id as pid, p_cardtype as pcardtype, p_name as pname,
+      p_time as ptime, p_curstate as pcurstate FROM 
+    tbl_payment 
+    WHERE M_ID 
+    IN (
+    SELECT target2.M_ID m_id
+    FROM 
+      (
+      SELECT 
+        m1.m_id m_id, 
+        if(gubun='T', target.team_id = m1.team_id, false) tResult, 
+        if(gubun='D', target.dept_id = m1.dept_id, false) dResult,
+        if(gubun='H', target.hq_id = m1.hq_id, false) hResult
+      FROM tbl_member m1 
+      LEFT OUTER JOIN (SELECT m_id, auth_id, hq_id, dept_id, team_id,
+        (case 
+          when auth_id = 2 then team_id
+          when auth_id = 3 then dept_id
+          when auth_id = 4 then hq_id
+        END) num,
+        (case 
+          when auth_id = 2 then 'T'
+          when auth_id = 3 then 'D'
+          when auth_id = 4 then 'H'
+        END) 
+          gubun   
+        FROM tbl_member WHERE m_id = #{mid}) target ON m1.m_id = target.m_id OR m1.m_id != target.m_id
+        ) target2
+    WHERE tResult + dResult + hResult = 1
+    )   
+    ;
+   </select>
+
   <select id="getPageByPid" resultType="PaymentDTO">
     select
       p_id as pid, p_cardtype as pcardtype, p_name as pname,
@@ -151,6 +187,7 @@
       m_id = (select m_id from tbl_payment where p_id = #{pid})
     limit
       #{skip}, #{size}
+
   </select>
 
   <select id="getMnameByMid" resultType="String">

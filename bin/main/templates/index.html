@@ -98,68 +98,38 @@
                 </div>
 
             </div>
-        </div>
 
-        <div class="container-fluid">
-            <!-- 신청 게시판 -->
             <div class="card shadow" style="margin-bottom: 50px;">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">로그인</h6>
+                </div>
                 <!-- Card Body -->
 
-                <div class="card-body">
-                    <p style="font-size : 30px ; padding: 20px;">게시물 제목</p>
-                    <hr style="padding:3px">
-
-                    <div class="float-container">
-                        <div class="row double">
-                            <div class="column-2 left" style="width: 200px; height:200px; background-color: #00308f;">
-                                <label for="inputContent" class="col-sm-2 col-form-label"><strong>이미지 첨부</strong></label>
-                                <div class="col-sm-10">
-                                    <input type="file" name="ab_img" id='ab_img' accept="image/*" onchange="show_img(event);" multiple>
-                                    <div class="col" style='height:auto'>
-                                        <div id="img_zip" style="width:auto; height:auto; float:left; margin-top:20px">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="column-2 right" style="width: 200px; height:200px; background-color: #5c6679;">
-                                <label for="inputContent" class="col-sm-2 col-form-label"><strong>내용</strong></label>
-                                <div class="col-sm-10">
-                                    <textarea type="text" name="content" class="form-control" id="inputContent"  style='height:300px' required></textarea>
-                                </div>
-                            </div>
+                <div class="card-body" style="text-align: center;" >
+                    <div class="form-group row" style="width: 100%;">
+                        <label class="col-lg-5 col-form-label form-control-label">사번</label>
+                        <div class="col-lg-6">
+                            <input class="form-control" type="text" name="pid"/>
                         </div>
-                      </div>
-
-                    <form action="/post" method="post" enctype="multipart/form-data">
-                        <div class="form-group row">
-                            
-                            
-                        </div>
-                        <div class="form-group row">
-                            
-                            
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-auto mr-auto"></div>
-                            <div class="col-auto">
-                                <input class="btn btn-primary" type="submit" role="button" value="신청">
-                            </div>
-                        </div>
-                    </form>
-                    <div class="row" style='margin-top:10px'>
-                        <div class="col-auto mr-auto"></div>
-                        <div class="col-auto" >
-                            <button class="btn btn-danger" onclick="location.href='/authmanaged/'">취소</button>
+                    </div>
+                    <div class="form-group row" style="width: 100%;">
+                        <label class="col-lg-5 col-form-label form-control-label">비밀번호</label>
+                        <div class="col-lg-6">
+                            <input class="form-control" type="text" name="password"/>
                         </div>
                     </div>
 
+                    <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
+                        
+                        <input class="btn btn-primary" type="submit" role="button" value="로그인"
+                            style="width: 200px; margin:20px;">
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
+
     </th:block>
 
 

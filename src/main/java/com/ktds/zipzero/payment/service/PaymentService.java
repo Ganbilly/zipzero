@@ -30,4 +30,15 @@ public interface PaymentService {
     * 기능 : 페이먼트 등록
     */
     public void registPayment(PaymentDTO paymentDTO);
+
+      /*
+    * 만든 사람 : 김예림(2022-08-10)
+    * 최종 수정 : 김예림(2022-08-12)
+    * 기능 : 본인 소속의 모든 직원 영수증 내역 조회
+    */
+    public List<PaymentDTO> getAuthList(long mid);
+
+
+  
+
 }

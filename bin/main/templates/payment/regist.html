@@ -5,35 +5,91 @@
 
     <th:block layout:fragment="content">
         <!-- Begin Page Content -->
+
         <div class="container-fluid">
-            <!-- 신청관리 게시판 -->
-            <h1 class="h3 mb-2 text-gray-800">신청 페이지</h1>
-            <p class="mb-4">영수증 신청 관리</p>
+            <h1 class="h3 mb-2 text-gray-800">청구 신청</h1>
+            <p class="mb-4">영수증 청구를 신청하시오.</p>
 
-            <!-- 신청관리 게시판 -->
+            <!-- 신청 게시판 -->
             <div class="card shadow" style="margin-bottom: 50px;">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">신청 관리하기</h6>
-                </div>
                 <!-- Card Body -->
-                <form method="post" action="/payment/regist">
-                    <input type="text" name="pname">
-                    <input type="text" name="year">
-                    <input type="text" name="month">
-                    <input type="text" name="date">
-                    <input type="text" name="hour">
-                    <input type="text" name="min">
-                    <input type="text" name="sec">
-                    <input type="text" name="pstorename">
-                    <input type="text" name="ptotalprice">
-                    <input type="text" name="pcardtype">
-                    <input type="submit">
-                </form>
-                <div class="card-body">
-                    <p style="font-size : 13px ;">게시물을 확인하고 승인하세요</p>
-                    <hr style="padding:3px">
 
+                <div class="card-body">
+                    <div class="float-container">
+                        <form method="post" action="/payment/regist">
+                            <input class="form-control" type="hidden" name="mid" th:value="1"/>
+                            <input type="text" name="pname" class="form-control" id="pname" placeholder="제목"
+                                style="height:50px;">
+                            <hr style="padding:3px">
+                            <div class="row double" style="margin: auto;display: flex; justify-content: center; margin-bottom: 50px;">
+                                <div class="column-2 left"
+                                    style="width: 500px; height:600px; background-color: #00308f; margin-right: 50px;">
+                                    <div>
+                                        <img th:src="@{/bootstrap/img/logo.png}">
+                                    </div>
+
+                                    <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
+                                        <input type="file" name="ab_img" id='ab_img' accept="image/*" multiple>
+                                        <button id="btndel" class="btn btn-success" onclick="location.href='/authmanaged/'">인식</button>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="width: 600px; height:300px;">
+                                    <input class="form-control" type="hidden" name="mid" th:value="1"/>
+                                    <div class="form-group row" style="width: 600px;">
+                                        <label class="col-lg-3 col-form-label form-control-label">카드 유형</label>
+                                        <div class="col-lg-9">
+                                            <select class="form-control" name="ptypecode">
+                                                <option value="0" >법인</option>
+                                                <option value="1" >개인</option>
+                                            </select>
+                                        </div>
+                                    </div>
+    
+                                    <div class="form-group row" style="width: 600px;">
+                                        <label class="col-lg-3 col-form-label form-control-label">이용 날짜</label>
+                                        <div class="col-lg-9">
+                                            <input class="form-control" type="datetime-local" name="ptime"/>
+                                        </div>
+
+                                        <!-- <div class="col-lg-9">
+                                            <input class="form-control" type="text" name="ptime" />
+
+                                            <input type="text" name="year">
+                                            <input type="text" name="month">
+                                            <input type="text" name="date">
+                                            <input type="text" name="hour">
+                                            <input type="text" name="min">
+                                            <input type="text" name="sec">
+                                            <input type="text" name="pstorename">
+                                            <input type="text" name="ptotalprice">
+                                            <input type="text" name="pcardtype">
+                                        </div> -->
+                                    </div>
+    
+                                    <div class="form-group row" style="width: 600px;">
+                                        <label class="col-lg-3 col-form-label form-control-label">상호</label>
+                                        <div class="col-lg-9">
+                                            <input class="form-control" type="text" name="pstorename" />
+                                        </div>
+                                    </div>
+    
+                                    <div class="form-group row" style="width: 600px;">
+                                        <label class="col-lg-3 col-form-label form-control-label">사용 금액합계</label>
+                                        <div class="col-lg-9">
+                                            <input class="form-control" type="text" name="ptotalprice" />
+                                        </div>
+                                    </div>
+                                    <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
+                                        <input class="btn btn-primary" type="submit" role="button" value="신청"
+                                            style="width: 200px; margin:20px;">
+                                    </div>
+    
+                                </div>
+                            </div>
+                            
+                        </form>
+                    </div>
                 </div>
             </div>
 
