@@ -1,7 +1,8 @@
 package com.ktds.zipzero.payment.dto;
 
-import java.time.LocalDate;
+import java.util.Date;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,49 +18,17 @@ import lombok.ToString;
 @NoArgsConstructor
 public class FilterDTO {
     @Builder.Default
-    private LocalDate startTime = LocalDate.parse("1000-01-01");
+    private Date startTime = null;
+    @Builder.Default
+    private Date endTime = null;
 
-    private LocalDate endTime;
-    private LocalDate ptime;
+    private String hq;
+    private String dept;
+    private String team;
+    private String mid;
+    private String mname;
 
-    @Builder.Default
-    private String hq = "";
-    @Builder.Default
-    private String dept = "";
-    @Builder.Default
-    private String team = "";
-    @Builder.Default
-    private String mname = "";
-
-    @Builder.Default
-    private String mid = "";
-    @Builder.Default
-    private int pcardtype = 2;
-    @Builder.Default
-    private String pname = "";
-    @Builder.Default
-    private String sname = "";
-    @Builder.Default
-    private String minptotalprice = "0";
-    @Builder.Default
-    private String maxptotalprice = "9999999";
+    private int pcardtype;
+    private String pname;
     private String ptotalprice;
-
-    public LocalDate getEndTime() {
-        if (this.endTime == null) {
-            return LocalDate.ofYearDay(9999, 360);
-        }
-        return this.endTime;
-    }
-
-    public String getCardType() {
-        switch(pcardtype) {
-            case 0:
-                return "법인";
-            case 1:
-                return "개인";
-            default:
-                return "";
-        }
-    }
 }

@@ -74,23 +74,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:if="${not #lists.isEmpty(adminpaymentList)}" th:each="l,state:${adminpaymentList}">
+                                <tr th:if="${not #lists.isEmpty(paymentList)}" th:each="l,state:${paymentList}">
                                     <td th:text="${state.size-state.index}"></td>
                                     <!-- 0 법인 1개인 -->
                                     <td th:if="${l.pcardtype} == 0" th:text="법인"></td>
                                     <td th:if="${l.pcardtype} == 1" th:text="개인"></td>
 
                                     <td>
-                                        <a href="#" th:href="@{admindetail(pid=${l.pid})}" th:text="${l.pname}"></a>
+                                        <a href="#" th:href="@{userdetail(pid=${l.pid})}" th:text="${l.pname}"></a>
                                     </td>
                                     <td th:text="${l.ptime}"></td>
 
-                                    <!-- 3 대기 1 승인 2 반려 -->
-                                    <td th:if="${l.pcurstate} == 3" th:text="대기"></td>
+                                    <!-- 0 대기 1 승인 3 반려 -->
+                                    <td th:if="${l.pcurstate} == 0" th:text="대기"></td>
                                     <td th:if="${l.pcurstate} == 1" th:text="승인"></td>
-                                    <td th:if="${l.pcurstate} == 2" th:text="반려"></td>
+                                    <td th:if="${l.pcurstate} == 3" th:text="반려"></td>
                                 </tr>
-                                <tr th:unless="${not #lists.isEmpty(adminpaymentList)}">
+                                <tr th:unless="${not #lists.isEmpty(paymentList)}">
                                     <td colspan="7">등록된 회원의 글이 없습니다.</td>
                                 </tr>
                             </tbody>

@@ -28,20 +28,20 @@ class ZipzeroApplicationTests {
 
 	@Value("${com.ktds.api_key}")
 	private String key;
-
+	
 	@Test
 	void contextLoads() {
 	}
-
+	
 	@Test
-	public void apiTest() {
+	public void apiTest(){
 		String apiURL = "https://9bpsb8rl83.apigw.ntruss.com/custom/v1/17635/3f8a9f00642ae1ed5a37e05854e1ed8f7b295c6a7cf2b987b31dfa2a5740aec3/document/receipt";
 		String secretKey = key;
 		String imageFile = "C:\\zzz\\3.jpg";
 
 		try {
 			URL url = new URL(apiURL);
-			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			HttpURLConnection con = (HttpURLConnection)url.openConnection();
 			con.setUseCaches(false);
 			con.setDoInput(true);
 			con.setDoOutput(true);
@@ -115,8 +115,8 @@ class ZipzeroApplicationTests {
 		}
 	}
 
-	private static void writeMultiPart(OutputStream out, String jsonMessage, File file, String boundary)
-			throws IOException {
+	private static void writeMultiPart(OutputStream out, String jsonMessage, File file, String boundary) throws
+		IOException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("--").append(boundary).append("\r\n");
 		sb.append("Content-Disposition:form-data; name=\"message\"\r\n\r\n");
@@ -130,7 +130,7 @@ class ZipzeroApplicationTests {
 			out.write(("--" + boundary + "\r\n").getBytes("UTF-8"));
 			StringBuilder fileString = new StringBuilder();
 			fileString
-					.append("Content-Disposition:form-data; name=\"file\"; filename=");
+				.append("Content-Disposition:form-data; name=\"file\"; filename=");
 			fileString.append("\"" + file.getName() + "\"\r\n");
 			fileString.append("Content-Type: application/octet-stream\r\n\r\n");
 			out.write(fileString.toString().getBytes("UTF-8"));

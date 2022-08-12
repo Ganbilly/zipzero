@@ -5,6 +5,7 @@
 
 <mapper namespace="com.ktds.zipzero.member.mapper.MemberMapper">
 
+
     <select id="getMemberById" resultType="com.ktds.zipzero.member.dto.MemberDTO">
         select 
             m_id AS mid,

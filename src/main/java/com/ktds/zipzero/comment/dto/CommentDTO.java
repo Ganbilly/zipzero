@@ -11,7 +11,7 @@ public class CommentDTO {
     private String ccontent;
     private LocalDateTime cregdate;
     private LocalDateTime cmoddate;
-    private int ccheck;
+    private boolean ccheck;
 
     private Long mid;
     private Long pid;

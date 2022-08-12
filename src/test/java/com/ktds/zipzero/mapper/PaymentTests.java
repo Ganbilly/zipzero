@@ -1,6 +1,5 @@
 package com.ktds.zipzero.mapper;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -11,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.member.mapper.MemberMapper;
-import com.ktds.zipzero.payment.dto.FilterDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 import com.ktds.zipzero.payment.mapper.PaymentMapper;
 
@@ -26,6 +24,13 @@ public class PaymentTests {
     @Autowired(required = false)
     MemberMapper memberMapper;
 
+
+
+
+
+
+
+
     /*
      * 만든 사람 : 정문경
      * 최종 수정 : 정문경
@@ -34,19 +39,7 @@ public class PaymentTests {
     @Test
     public void testGetPage() {
         PageDTO pageDTO = PageDTO.builder().page(1).size(10).build();
-        paymentMapper.getUserPage(2L, pageDTO.getSkip(), pageDTO.getSize());
-    }
-
-    /*
-     * 만든 사람 : 정문경
-     * 최종 수정 : 정문경
-     * 기능 : 필터 조건에 해당하는 페이지 목록 춫력
-     */
-    @Test
-    public void testGetFilterPage() {
-        FilterDTO filterDTO = FilterDTO.builder().endTime(LocalDate.now()).mid("3").build();
-        List<FilterDTO> filterList = paymentMapper.getAdminPage(filterDTO, 0, 10);
-        filterList.forEach(f -> log.info(f));
+        paymentMapper.getPage(2L, pageDTO.getSkip(), pageDTO.getSize());
     }
 
     /*
@@ -55,6 +48,7 @@ public class PaymentTests {
      * 기능 : pid가 맞는 영수증 정보 가져옴
      */
 
+
     @Test
     public void testGetDetail() {
         PaymentDTO paymentDTO = new PaymentDTO();
@@ -62,13 +56,15 @@ public class PaymentTests {
         log.info(paymentMapper.getDetail(paymentDTO));
     }
 
+
+
     /*
      * 만든사람 : 이은성
      * 최종수정 : 이은성
      * 기능 : paymentRegist 테스트
-     */
+    */
     @Test
-    public void testRegistPayment() {
+    public void testRegistPayment(){
         PaymentDTO paymentDTO = new PaymentDTO();
 
         paymentDTO.setPname("test입니다");
@@ -85,10 +81,10 @@ public class PaymentTests {
         paymentDTO.setPcurstate(1L);
         paymentDTO.setPfinstate(1L);
 
+
         paymentMapper.registPayment(paymentDTO);
         log.info(paymentMapper.getDetail(paymentDTO));
     }
-
     /*
      * 만든 사람 : 정문경
      * 최종 수정 : 정문경
