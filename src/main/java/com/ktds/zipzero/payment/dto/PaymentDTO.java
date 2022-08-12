@@ -12,9 +12,11 @@ public class PaymentDTO {
 
 
     private String pname;
+
     private LocalDateTime ptime;
     private LocalDateTime pregdate;
     private LocalDateTime pmoddate;
+    
     private String pstorename;
     private Long ptotalprice;
     private Integer pcardtype;

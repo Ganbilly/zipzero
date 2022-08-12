@@ -1,6 +1,8 @@
 package com.ktds.zipzero.mapper;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,13 @@ public class PaymentTests {
     @Autowired(required = false)
     MemberMapper memberMapper;
 
+
+
+
+
+
+
+
     /*
      * 만든 사람 : 정문경
      * 최종 수정 : 정문경
@@ -38,12 +47,15 @@ public class PaymentTests {
      * 최종 수정 : 정문경
      * 기능 : pid가 맞는 영수증 정보 가져옴
      */
+
+
     @Test
     public void testGetDetail() {
         PaymentDTO paymentDTO = new PaymentDTO();
         paymentDTO.setPid(2L);
-        log.info(paymentMapper.getAdminDetail(paymentDTO));
+        log.info(paymentMapper.getDetail(paymentDTO));
     }
+
 
 
     /*
@@ -101,5 +113,17 @@ public class PaymentTests {
         paymentDTO.setPtypecode(2L); // 회원아이디
         paymentDTO.setPid(2L);
         paymentMapper.modifyPayment(paymentDTO);
+    }
+
+    @Test
+    public void testGetPageByPid() {
+        List<PaymentDTO> paymentList = paymentMapper.getPageByPid(2L, 1, 10);
+        paymentList.forEach(p -> log.info(p.getPname()));
+    }
+
+    @Test
+    public void testLocalDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        log.info(LocalDateTime.parse("2020-10-30T10:30:20".replace("T", " "), formatter));
     }
 }

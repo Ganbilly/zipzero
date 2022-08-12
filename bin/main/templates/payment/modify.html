@@ -1,12 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>modify</h1>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<body id="page-top">
+
+    <th:block layout:fragment="content">
+        <!-- Begin Page Content -->
+
+        <div class="container-fluid">
+            <h1 class="h3 mb-2 text-gray-800">청구 신청</h1>
+            <p class="mb-4">영수증 청구를 신청하시오.</p>
+
+            <!-- 신청 게시판 -->
+            <div class="card shadow" style="margin-bottom: 50px;">
+                <!-- Card Body -->
+
+                <div class="card-body">
+                    <div class="float-container">
+                        <div style="display: flex; justify-content: right; margin-bottom: 20px;">
+                            <form th:action="@{/payment/userdetail}" th:object="${paymentDTO}">
+                                <input type="hidden" name="pid" th:value="${payment.pid}" />
+                                <input type="submit" class="btn btn-danger" value="돌아가기" />
+                            </form>
+                        </div>
+
+                        <form th:action="@{/payment/modifyresult}" th:object="${paymentDTO}" method="post">
+                            <!-- url, 전달할 변수 -->
+                            <input type="text" name="pname" class="form-control" id="inputTitle" placeholder="제목"
+                                style="height:50px;" th:value="${payment.pname}">
+                            <hr style="padding:3px">
+                            <div class="row double" style="margin: auto;display: flex; justify-content: center; margin-bottom: 50px;">
+                                <div class="column-2 left"
+                                    style="width: 500px; height:600px; background-color: #00308f; margin-right: 50px;">
+                                    <div>
+                                        <img th:src="@{/bootstrap/img/logo.png}">
+                                    </div>
+
+                                    <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
+                                        <!-- <input type="file" name="ab_img" id='ab_img' accept="image/*" multiple> -->
+                                        <input class="form-control" type="text" name="preceipt" th:value="${payment.preceipt}"/>
+                                        <button id="btndel" class="btn btn-success" onclick="location.href='/authmanaged/'">인식</button>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="width: 600px; height:300px; margin-top: 50px;">
+                                    <!-- hidden start -->
+                                    <input type="hidden" name="mid" th:value="1"/>
+                                    <input type="hidden" name="pid" th:value="${payment.pid}" />
+                                    <input type="hidden" name="pregdate" th:value="${payment.pregdate}" />
+                                    <input type="hidden" name="pcurstate" th:value="${payment.pcurstate}" />
+                                    <input type="hidden" name="pfinstate" th:value="${payment.pfinstate}" />
+                                    <input type="hidden" name="ptypecode" th:value="${payment.ptypecode}" />
+                                    <!-- hidden end -->
+
+                                        <div class="form-group row" style="width: 600px;">
+                                            <label class="col-lg-3 col-form-label form-control-label">카드 유형</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control" name="pcardtype">
+                                                    <option value="0" th:selected="${payment.pcardtype}==0">법인</option>
+                                                    <option value="1" th:selected="${payment.pcardtype}==1">개인</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row" style="width: 600px;">
+                                            <label class="col-lg-3 col-form-label form-control-label">이용 날짜</label>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="datetime-local" name="ptime" th:value="${payment.ptime}"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row" style="width: 600px;">
+                                            <label class="col-lg-3 col-form-label form-control-label">상호</label>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" name="pstorename" th:value="${payment.pstorename}"/>
+                                            </div>
+                                        </div>
+        
+                                        <div class="form-group row" style="width: 600px;">
+                                            <label class="col-lg-3 col-form-label form-control-label">사용 금액합계</label>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" type="text" name="ptotalprice" th:value="${payment.ptotalprice}"/>
+                                            </div>
+                                        </div>
+
+                                        <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
+                                            <input class="btn btn-primary" type="submit" role="button" value="수정"
+                                                style="width: 200px; margin:20px;">
+                                        </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </th:block>
 </body>
+
 </html>

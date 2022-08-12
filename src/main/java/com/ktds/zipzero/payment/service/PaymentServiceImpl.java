@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 import com.ktds.zipzero.payment.mapper.PaymentMapper;
 
+
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
@@ -37,6 +38,7 @@ import lombok.extern.log4j.Log4j2;
 public class PaymentServiceImpl implements PaymentService {
     @Setter(onMethod_ = @Autowired)
     private PaymentMapper paymentMapper;
+
     
     @Override
     public List<PaymentDTO> getPaymentList(long mid, int skip, int size) {
@@ -46,8 +48,17 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentDTO getPaymentDetail(long pid) {
-        PaymentDTO ppayment = paymentMapper.getPaymentById(pid);
-        return ppayment;
+        return paymentMapper.getPaymentByPid(pid);
+    }
+
+    @Override
+    public List<PaymentDTO> getPaymentListByPid(long pid, int skip, int size) {
+        return paymentMapper.getPageByPid(pid, skip, size);
+    }
+
+    @Override
+    public void modifyPayment(PaymentDTO paymentDTO) {
+        paymentMapper.modifyPayment(paymentDTO);
     }
 
     /*
@@ -60,4 +71,15 @@ public class PaymentServiceImpl implements PaymentService {
         paymentMapper.registPayment(paymentDTO);
     }
 
+    /*
+    * 만든 사람 : 김예림(2022-08-10)
+    * 최종 수정 : 김예림(2022-08-12)
+    * 기능 : 본인 소속의 모든 직원 영수증 내역 조회
+    */
+    @Override
+    public List<PaymentDTO> getAuthList(long mid){
+        List<PaymentDTO> adminpaymentList = paymentMapper.getMidListByAuth(mid);
+        return adminpaymentList;
+
+    }
 }

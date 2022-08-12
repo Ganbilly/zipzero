@@ -19,4 +19,8 @@ public interface MemberMapper {
      * 기능 : ID로 MemberDTO 찾아서 반환
      */
     public MemberDTO getMemberById(Long mid);
+
+
+
+    
 }

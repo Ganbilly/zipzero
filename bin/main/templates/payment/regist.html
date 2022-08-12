@@ -1,37 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<body>
-    <!-- <form name="form" method="post" action="/payment/registrec" enctype="multipart/form-data">
-        <input type="file" name="receipt"/>
-        <input type="submit" id="submit" value="이미지인식"/>
-    </form> -->
-    <input type="file" />
-    <button class="uploadBtn" >이미지인식</button>
-    <input type="submit" value="JSON">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<body id="page-top">
+
+    <th:block layout:fragment="content">
+        <!-- Begin Page Content -->
+
+        <div class="container-fluid">
+            <h1 class="h3 mb-2 text-gray-800">청구 신청</h1>
+            <p class="mb-4">영수증 청구를 신청하시오.</p>
+
+            <!-- 신청 게시판 -->
+            <div class="card shadow" style="margin-bottom: 50px;">
+                <!-- Card Body -->
+
+                <div class="card-body">
+                    <div class="float-container">
+                        <form method="post" action="/payment/registadd" >
+                            <input class="form-control" type="hidden" name="mid" th:value="1"/>
+                            <input type="text" name="pname" class="form-control" id="pname" placeholder="제목"
+                                style="height:50px;">
+                            <hr style="padding:3px">
+                            <div class="row double" style="margin: auto;display: flex; justify-content: center; margin-bottom: 50px;">
+                                <div class="column-2 left"
+                                    style="width: 500px; height:600px; background-color: #00308f; margin-right: 50px;">
+                                    <div>
+                                        <img th:src="@{/bootstrap/img/logo.png}">
+                                    </div>
+
+                                    <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
+                                        <input type="file" name="ab_img" id='ab_img' accept="image/*">
+                                        <button id="btndel" class="btn btn-success uploadBtn">인식</button>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="width: 600px; height:300px;">
+                                    <input class="form-control" type="hidden" name="mid" th:value="1"/>
+                                    <div class="form-group row" style="width: 600px;">
+                                        <label class="col-lg-3 col-form-label form-control-label">카드 유형</label>
+                                        <div class="col-lg-9">
+                                            <select class="form-control" name="ptypecode">
+                                                <option value="0" >법인</option>
+                                                <option value="1" >개인</option>
+                                            </select>
+                                        </div>
+                                    </div>
     
-    <form action="/payment/registadd" method="post">
-        <input type="text" name="pname" placeholder="제목">
-        <input type="text" name="year" placeholder="년">
-        <input type="text" name="month" placeholder="월">
-        <input type="text" name="date" placeholder="일">
-        <input type="text" name="hour" placeholder="시간">
-        <input type="text" name="min" placeholder="분">
-        <input type="text" name="sec" placeholder="초">
-        <input type="text" name="pstorename" placeholder="상호">
-        <input type="text" name="ptotalprice" placeholder="합계">
-        <input type="text" name="pcardtype" placeholder="법인(1)/개인(0)">
-        <input type="text" name="ptypecode" placeholder="사용코드">
-        <input type="hidden" name="preceipt">
-        
-        <input type="submit">
-    </form>
+                                    <div class="form-group row" style="width: 600px;">
+                                        <label class="col-lg-3 col-form-label form-control-label">이용 날짜</label>
+                                        <div class="col-lg-9">
+                                            <input class="form-control" type="datetime-local" name="ptime"/>
+                                        </div>
+                                    </div>
+    
+                                    <div class="form-group row" style="width: 600px;">
+                                        <label class="col-lg-3 col-form-label form-control-label">상호</label>
+                                        <div class="col-lg-9">
+                                            <input class="form-control" type="text" name="pstorename" />
+                                        </div>
+                                    </div>
+    
+                                    <div class="form-group row" style="width: 600px;">
+                                        <label class="col-lg-3 col-form-label form-control-label">사용 금액합계</label>
+                                        <div class="col-lg-9">
+                                            <input class="form-control" type="text" name="ptotalprice" />
+                                        </div>
+                                    </div>
+                                    <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
+                                        <input class="btn btn-primary" type="submit" role="button" value="신청"
+                                            style="width: 200px; margin:20px;">
+                                    </div>
+    
+                                </div>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </th:block>
 
     <script>
         
@@ -91,6 +140,7 @@
             });
         });
     </script>
-
+    
 </body>
+
 </html>
