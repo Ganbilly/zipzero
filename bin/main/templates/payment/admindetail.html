@@ -83,10 +83,13 @@
                     <input type="hidden" name="pid" th:value="${payment.pid}">
                 </form>
 
-                <form th:action="@{/payment/admindetail}" method="get">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
+                    반려
+                </button>
+                <!-- <form th:action="@{/payment/admindetail}" method="get">
                     <input type="submit" value="반려">
                     <input type="hidden" name="pid" th:value="${payment.pid}">
-                </form>
+                </form> -->
 
                 <form th:action="@{/payment/adminmanage}" method="get">
                     <input type="submit" value="돌아가기">
@@ -99,10 +102,6 @@
 
                 </div>
             </div>
-
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
-                모달 생성
-            </button>
             
             <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
