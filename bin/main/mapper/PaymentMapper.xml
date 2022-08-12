@@ -81,6 +81,8 @@
           AND (p_time BETWEEN #{filter.startTime} AND #{filter.endTime})
         </otherwise>
       </choose>
+    order by
+      p_time desc
     limit
       #{skip}, #{size}
   </select>
@@ -141,6 +143,11 @@
       p_id = #{pid}
   </select>
 
+  <select id="getMidByPid" resultType="long">
+    select m_id from tbl_payment
+    where p_id = #{pid}
+  </select>
+
 
     <!-- 본인 소속의 모든 직원들 영수증 내역 조회 쿼리문 -->
     <select id="getMidListByAuth" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
@@ -198,5 +205,10 @@
     where
       m_id = #{mid}
   </select>
+
+  <insert id="registComment">
+    INSERT INTO tbl_comment (c_content, c_regdate, c_moddate, p_id, m_id, c_check)
+    VALUES (#{comment.ccontent}, #{comment.cregdate}, #{comment.cmoddate}, #{comment.pid}, #{comment.mid}, #{comment.ccheck})
+  </insert>
 
 </mapper>

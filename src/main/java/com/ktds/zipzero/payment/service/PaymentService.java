@@ -2,6 +2,7 @@ package com.ktds.zipzero.payment.service;
 
 import java.util.List;
 
+import com.ktds.zipzero.comment.dto.CommentDTO;
 import com.ktds.zipzero.payment.dto.FilterDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 
@@ -24,6 +25,8 @@ public interface PaymentService {
 
     public String getMnameByMid(long mid);
 
+    public long getMidByPid(long pid);
+
     /*
     * 만든 사람 : 이은성(2022-08-11)
     * 최종 수정 : 이은성(2022-08-11)
@@ -38,7 +41,11 @@ public interface PaymentService {
     */
     public List<PaymentDTO> getAuthList(long mid);
 
-
-  
+  /*
+   * 만든 사람 : 정문경 (2022-08-12)
+   * 최종 수정 : 정문경 (2022-08-12)
+   * 기능 : 댓글 등록
+   */
+  public void registComment(CommentDTO commentDTO);
 
 }

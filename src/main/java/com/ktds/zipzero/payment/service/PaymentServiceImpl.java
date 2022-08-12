@@ -1,17 +1,14 @@
 package com.ktds.zipzero.payment.service;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.datetime.joda.LocalDateParser;
 import org.springframework.stereotype.Service;
 
+import com.ktds.zipzero.comment.dto.CommentDTO;
 import com.ktds.zipzero.payment.dto.FilterDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 import com.ktds.zipzero.payment.mapper.PaymentMapper;
-
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -57,6 +54,11 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    public long getMidByPid(long pid) {
+        return paymentMapper.getMidByPid(pid);
+    }
+
+    @Override
     public void modifyPayment(PaymentDTO paymentDTO) {
         paymentMapper.modifyPayment(paymentDTO);
     }
@@ -81,6 +83,16 @@ public class PaymentServiceImpl implements PaymentService {
         List<PaymentDTO> adminpaymentList = paymentMapper.getMidListByAuth(mid);
         return adminpaymentList;
 
+    }
+
+    /*
+    * 만든 사람 : 정문경(2022-08-12)
+    * 최종 수정 : 정문경(2022-08-12)
+    * 기능 : 댓글 등록
+    */
+    @Override
+    public void registComment(CommentDTO commentDTO) {
+        paymentMapper.registComment(commentDTO);
     }
  
 }

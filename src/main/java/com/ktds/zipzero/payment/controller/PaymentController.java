@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.all.dto.TimeDTO;
+import com.ktds.zipzero.comment.dto.CommentDTO;
 import com.ktds.zipzero.payment.dto.FilterDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
-
-
 import com.ktds.zipzero.payment.service.PaymentService;
 
 import lombok.AllArgsConstructor;
@@ -159,6 +158,26 @@ public class PaymentController {
         log.info("adminManage");
         
         model.addAttribute("adminpaymentList", paymentService.getAuthList(mid));
+
+        return "payment/adminmanage";
+    }
+
+    /*
+     * 만든 사람 : 정문경 (2022-08-12)
+     * 최종 수정 : 정문경 (2022-08-12)
+     * 기능 : detail에서 작성한 모달의 결과를 저장하고 adminmanage 페이지 반환
+     */
+    @PostMapping("/adminmanage")
+    public String adminManageReject(Model model, @ModelAttribute("commentDTO") CommentDTO commentDTO){
+        log.info("adminManageReject");
+        commentDTO.setCregdate(LocalDateTime.now());
+        commentDTO.setCmoddate(LocalDateTime.now());
+        commentDTO.setCcheck(1);
+        commentDTO.setMid(paymentService.getMidByPid(commentDTO.getPid()));
+
+        paymentService.registComment(commentDTO);
+        
+        model.addAttribute("adminpaymentList", paymentService.getAuthList(commentDTO.getMid()));
 
         return "payment/adminmanage";
     }
