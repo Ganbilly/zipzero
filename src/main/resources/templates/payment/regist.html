@@ -16,15 +16,17 @@
 
                 <div class="card-body">
                     <div class="float-container">
-                        <div class="row double" style="margin: auto;display: flex; justify-content: center; margin-bottom: 50px;">
+                        <div class="row double"
+                            style="margin: auto;display: flex; justify-content: center; margin-bottom: 50px;">
                             <div class="column-2 left"
                                 style="width: 500px; height:600px; background-color: #00308f; margin-right: 50px;">
                                 <div>
-                                    <img th:src="@{/bootstrap/img/logo.png}" name="image">
+                                    <img th:src="@{/bootstrap/img/logo.png}" id="imgbox" name="image" style="width:500px; height: 600px; object-fit: contain;">
                                 </div>
 
-                                <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
-                                    <input type="file" name="ab_img" id='ab_img' accept="image/*">
+                                <div style="margin:  uto;display: flex; justify-content: center; margin-top: 20px;">
+                                    <input type="file" name="ab_img" id='ab_img' accept="image/*"
+                                        onchange="previewFile()">
                                     <button id="btnrec" class="btn btn-success uploadBtn">인식</button>
                                 </div>
                             </div>
@@ -160,6 +162,23 @@
                     }
                 });
             });
+
+            function previewFile() {
+                const reader = new FileReader();
+                const imgbox = document.getElementById('imgbox');
+                var file = document.querySelector('input[type=file]').files[0];
+
+                reader.addEventListener(
+                    'load',
+                    function () {
+                        imgbox.src = reader.result;
+                    },
+                    false
+                );
+
+                reader.readAsDataURL(file);
+
+            }
         </script>
     </th:block>
 
