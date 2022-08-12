@@ -31,7 +31,8 @@ public class FilterDTO {
     @Builder.Default
     private String mname = "";
 
-    private long mid;
+    @Builder.Default
+    private String mid = "";
     @Builder.Default
     private int pcardtype = 2;
     @Builder.Default
