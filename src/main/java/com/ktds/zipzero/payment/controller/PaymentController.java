@@ -75,26 +75,31 @@ public class PaymentController {
         return "redirect:userlist";
     }
 
-    // @GetMapping("/adminlist")
-    // public String adminPaymentList(Model model, @RequestParam(value = "mid") long mid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
-    //     log.info("PaymentList");
-    //     PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
-    //     List<PaymentDTO> paymentList = paymentService.getPaymentList(mid, pageDTO.getSkip(), size);
+    @GetMapping("/adminlist")
+    public String adminPaymentList(Model model, @RequestParam(value = "mid") long mid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
+        log.info("PaymentList");
+        PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
+        FilterDTO filterDTO = FilterDTO.builder().build();
+        List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), size);
 
-    //     model.addAttribute("paymentList", paymentList);
-        
-    //     return "payment/adminlist";
-    // }
+        model.addAttribute("filter", filterList);
+
+        return "payment/adminlist";
+    }
 
     @PostMapping("/adminlist")
-    public String adminPaymentListFilter(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO){
-        log.info("PaymentListFilter");
+    public String adminPaymentListFilter(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
+        log.info("PaymentListFilter : " + filterDTO);
+        PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
+        List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), size);
+
+        model.addAttribute("filter", filterList);
         
         return "payment/adminlist";
     }
 
-    @PostMapping("/adminmanage")
-    public String adminPaymentManage(Model model, long pid) {
+    @PostMapping("/adminsuccess")
+    public String adminPaymentsuccess(Model model, long pid) {
         log.info("AdminManage");
         log.info("============  pid : " + pid);
         PaymentDTO paymentDTO = paymentService.getPaymentDetail(pid);
@@ -149,19 +154,15 @@ public class PaymentController {
     * 최종 수정 : 김예림(2022-08-12)
     * 기능 : 본인 소속의 모든 직원 영수증 내역 조회
     */
-    @GetMapping("/adminlist")
+    @GetMapping("/adminmanage")
     public String adminlist(Model model, @RequestParam(value = "mid") long mid){
-        log.info("adminlist");
+        log.info("adminManage");
         
         model.addAttribute("adminpaymentList", paymentService.getAuthList(mid));
 
-        return "payment/adminlist";
+        return "payment/adminmanage";
     }
-    // @GetMapping("/adminmanage")
-    // public void paymentAdminManage(){
-    //     log.info("adminManage");
-    // }
-    // */
+    
     @GetMapping("/userdetail")
     public String userDetail(Model model, @RequestParam(value = "pid") long pid){
         log.info("UserDetail");

@@ -1,10 +1,14 @@
 package com.ktds.zipzero.payment.service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.datetime.joda.LocalDateParser;
 import org.springframework.stereotype.Service;
 
+import com.ktds.zipzero.payment.dto.FilterDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 import com.ktds.zipzero.payment.mapper.PaymentMapper;
 
@@ -27,8 +31,14 @@ public class PaymentServiceImpl implements PaymentService {
     
     @Override
     public List<PaymentDTO> getPaymentList(long mid, int skip, int size) {
-        List<PaymentDTO> paymentList = paymentMapper.getPage(mid, skip, size);
+        List<PaymentDTO> paymentList = paymentMapper.getUserPage(mid, skip, size);
         return paymentList;
+    }
+
+    @Override
+    public List<FilterDTO> getPaymentFilterList(FilterDTO filterDTO, int skip, int size) {
+        List<FilterDTO> filterList = paymentMapper.getAdminPage(filterDTO, skip, size);
+        return filterList;
     }
 
     @Override
@@ -39,6 +49,11 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public List<PaymentDTO> getPaymentListByPid(long pid, int skip, int size) {
         return paymentMapper.getPageByPid(pid, skip, size);
+    }
+
+    @Override
+    public String getMnameByMid(long mid) {
+        return paymentMapper.getMnameByMid(mid);
     }
 
     @Override

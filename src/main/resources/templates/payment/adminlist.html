@@ -21,6 +21,7 @@
                     <option value="0">법인</option>
                     <option value="1">개인</option>
                 </select> -->
+
                 <div class="card-body">
                     <form th:action="@{/payment/adminlist}" th:object="${filterDTO}" method="post" id="listForm">
                         <select name="pcardtype" form="listForm">
