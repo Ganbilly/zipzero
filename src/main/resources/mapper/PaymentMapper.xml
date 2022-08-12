@@ -21,7 +21,7 @@
 
   <select id="getAdminPage" resultType="FilterDTO">
     select
-      hq_id as hq, dept_id as dept, team_id as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice
+      tbl_payment.m_id as mid, hq_id as hq, dept_id as dept, team_id as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice
     from
       tbl_payment
     join
@@ -45,6 +45,9 @@
         AND (#{filter.pcardtype} = 2 OR p_cardtype = #{filter.pcardtype})
       <if test="filter.pname != ''">
         AND p_name LIKE concat('%', #{filter.pname}, '%')
+      </if>
+      <if test="filter.mid != ''">
+        AND tbl_payment.m_id = #{filter.mid}
       </if>
       <choose>
         <when test="filter.minptotalprice == '' and filter.maxptotalprice == ''">
@@ -77,10 +80,7 @@
         <otherwise>
           AND (p_time BETWEEN #{filter.startTime} AND #{filter.endTime})
         </otherwise>
-      </choose> 
-      <!--<if test="filter.startTime != null and filter.endTime != null">
-        AND (p_time BETWEEN #{filter.startTime} AND #{filter.endTime})
-      </if>-->
+      </choose>
     limit
       #{skip}, #{size}
   </select>
