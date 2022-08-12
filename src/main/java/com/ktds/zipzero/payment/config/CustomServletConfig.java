@@ -34,6 +34,10 @@ public class CustomServletConfig implements WebMvcConfigurer{
             .addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/**/*.js")
             .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/**/*.ttf")
+            .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/**/*.woff*")
+            .addResourceLocations("classpath:/static/");
 
 
     }
