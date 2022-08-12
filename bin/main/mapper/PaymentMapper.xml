@@ -157,11 +157,20 @@
 
 
     <!-- 본인 소속의 모든 직원들 영수증 내역 조회 쿼리문 -->
-    <select id="getMidListByAuth" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
-      SELECT   p_id as pid, p_cardtype as pcardtype, p_name as pname, s_id as sid,
-      p_time as ptime, p_curstate as pcurstate FROM 
-    tbl_payment 
-    WHERE M_ID 
+     <select id="getMidListByAuth" resultType="PaymentDTO">
+     SELECT p_id as pid, p_cardtype as pcardtype, p_name as pname,
+      p_time as ptime, s_id AS sid, team_name AS tname, hq_name AS hname, dept_name AS dname,
+      p1.m_id AS m_id, m1.m_name AS mname, p1.p_totalprice AS tprice
+      
+        FROM 
+       (
+    tbl_payment p1
+      JOIN tbl_member m1 ON m1.m_id =p1.m_id
+      JOIN tbl_team t1 ON t1.team_id= m1.m_id
+      JOIN tbl_headquarter h1 ON h1.hq_id = m1.hq_id
+      JOIN tbl_department d1 ON d1.dept_id=m1.dept_id
+   )
+    WHERE p1.M_ID 
     IN (
     SELECT target2.M_ID m_id
     FROM 
@@ -184,11 +193,14 @@
           when auth_id = 4 then 'H'
         END) 
           gubun   
-        FROM tbl_member WHERE m_id = #{mid}) target ON m1.m_id = target.m_id OR m1.m_id != target.m_id
+        FROM tbl_member WHERE m_id = 9) target ON m1.m_id = target.m_id OR m1.m_id != target.m_id
         ) target2
     WHERE tResult + dResult + hResult = 1
     )   
     ;
+
+
+
    </select>
 
   <select id="getPageByPid" resultType="PaymentDTO">

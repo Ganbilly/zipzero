@@ -22,6 +22,12 @@ public class PaymentDTO {
     private int pcheck;
     private Long pcurstate;
     private Long pfinstate;
+    private String hname;
+    private String dname;
+    private String tname;
+    private String m_id;
+    private String mname;
+    private Long tprice;
 
     private Long sid;
     private Long mid;
