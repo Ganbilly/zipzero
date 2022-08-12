@@ -12,7 +12,7 @@ import com.ktds.zipzero.payment.dto.PaymentDTO;
 public interface CommentMapper {
     
     
-    public boolean write(CommentDTO commentDTO);
+    public int write(CommentDTO commentDTO);
 
     @Select("")
     void delete(CommentDTO commentDTO);

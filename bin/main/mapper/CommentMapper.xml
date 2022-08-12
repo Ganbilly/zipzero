@@ -11,7 +11,7 @@
     from
       tbl_comment
     where
-      p_id = #{pid}
+      p_id = #{pid} and c_check = '1'
     order by
       c_regdate desc
     limit
@@ -22,14 +22,12 @@
     INSERT INTO tbl_comment (
       c_content as ccontent,
       c_moddate as cmoddate,
-      p_id as pid,
-      m_id as mid,
+      p_id as pid
 
     ) VALUES (
       #{c_content},
       NOW(),
-      #{p_id},
-      #{m_id}
+      #{p_id}
     )
   </insert>
 

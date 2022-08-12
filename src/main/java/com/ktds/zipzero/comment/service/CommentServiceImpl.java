@@ -10,11 +10,9 @@ import com.ktds.zipzero.comment.mapper.CommentMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j2;
 
 @Service
 @AllArgsConstructor
-@Log4j2
 public class CommentServiceImpl implements CommentService{
     @Setter(onMethod_ = @Autowired)
     private CommentMapper commentMapper;
@@ -30,8 +28,8 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public boolean write(CommentDTO commentDTO) {
-        
-        return commentMapper.write(commentDTO);
+
+        return false;
     }
     
 }

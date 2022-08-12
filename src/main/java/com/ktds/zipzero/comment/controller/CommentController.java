@@ -27,11 +27,7 @@ public class CommentController {
 
     private CommentService commentService;
 
-    /*
-    * 만든사람 : 박유진(2022-08-12)
-    * 최종수정 : 박유진(2022-08-12)
-    * 기능 : /comment/write 페이지에서 댓글 등록
-    */
+
     @PostMapping("/write")
     public ResponseEntity<String> write(@RequestBody CommentDTO commentDTO) {
         
@@ -45,17 +41,18 @@ public class CommentController {
     }
 
     @GetMapping("/list")
-    public String getCommentList(Model model, @RequestParam(value = "pid") long pid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "5") int size){
+    public String getCommentList(Model model, @RequestParam(value = "pid") long pid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
         
         
         log.info("commentList");
         PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
         List<CommentDTO> commentList = commentService.getCommentList(pid, pageDTO.getSkip(), size);
 
-        model.addAttribute("commentList", commentList);
+        model.addAttribute("commentList", commentService.getCommentList(pid, 1, 5));
         
         return "comment/list";
     }
+
 
     @GetMapping("/modify")
     public void commentModify() {
