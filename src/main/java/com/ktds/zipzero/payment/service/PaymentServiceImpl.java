@@ -1,23 +1,7 @@
 package com.ktds.zipzero.payment.service;
 
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
-import java.util.UUID;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ktds.zipzero.comment.dto.CommentDTO;
@@ -33,7 +17,6 @@ import lombok.extern.log4j.Log4j2;
  * 최종 수정 : 이은성(2022-08-11)
  * 기능 : 페이지 맵퍼
  */
-
 @Service
 @Log4j2
 public class PaymentServiceImpl implements PaymentService {
