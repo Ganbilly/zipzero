@@ -1,5 +1,6 @@
 package com.ktds.zipzero.mapper;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.member.mapper.MemberMapper;
+import com.ktds.zipzero.payment.dto.FilterDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 import com.ktds.zipzero.payment.mapper.PaymentMapper;
 
@@ -32,7 +34,19 @@ public class PaymentTests {
     @Test
     public void testGetPage() {
         PageDTO pageDTO = PageDTO.builder().page(1).size(10).build();
-        paymentMapper.getPage(2L, pageDTO.getSkip(), pageDTO.getSize());
+        paymentMapper.getUserPage(2L, pageDTO.getSkip(), pageDTO.getSize());
+    }
+
+    /*
+     * 만든 사람 : 정문경
+     * 최종 수정 : 정문경
+     * 기능 : 필터 조건에 해당하는 페이지 목록 춫력
+     */
+    @Test
+    public void testGetFilterPage() {
+        FilterDTO filterDTO = FilterDTO.builder().endTime(LocalDate.now()).build();
+        List<FilterDTO> filterList = paymentMapper.getAdminPage(filterDTO, 0, 10);
+        filterList.forEach(f -> log.info(f));
     }
 
     /*

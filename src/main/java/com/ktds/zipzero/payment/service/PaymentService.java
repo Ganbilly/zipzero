@@ -2,6 +2,7 @@ package com.ktds.zipzero.payment.service;
 
 import java.util.List;
 
+import com.ktds.zipzero.payment.dto.FilterDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 
 /*
@@ -13,11 +14,15 @@ public interface PaymentService {
 
     public List<PaymentDTO> getPaymentList(long mid, int skip, int size);
 
+    public List<FilterDTO> getPaymentFilterList(FilterDTO filterDTO, int skip, int size);
+
     public PaymentDTO getPaymentDetail(long pid);
 
     public List<PaymentDTO> getPaymentListByPid(long pid, int skip, int size);
 
     public void modifyPayment(PaymentDTO paymentDTO);
+
+    public String getMnameByMid(long mid);
 
     /*
     * 만든 사람 : 이은성(2022-08-11)

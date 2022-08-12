@@ -75,16 +75,21 @@ public class PaymentController {
     public String adminPaymentList(Model model, @RequestParam(value = "mid") long mid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
         log.info("PaymentList");
         PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
-        List<PaymentDTO> paymentList = paymentService.getPaymentList(mid, pageDTO.getSkip(), size);
+        FilterDTO filterDTO = FilterDTO.builder().build();
+        List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), size);
 
-        model.addAttribute("paymentList", paymentList);
+        model.addAttribute("filter", filterList);
         
         return "payment/adminlist";
     }
 
     @PostMapping("/adminlist")
-    public String adminPaymentListFilter(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO){
-        log.info("PaymentListFilter");
+    public String adminPaymentListFilter(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
+        log.info("PaymentListFilter : " + filterDTO);
+        PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
+        List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), size);
+
+        model.addAttribute("filter", filterList);
         
         return "payment/adminlist";
     }
