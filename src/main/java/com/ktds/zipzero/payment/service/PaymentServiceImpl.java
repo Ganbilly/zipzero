@@ -25,7 +25,6 @@ public class PaymentServiceImpl implements PaymentService {
     @Setter(onMethod_ = @Autowired)
     private PaymentMapper paymentMapper;
 
-    
     @Override
     public List<PaymentDTO> getPaymentList(long mid, int skip, int size) {
         List<PaymentDTO> paymentList = paymentMapper.getUserPage(mid, skip, size);
@@ -64,35 +63,35 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     /*
-    * 만든 사람 : 이은성(2022-08-11)
-    * 최종 수정 : 이은성(2022-08-11)
-    * 기능 : 페이먼트 등록
-    */
+     * 만든 사람 : 이은성(2022-08-11)
+     * 최종 수정 : 이은성(2022-08-11)
+     * 기능 : 페이먼트 등록
+     */
     @Override
     public void registPayment(PaymentDTO paymentDTO) {
         paymentMapper.registPayment(paymentDTO);
     }
 
-          /*
-    * 만든 사람 : 김예림(2022-08-10)
-    * 최종 수정 : 김예림(2022-08-12)
-    * 기능 : 본인 소속의 모든 직원 영수증 내역 조회
-    */
+    /*
+     * 만든 사람 : 김예림(2022-08-10)
+     * 최종 수정 : 김예림(2022-08-12)
+     * 기능 : 본인 소속의 모든 직원 영수증 내역 조회
+     */
     @Override
-    public List<PaymentDTO> getAuthList(long mid){
+    public List<PaymentDTO> getAuthList(long mid) {
         List<PaymentDTO> adminpaymentList = paymentMapper.getMidListByAuth(mid);
         return adminpaymentList;
 
     }
 
     /*
-    * 만든 사람 : 정문경(2022-08-12)
-    * 최종 수정 : 정문경(2022-08-12)
-    * 기능 : 댓글 등록
-    */
+     * 만든 사람 : 정문경(2022-08-12)
+     * 최종 수정 : 정문경(2022-08-12)
+     * 기능 : 댓글 등록
+     */
     @Override
     public void registComment(CommentDTO commentDTO) {
         paymentMapper.registComment(commentDTO);
     }
- 
+
 }

@@ -7,9 +7,7 @@ import lombok.Data;
 
 @Data
 public class PaymentDTO {
-    
     private Long pid;
-
 
     private String pname;
 
