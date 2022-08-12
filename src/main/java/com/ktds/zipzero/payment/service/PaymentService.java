@@ -54,6 +54,7 @@ public interface PaymentService {
    */
   public String getMnameByMid(long mid);
 
+
   /*
    * 만든 사람 : 정문경(2022-08-12)
    * 최종 수정 : 정문경(2022-08-12)
