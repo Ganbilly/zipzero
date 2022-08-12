@@ -35,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.all.dto.TimeDTO;
+import com.ktds.zipzero.comment.dto.CommentDTO;
 import com.ktds.zipzero.payment.dto.FilterDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 import com.ktds.zipzero.payment.service.PaymentService;
@@ -133,8 +134,10 @@ public class PaymentController {
         paymentService.modifyPayment(paymentDTO);
 
         model.addAttribute("mid", paymentDTO.getMid());
-        
-        return "redirect:adminlist";
+
+        model.addAttribute("pid", pid);
+
+        return "redirect:adminmanage";
     }
     
     /*
@@ -363,11 +366,37 @@ public class PaymentController {
 
         return "payment/adminlist";
     }
-    // @GetMapping("/adminmanage")
-    // public void paymentAdminManage(){
-    //     log.info("adminManage");
-    // }
-    // */
+
+    /*
+     * 만든 사람 : 정문경 (2022-08-12)
+     * 최종 수정 : 정문경 (2022-08-12)
+     * 기능 : detail에서 작성한 모달의 결과를 저장하고 adminmanage 페이지 반환
+     */
+    @PostMapping("/adminmanage")
+    public String adminManageComment(Model model, @ModelAttribute("commentDTO") CommentDTO commentDTO) {
+        log.info("adminManageComment");
+        commentDTO.setCregdate(LocalDateTime.now());
+        commentDTO.setCmoddate(LocalDateTime.now());
+        commentDTO.setCcheck(1);
+        commentDTO.setMid(paymentService.getMidByPid(commentDTO.getPid()));
+        paymentService.registComment(commentDTO);
+
+        PaymentDTO paymentDTO = paymentService.getPaymentDetail(commentDTO.getPid());
+        paymentDTO.setSid(2L);
+        paymentService.modifyPayment(paymentDTO);
+
+        model.addAttribute("adminpaymentList", paymentService.getAuthList(commentDTO.getMid()));
+        model.addAttribute("pid", commentDTO.getPid());
+
+        return "redirect:admindetail";
+    }
+
+    /*
+     * 만든 사람 : 정문경 (2022-08-12)
+     * 최종 수정 : 정문경 (2022-08-12)
+     * 기능 : pid로 유저의 영수증 상세 페이지 조회
+     */
+
     @GetMapping("/userdetail")
     public String userDetail(Model model, @RequestParam(value = "pid") long pid){
         log.info("UserDetail");
@@ -384,22 +413,5 @@ public class PaymentController {
 
         return "payment/admindetail";
     }
-
-    /*
-     * @PostMapping("/modify")
-     * public void paymentModify(){
-     * log.info("Modify");
-     * }
-     * 
-     * @PostMapping("/delete")
-     * public void paymentDelete(){
-     * log.info("Delete");
-     * }
-     * 
-     * @GetMapping("/chart")
-     * public void paymentChart(){
-     * log.info("chart");
-     * }
-     */
 
 }

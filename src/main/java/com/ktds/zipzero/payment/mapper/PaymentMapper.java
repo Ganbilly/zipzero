@@ -44,7 +44,7 @@ public interface PaymentMapper {
     * 최종 수정 : 김예림(2022-08-12)
     * 기능 : 본인 소속의 모든 영수증 내역 조회
     */
-    public List<PaymentDTO> getMidListByAuth(Long mid);
+    public List<PaymentDTO> getMidListByAuth(@Param("mid") Long mid);
    
 }
 
