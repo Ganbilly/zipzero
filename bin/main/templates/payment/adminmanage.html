@@ -86,9 +86,9 @@
                                     <td th:text="${l.ptime}"></td>
 
                                     <!-- 3 대기 1 승인 2 반려 -->
-                                    <td th:if="${l.pcurstate} == 3" th:text="대기"></td>
-                                    <td th:if="${l.pcurstate} == 1" th:text="승인"></td>
-                                    <td th:if="${l.pcurstate} == 2" th:text="반려"></td>
+                                    <td th:if="${l.sid} == 3" th:text="대기"></td>
+                                    <td th:if="${l.sid} == 1" th:text="승인"></td>
+                                    <td th:if="${l.sid} == 2" th:text="반려"></td>
                                 </tr>
                                 <tr th:unless="${not #lists.isEmpty(adminpaymentList)}">
                                     <td colspan="7">등록된 회원의 글이 없습니다.</td>

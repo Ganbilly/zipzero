@@ -38,6 +38,8 @@ public class FilterDTO {
     @Builder.Default
     private String pname = "";
     @Builder.Default
+    private String sname = "";
+    @Builder.Default
     private String minptotalprice = "0";
     @Builder.Default
     private String maxptotalprice = "9999999";
@@ -45,8 +47,19 @@ public class FilterDTO {
 
     public LocalDate getEndTime() {
         if (this.endTime == null) {
-            return LocalDate.ofYearDay(2025, 1);
+            return LocalDate.ofYearDay(9999, 360);
         }
         return this.endTime;
+    }
+
+    public String getCardType() {
+        switch(pcardtype) {
+            case 0:
+                return "법인";
+            case 1:
+                return "개인";
+            default:
+                return "";
+        }
     }
 }

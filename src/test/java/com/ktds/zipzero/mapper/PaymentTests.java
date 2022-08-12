@@ -26,13 +26,6 @@ public class PaymentTests {
     @Autowired(required = false)
     MemberMapper memberMapper;
 
-
-
-
-
-
-
-
     /*
      * 만든 사람 : 정문경
      * 최종 수정 : 정문경
@@ -62,7 +55,6 @@ public class PaymentTests {
      * 기능 : pid가 맞는 영수증 정보 가져옴
      */
 
-
     @Test
     public void testGetDetail() {
         PaymentDTO paymentDTO = new PaymentDTO();
@@ -70,15 +62,13 @@ public class PaymentTests {
         log.info(paymentMapper.getDetail(paymentDTO));
     }
 
-
-
     /*
      * 만든사람 : 이은성
      * 최종수정 : 이은성
      * 기능 : paymentRegist 테스트
-    */
+     */
     @Test
-    public void testRegistPayment(){
+    public void testRegistPayment() {
         PaymentDTO paymentDTO = new PaymentDTO();
 
         paymentDTO.setPname("test입니다");
@@ -95,10 +85,10 @@ public class PaymentTests {
         paymentDTO.setPcurstate(1L);
         paymentDTO.setPfinstate(1L);
 
-
         paymentMapper.registPayment(paymentDTO);
         log.info(paymentMapper.getDetail(paymentDTO));
     }
+
     /*
      * 만든 사람 : 정문경
      * 최종 수정 : 정문경
