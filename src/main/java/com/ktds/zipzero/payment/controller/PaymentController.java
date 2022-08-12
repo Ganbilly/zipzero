@@ -75,16 +75,16 @@ public class PaymentController {
         return "redirect:userlist";
     }
 
-    @GetMapping("/adminlist")
-    public String adminPaymentList(Model model, @RequestParam(value = "mid") long mid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
-        log.info("PaymentList");
-        PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
-        List<PaymentDTO> paymentList = paymentService.getPaymentList(mid, pageDTO.getSkip(), size);
+    // @GetMapping("/adminlist")
+    // public String adminPaymentList(Model model, @RequestParam(value = "mid") long mid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
+    //     log.info("PaymentList");
+    //     PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
+    //     List<PaymentDTO> paymentList = paymentService.getPaymentList(mid, pageDTO.getSkip(), size);
 
-        model.addAttribute("paymentList", paymentList);
+    //     model.addAttribute("paymentList", paymentList);
         
-        return "payment/adminlist";
-    }
+    //     return "payment/adminlist";
+    // }
 
     @PostMapping("/adminlist")
     public String adminPaymentListFilter(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO){
@@ -144,30 +144,18 @@ public class PaymentController {
         // paymentMapper.registPayment(paymentDTO);
     }
     
-
-
-    //예림test
-    // @GetMapping("/adminlist")
-    // public String paymentAdminList(Model model, @RequestParam(value = "mid") long mid, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size){
-    //     log.info("paymentList");
-    //     PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
-    //     List<PaymentDTO> paymentList = paymentService.getPaymentList(mid, pageDTO.getSkip(), size);
-
-    //     model.addAttribute("paymentList", paymentList);
-        
-    //     return "payment/adminlist";
-    // }
-    
-    //예림test
-    @GetMapping("/admintest")
+      /*
+    * 만든 사람 : 김예림(2022-08-10)
+    * 최종 수정 : 김예림(2022-08-12)
+    * 기능 : 본인 소속의 모든 직원 영수증 내역 조회
+    */
+    @GetMapping("/adminlist")
     public String adminlist(Model model, @RequestParam(value = "mid") long mid){
-        log.info("admintest");
+        log.info("adminlist");
         
         model.addAttribute("adminpaymentList", paymentService.getAuthList(mid));
-     
 
-
-        return "payment/admintest";
+        return "payment/adminlist";
     }
     // @GetMapping("/adminmanage")
     // public void paymentAdminManage(){

@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ktds.zipzero.payment.dto.PaymentDTO;
-import com.ktds.zipzero.member.dto.MemberDTO;
 import com.ktds.zipzero.payment.mapper.PaymentMapper;
-import com.ktds.zipzero.member.mapper.MemberMapper;
+
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -57,10 +56,11 @@ public class PaymentServiceImpl implements PaymentService {
         paymentMapper.registPayment(paymentDTO);
     }
 
-     
-
-
-
+          /*
+    * 만든 사람 : 김예림(2022-08-10)
+    * 최종 수정 : 김예림(2022-08-12)
+    * 기능 : 본인 소속의 모든 직원 영수증 내역 조회
+    */
     @Override
     public List<PaymentDTO> getAuthList(long mid){
         List<PaymentDTO> adminpaymentList = paymentMapper.getMidListByAuth(mid);

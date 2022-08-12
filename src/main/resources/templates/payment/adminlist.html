@@ -7,7 +7,7 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
             <!-- 신청관리 게시판 -->
-            <h1 class="h3 mb-2 text-gray-800">출력 페이지</h1>
+            <h1 class="h3 mb-2 text-gray-800">본인 소속 영수증 내역 출력 페이지</h1>
             <p class="mb-4">영수증 신청 관리</p>
 
             <!-- 신청관리 게시판 -->
@@ -46,14 +46,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:if="${not #lists.isEmpty(paymentList)}" th:each="l:${paymentList}">
+                        <tr th:if="${not #lists.isEmpty(adminpaymentList)}" th:each="l:${adminpaymentList}">
                             <td th:text="${l.pid}"></td>
                             <td th:text="${l.pcardtype}"></td>
                             <td th:text="${l.pname}"></td>
                             <td th:text="${l.ptime}"></td>
                             <td th:text="${l.pcurstate}"></td>
                         </tr>
-                        <tr th:unless="${not #lists.isEmpty(paymentList)}">
+                        <tr th:unless="${not #lists.isEmpty(adminpaymentList)}">
                             <td colspan="7">등록된 회원의 정보가 없습니다.</td>
                         </tr>
                     </tbody>

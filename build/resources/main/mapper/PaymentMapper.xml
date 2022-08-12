@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktds.zipzero.payment.mapper.PaymentMapper">
+
+
+  <select id="getPage" resultType="PaymentDTO">
+
+    select
+      p_id as pid, p_cardtype as pcardtype, p_name as pname,
+      p_time as ptime, p_curstate as pcurstate
+    from
+      tbl_payment
+    where
+      m_id = #{mid} and p_check = 1
+    order by
+      p_id desc
+    limit
+      #{skip}, #{size}
+  </select>
+
+  <insert id="registPayment">
+    INSERT INTO tbl_payment (p_name, p_time, p_regdate, p_moddate, p_storename, p_totalprice,  p_cardtype, p_receipt, m_id, s_id, p_check, ptype_code, p_curstate, p_finstate)  
+    VALUES (#{pname}, #{ptime}, #{pregdate}, #{pmoddate}, #{pstorename}, #{ptotalprice}, #{pcardtype}, #{preceipt},#{mid}, #{sid}, #{pcheck}, #{ptypecode}, #{pcurstate}, #{pfinstate})
+  </insert>
+
+  <select id="getDetail" resultType="PaymentDTO">
+    select
+      p_id as pid, p_name as pname, p_time as ptime,
+      p_regdate as pregdate, p_moddate as pmoddate,
+      p_storename as pstorename, p_totalprice as ptotalprice,
+      p_cardtype as pcardtype, p_receipt as preceipt,
+      p_curstate as pcurstate, p_finstate as pfinstate
+    from
+      tbl_payment
+    where
+      p_id = #{pid}
+  </select>
+
+  <update id="deletePayment">
+    update tbl_payment set p_check = 0 where p_id = #{pid}
+  </update>
+
+  <update id="modifyPayment">
+    update
+      tbl_payment
+    set
+      p_name = #{pname}, <!-- 결제내역 -->
+      p_time = #{ptime}, <!-- 결제시각 -->
+      p_moddate = #{pmoddate}, <!-- 결제건수정시간 -->
+      p_storename = #{pstorename}, <!-- 결제상호명 -->
+      p_totalprice = #{ptotalprice}, <!-- 결제총액 -->
+      p_cardtype = #{pcardtype}, <!-- 결제카드유형 -->
+      p_receipt = #{preceipt}, <!-- 영수증 -->
+      p_curstate = 2, <!-- 결제 상태 -->
+      p_finstate = #{pfinstate}, <!-- 최종 결제 상태 -->
+      p_check = #{pcheck}, <!-- 삭제 여부 -->
+      s_id = #{sid}, <!-- 상태아이디 -->
+      ptype_code = #{ptypecode} <!-- 결제 종류 -->
+    where
+      p_id = #{pid}
+  </update>
+
+  <select id="getPaymentByPid" resultType="PaymentDTO">
+    select
+      p_id as pid, p_name as pname, p_time as ptime,
+      p_regdate as pregdate, p_moddate as pmoddate,
+      p_storename as pstorename, p_totalprice as ptotalprice,
+      p_cardtype as pcardtype, p_receipt as preceipt,
+      p_curstate as pcurstate, p_finstate as pfinstate,
+      s_id as sid, m_id as mid, ptype_code as ptypecode
+    from
+      tbl_payment
+    where
+      p_id = #{pid}
+  </select>
+
+
+    <!-- 예림 test -->
+    <select id="getMidListByAuth" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
+      SELECT   p_id as pid, p_name as pname FROM 
+    tbl_payment 
+    WHERE M_ID 
+    IN (
+    SELECT target2.M_ID m_id
+    FROM 
+      (
+      SELECT 
+        m1.m_id m_id, 
+        if(gubun='T', target.team_id = m1.team_id, false) tResult, 
+        if(gubun='D', target.dept_id = m1.dept_id, false) dResult,
+        if(gubun='H', target.hq_id = m1.hq_id, false) hResult
+      FROM tbl_member m1 
+      LEFT OUTER JOIN (SELECT m_id, auth_id, hq_id, dept_id, team_id,
+        (case 
+          when auth_id = 2 then team_id
+          when auth_id = 3 then dept_id
+          when auth_id = 4 then hq_id
+        END) num,
+        (case 
+          when auth_id = 2 then 'T'
+          when auth_id = 3 then 'D'
+          when auth_id = 4 then 'H'
+        END) 
+          gubun   
+        FROM tbl_member WHERE m_id = #{mid}) target ON m1.m_id = target.m_id OR m1.m_id != target.m_id
+        ) target2
+    WHERE tResult + dResult + hResult = 1
+    )   
+    ;
+   </select>
+
+  <select id="getPageByPid" resultType="PaymentDTO">
+    select
+      p_id as pid, p_cardtype as pcardtype, p_name as pname,
+      p_time as ptime, p_curstate as pcurstate
+    from
+      tbl_payment
+    where
+      m_id = (select m_id from tbl_payment where p_id = #{pid})
+    limit
+      #{skip}, #{size}
+
+  </select>
+
+</mapper>

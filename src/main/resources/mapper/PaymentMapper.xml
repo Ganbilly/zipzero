@@ -78,9 +78,10 @@
   </select>
 
 
-    <!-- 예림 test -->
+    <!-- 본인 소속의 모든 직원들 영수증 내역 조회 쿼리문 -->
     <select id="getMidListByAuth" resultType="com.ktds.zipzero.payment.dto.PaymentDTO">
-      SELECT   p_id as pid, p_name as pname FROM 
+      SELECT   p_id as pid, p_cardtype as pcardtype, p_name as pname,
+      p_time as ptime, p_curstate as pcurstate FROM 
     tbl_payment 
     WHERE M_ID 
     IN (
@@ -110,6 +111,7 @@
     WHERE tResult + dResult + hResult = 1
     )   
     ;
+   </select>
 
   <select id="getPageByPid" resultType="PaymentDTO">
     select
