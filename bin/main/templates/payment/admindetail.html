@@ -78,7 +78,7 @@
                 <td th:text="${payment.pfinstate}"></td>
                 <td th:text="${payment.ptypecode}"></td> -->
 
-                <form th:action="@{/payment/adminmanage}" method="post">
+                <form th:action="@{/payment/adminsuccess}" method="post">
                     <input type="submit" value="승인">
                     <input type="hidden" name="pid" th:value="${payment.pid}">
                 </form>
@@ -88,7 +88,7 @@
                     <input type="hidden" name="pid" th:value="${payment.pid}">
                 </form>
 
-                <form th:action="@{/payment/adminlist}" method="get">
+                <form th:action="@{/payment/adminmanage}" method="get">
                     <input type="submit" value="돌아가기">
                     <input type="hidden" name="mid" th:value="${payment.mid}">
                 </form>
