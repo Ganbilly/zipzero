@@ -5,49 +5,92 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-    <form name="form" method="post" action="/payment/registrec" enctype="multipart/form-data">
+    <!-- <form name="form" method="post" action="/payment/registrec" enctype="multipart/form-data">
         <input type="file" name="receipt"/>
         <input type="submit" id="submit" value="이미지인식"/>
-      </form>
+    </form> -->
+    <input type="file" />
+    <button class="uploadBtn" >이미지인식</button>
     <input type="submit" value="JSON">
-
+    
     <form action="/payment/registadd" method="post">
-        <div th:if="${paymentDTO == null}">
-            <input type="text" name="pname" placeholder="이름">
-            <input type="text" name="year" placeholder="년">
-            <input type="text" name="month" placeholder="월">
-            <input type="text" name="date" placeholder="일">
-            <input type="text" name="hour" placeholder="시간">
-            <input type="text" name="min" placeholder="분">
-            <input type="text" name="sec" placeholder="초">
-            <input type="text" name="pstorename" placeholder="상호">
-            <input type="text" name="ptotalprice" placeholder="합계">
-            <input type="text" name="pcardtype" placeholder="법인(1)/개인(0)">
-            <input type="text" name="ptypecode" placeholder="사용코드">
-            
-            <input type="submit">
-        </div> 
-        <div th:unless="${paymentDTO == null}">
-            
-            <input type="text" name="apname" placeholder="이름" th:value="${paymentDTO.pname}">
-            <input type="text" name="year" placeholder="년" th:value="${timeDTO.year}">
-            <input type="text" name="month" placeholder="월" th:value="${timeDTO.month}">
-            <input type="text" name="date" placeholder="일" th:value="${timeDTO.date}">
-            <input type="text" name="hour" placeholder="시간" th:value="${timeDTO.hour}">
-            <input type="text" name="min" placeholder="분" th:value="${timeDTO.min}">
-            <input type="text" name="sec" placeholder="초" th:value="${timeDTO.sec}">
-            <input type="text" name="pstorename" placeholder="상호" th:value="${paymentDTO.pstorename}">
-            <input type="text" name="ptotalprice" placeholder="합계" th:value="${paymentDTO.ptotalprice}">
-            <input type="text" name="pcardtype" placeholder="법인(1)/개인(0)" th:value="${paymentDTO.pcardtype}">
-            <input type="text" name="ptypecode" placeholder="사용코드" th:value="${paymentDTO.ptypecode}">
-            
-            <input type="submit">
-        </div> 
+        <input type="text" name="pname" placeholder="제목">
+        <input type="text" name="year" placeholder="년">
+        <input type="text" name="month" placeholder="월">
+        <input type="text" name="date" placeholder="일">
+        <input type="text" name="hour" placeholder="시간">
+        <input type="text" name="min" placeholder="분">
+        <input type="text" name="sec" placeholder="초">
+        <input type="text" name="pstorename" placeholder="상호">
+        <input type="text" name="ptotalprice" placeholder="합계">
+        <input type="text" name="pcardtype" placeholder="법인(1)/개인(0)">
+        <input type="text" name="ptypecode" placeholder="사용코드">
+        <input type="hidden" name="preceipt">
+        
+        <input type="submit">
     </form>
+
+    <script>
+        
+        var a;
+        const ptime = document.getElementsByName("ptime");
+        const pstorename = document.getElementsByName("pstorename");
+        const ptotalprice = document.getElementsByName("ptotalprice");
+        const ptypecode = document.getElementsByName("ptypecode");
+        $('.uploadBtn').click(function() {
+            var formData = new FormData();
+            var inputFile = $("input[type='file']");
+            var imageFile = inputFile[0].files[0];
+
+            formData.append('receipt', imageFile);
+            console.log(imageFile);
+            //upload ajax
+            $.ajax({
+                url:'/payment/registrec',
+                processData:false,
+                contentType:false,
+                data:formData,
+                type:'POST',
+                dataType:'json',
+                success:function(result){
+                    console.log(result);
+                    // 성공시 이후 수정
+                    a = result;
+                    var name;
+                    var subName;
+                    try{
+                        name = result['images'][0]["receipt"]["result"]["storeInfo"]["name"]['text'];
+                    } catch(e){
+                        name = "";
+                    }   
+                    try{
+                        subName = result['images'][0]["receipt"]["result"]["storeInfo"]["subName"]['text'];
+                    } catch(e){
+                        subName = "";
+                    }   
+                    $('input[name="pstorename"]').val(name.concat(' ', subName)); 
+                    var year = result['images'][0]["receipt"]["result"]["paymentInfo"]["date"]["formatted"]["year"];
+                    if(year == ''){
+                        year = "20" + result['images'][0]["receipt"]["result"]["paymentInfo"]["date"]["text"].split('-')[0];
+                    }
+                    $('input[name="year"]').val(year);
+                    $('input[name="month"]').val(result['images'][0]["receipt"]["result"]["paymentInfo"]["date"]["formatted"]["month"]);
+                    $('input[name="date"]').val(result['images'][0]["receipt"]["result"]["paymentInfo"]["date"]["formatted"]["day"]);
+                    $('input[name="hour"]').val(result['images'][0]["receipt"]["result"]["paymentInfo"]["time"]["formatted"]["hour"]);
+                    $('input[name="min"]').val(result['images'][0]["receipt"]["result"]["paymentInfo"]["time"]["formatted"]["minute"]);
+                    $('input[name="sec"]').val(result['images'][0]["receipt"]["result"]["paymentInfo"]["time"]["formatted"]["second"]);
+                    $('input[name="ptotalprice"]').val(result['images'][0]["receipt"]["result"]["totalPrice"]["price"]["formatted"]["value"]);
+                    $('input[name="preceipt"]').val(result['images'][0]['name']);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

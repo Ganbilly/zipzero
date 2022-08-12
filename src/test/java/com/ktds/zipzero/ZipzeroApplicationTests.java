@@ -26,7 +26,7 @@ import org.json.JSONObject;
 @Log4j2
 class ZipzeroApplicationTests {
 
-	@Value("${api_key}")
+	@Value("${com.ktds.api_key}")
 	private String key;
 	
 	@Test
@@ -148,5 +148,14 @@ class ZipzeroApplicationTests {
 			out.write(("--" + boundary + "--\r\n").getBytes("UTF-8"));
 		}
 		out.flush();
+	}
+
+	@Test
+	public void testest(){
+		String a = "123456";
+
+		a = a.replaceFirst("1", "{\"image_url\":abc.jpg, ");
+		log.info(a);
+		
 	}
 }

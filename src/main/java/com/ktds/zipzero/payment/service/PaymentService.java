@@ -22,6 +22,4 @@ public interface PaymentService {
     */
     public void registPayment(PaymentDTO paymentDTO);
 
-    public PaymentDTO recImage(String imageFile);
-
 }
