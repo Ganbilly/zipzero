@@ -11,14 +11,14 @@ import com.ktds.zipzero.payment.dto.PaymentDTO;
 
 public interface CommentMapper {
     
-    @Select("")
-    void insert(CommentDTO commentDTO);
+    
+    public boolean write(CommentDTO commentDTO);
 
     @Select("")
     void delete(CommentDTO commentDTO);
 
     
-    public List<CommentDTO> getPage(@Param("pid") long pid, @Param("skip") int skip, @Param("size") int size);
+    public List<CommentDTO> getCommentList(@Param("pid") long pid, @Param("skip") int skip, @Param("size") int size);
 
     @Select("")
     void modify(CommentDTO commentDTO);

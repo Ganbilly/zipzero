@@ -5,9 +5,9 @@
 
 <mapper namespace="com.ktds.zipzero.comment.mapper.CommentMapper">
 
-  <select id="getPage" resultType="com.ktds.zipzero.comment.dto.CommentDTO">
+  <select id="getCommentList" resultType="com.ktds.zipzero.comment.dto.CommentDTO">
     select
-      c_content as ccontent, c_moddate as cmoddate
+      c_content as ccontent, c_moddate as cmoddate, p_id as pid, m_id as mid
     from
       tbl_comment
     where
@@ -17,4 +17,21 @@
     limit
       #{skip}, #{size}
   </select>
+
+  <insert id="write">
+    INSERT INTO tbl_comment (
+      c_content as ccontent,
+      c_moddate as cmoddate,
+      p_id as pid,
+      m_id as mid,
+
+    ) VALUES (
+      #{c_content},
+      NOW(),
+      #{p_id},
+      #{m_id}
+    )
+  </insert>
+
+
 </mapper>
