@@ -173,8 +173,9 @@ public class PaymentController {
         paymentService.modifyPayment(paymentDTO);
 
         model.addAttribute("mid", paymentDTO.getMid());
+        model.addAttribute("pid", pid);
 
-        return "redirect:adminlist";
+        return "redirect:adminmanage";
     }
 
     /*
@@ -415,18 +416,22 @@ public class PaymentController {
      * 기능 : detail에서 작성한 모달의 결과를 저장하고 adminmanage 페이지 반환
      */
     @PostMapping("/adminmanage")
-    public String adminManageReject(Model model, @ModelAttribute("commentDTO") CommentDTO commentDTO) {
-        log.info("adminManageReject");
+    public String adminManageComment(Model model, @ModelAttribute("commentDTO") CommentDTO commentDTO) {
+        log.info("adminManageComment");
         commentDTO.setCregdate(LocalDateTime.now());
         commentDTO.setCmoddate(LocalDateTime.now());
         commentDTO.setCcheck(1);
         commentDTO.setMid(paymentService.getMidByPid(commentDTO.getPid()));
-
         paymentService.registComment(commentDTO);
 
-        model.addAttribute("adminpaymentList", paymentService.getAuthList(commentDTO.getMid()));
+        PaymentDTO paymentDTO = paymentService.getPaymentDetail(commentDTO.getPid());
+        paymentDTO.setSid(2L);
+        paymentService.modifyPayment(paymentDTO);
 
-        return "payment/adminmanage";
+        model.addAttribute("adminpaymentList", paymentService.getAuthList(commentDTO.getMid()));
+        model.addAttribute("pid", commentDTO.getPid());
+
+        return "redirect:admindetail";
     }
 
     /*
