@@ -21,33 +21,40 @@
 
   <select id="getAdminPage" resultType="FilterDTO">
     select
-      tbl_payment.m_id as mid, hq_id as hq, dept_id as dept, team_id as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice
+      tbl_payment.m_id as mid, hq_name as hq, dept_name as dept, team_name as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice, s_name as sname
     from
       tbl_payment
     join
       tbl_member
     on
       tbl_payment.m_id = tbl_member.m_id
+    join tbl_headquarter on tbl_headquarter.hq_id = tbl_member.hq_id
+    join tbl_department on tbl_department.dept_id = tbl_member.dept_id
+    join tbl_team on tbl_team.team_id = tbl_member.team_id
+    join tbl_state on tbl_state.s_id = tbl_payment.s_id
     WHERE
       1=1
       <if test="filter.hq != ''">
-        AND hq_id = (SELECT hq_id FROM tbl_headquarter WHERE hq_name LIKE concat('%', #{filter.hq}, '%'))
+        AND hq_name LIKE concat('%', #{filter.hq}, '%')
       </if>
       <if test="filter.dept != ''">
-        AND dept_id = (SELECT dept_id FROM tbl_department WHERE dept_name LIKE concat('%', #{filter.dept}, '%'))
+        AND dept_name LIKE concat('%', #{filter.dept}, '%')
       </if>
       <if test="filter.team != ''">
-        AND team_id = (SELECT team_id FROM tbl_team WHERE team_name LIKE concat('%', #{filter.team}, '%'))
+        AND team_name LIKE concat('%', #{filter.team}, '%')
       </if>
       <if test="filter.mname != ''">
         AND m_name LIKE concat('%', #{filter.mname}, '%')
       </if>
-        AND (#{filter.pcardtype} = 2 OR p_cardtype = #{filter.pcardtype})
+      AND (#{filter.pcardtype} = 2 OR p_cardtype = #{filter.pcardtype})
       <if test="filter.pname != ''">
         AND p_name LIKE concat('%', #{filter.pname}, '%')
       </if>
       <if test="filter.mid != ''">
         AND tbl_payment.m_id = #{filter.mid}
+      </if>
+      <if test="filter.sname != ''">
+        AND s_name like #{filter.sname}
       </if>
       <choose>
         <when test="filter.minptotalprice == '' and filter.maxptotalprice == ''">
