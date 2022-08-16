@@ -14,4 +14,5 @@ public class MemberDTO {
     private Long hqid;
     private Long deptid;
     private Long teamid;
+
 }

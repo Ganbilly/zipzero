@@ -7,14 +7,14 @@ import lombok.Data;
 
 @Data
 public class PaymentDTO {
-    
     private Long pid;
 
-
     private String pname;
+
     private LocalDateTime ptime;
     private LocalDateTime pregdate;
     private LocalDateTime pmoddate;
+    
     private String pstorename;
     private Long ptotalprice;
     private Integer pcardtype;
@@ -22,6 +22,12 @@ public class PaymentDTO {
     private int pcheck;
     private Long pcurstate;
     private Long pfinstate;
+    private String hname;
+    private String dname;
+    private String tname;
+    private String m_id;
+    private String mname;
+    private Long tprice;
 
     private Long sid;
     private Long mid;

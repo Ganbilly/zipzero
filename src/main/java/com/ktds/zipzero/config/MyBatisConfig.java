@@ -6,7 +6,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @MapperScan(basePackages = {"com.ktds.zipzero.**.mapper"})
 public class MyBatisConfig {
-    
 
-    
 }
