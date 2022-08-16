@@ -60,18 +60,18 @@
                         </div>
 
                         <div class="form-group row" style="width: 100%; text-align: center;">
-                            <label class="col-lg-1 col-form-label form-control-label">담당</label>
-                            <div class="col-lg-3">
-                                <input type="text" name="dept" placeholder="담당" class="form-control"
-                                    style="width: 100%;" />
-                            </div>
-
                             <label class="col-lg-1 col-form-label form-control-label">본부</label>
                             <div class="col-lg-3">
                                 <input type="text" name="hq" placeholder="본부" class="form-control"
                                     style="width: 100%;" />
                             </div>
 
+                            <label class="col-lg-1 col-form-label form-control-label">담당</label>
+                            <div class="col-lg-3">
+                                <input type="text" name="dept" placeholder="담당" class="form-control"
+                                    style="width: 100%;" />
+                            </div>
+                            
                             <label class="col-lg-1 col-form-label form-control-label">팀</label>
                             <div class="col-lg-3">
                                 <input type="text" name="team" placeholder="팀" class="form-control"
@@ -113,7 +113,7 @@
 
                     </form>
 
-                    <table border="1" style="width: 100%;">x
+                    <table border="1" style="width: 100%;text-align: center;">
                         <thead>
                             <tr>
                                 <th>본부</th>
@@ -125,38 +125,43 @@
                                 <th>결제시각</th>
                                 <th>결제총액</th>
                                 <th>승인상태</th>
-                                <th>상태</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:if="${not #lists.isEmpty(filter)}" th:each="l:${filter}">
 
                                 <!--1 고객서비스 2 플랫폼 서비스-->
-                                <td th:text="${l.hq}"></td>
+                                <td th:text="${l.hq}" style="width: 100px;"></td>
 
                                 <!-- 1 CRM 2 빌링 3 플랫폼 서비스 4 DIGICO 서비스 -->
-                                <td th:text="${l.dept}"></td>
-                                <td th:text="${l.team}"></td>
-                                <td th:text="${l.mid}"></td>
-                                <td th:text="${l.mname}"></td>
-                                <td th:text="${l.pcardtype}" style="width: 150px;"></td>
+                                <td th:text="${l.dept}" style="width: 100px;"></td>
+                                <td th:text="${l.team}" style="width: 100px;"></td>
+                                <td th:text="${l.mname}" style="width: 80px;"></td>
+
+                                <!--0 법인 1 개인-->
+                                <td th:if="${l.pcardtype}==0" th:text="법인" style="width: 80px;"></td>
+                                <td th:if="${l.pcardtype}==1" th:text="개인" style="width: 80px;"></td>
+                                
                                 <td th:text="${l.pname}"
-                                    style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+                                    style="width: 100px; max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
                                 </td>
                                 <td th:text="${l.ptime}"
-                                    style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+                                    style="width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
                                 </td>
                                 <td th:text="${l.ptotalprice}"
-                                    style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+                                    style="width: 150px; max-width: 200px;">
                                 </td>
-
                                 
-                                <td th:text="${l.ptime}"
-                                    style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
-                                </td>
+                                <!-- 결제 상태 -->
+                                <!-- 1 승인 2 반려 3 대기 4 취소  -->
+                                <td th:if="${l.sid}== 1" th:text="승인" style="width: 50px;"></td>
+                                <td th:if="${l.sid}== 2" th:text="반려" style="width: 50px;"></td>
+                                <td th:if="${l.sid}== 3" th:text="대기" style="width: 50px;"></td>
+                                <td th:if="${l.sid}== 4" th:text="취소" style="width: 50px;"></td>
+
                             </tr>
                             <tr th:unless="${not #lists.isEmpty(filter)}">
-                                <td colspan="7">등록된 회원의 정보가 없습니다.</td>
+                                <td colspan="11">등록된 회원의 정보가 없습니다.</td>
                             </tr>
                         </tbody>
                     </table>

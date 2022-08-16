@@ -37,15 +37,6 @@
 
                     </div>
 
-                    <!-- 스피너 start -->
-                    <div id="loader">
-                        <div style="font-size: 10px; color:rgb(11, 255, 214);">
-                            <i class="fas fa-spinner fa-10x fa-spin fa-spinner"></i>
-                        </div>
-                    </div>
-                    <!-- 스피너 end -->
-
-
                     <div class="table-responsive table mt-2" id="dataTable" role="grid"
                         aria-describedby="dataTable_info" style="margin-bottom:50px">
                         <table class="table my-0 " id="dataTable"
@@ -73,13 +64,13 @@
 
                                     <!-- 결제 상태 -->
                                     <!-- 1 승인 2 반려 3 대기 4 취소  -->
-                                    <td th:if="${l.sid == 1}" th:text="승인"></td>
-                                    <td th:if="${l.sid == 2}" th:text="반려"></td>
-                                    <td th:if="${l.sid == 3}" th:text="대기"></td>
-                                    <td th:if="${l.sid == 4}" th:text="취소"></td>
+                                    <td th:if="${l.sid}== 1" th:text="승인"></td>
+                                    <td th:if="${l.sid}== 2" th:text="반려"></td>
+                                    <td th:if="${l.sid}== 3" th:text="대기"></td>
+                                    <td th:if="${l.sid}== 4" th:text="취소"></td>
                                 </tr>
-                                <tr th:unless="${not #lists.isEmpty(paymentList)}">
-                                    <td colspan="7">등록된 회원의 글이 없습니다.</td>
+                                <tr th:unless="${not #lists.isEmpty(paymentList)}" style="text-align: center;">
+                                    <td colspan="5">등록된 회원의 글이 없습니다.</td>
                                 </tr>
                             </tbody>
                         </table>

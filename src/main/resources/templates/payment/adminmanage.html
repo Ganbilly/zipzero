@@ -54,11 +54,12 @@
                                     <th width="10">이름</th>
                                     <th width="10">금액</th>
                                     <th width="50">결제 상태</th>
-                                   
+
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:if="${not #lists.isEmpty(adminpaymentList)}" th:each="l,state:${adminpaymentList}">
+                                <tr th:if="${not #lists.isEmpty(adminpaymentList)}"
+                                    th:each="l,state:${adminpaymentList}">
                                     <!-- 번호 -->
                                     <td th:text="${state.size-state.index}"></td>
 
@@ -88,16 +89,12 @@
                                     <td th:if="${l.sid == 3}" th:text="대기"></td>
                                     <td th:if="${l.sid == 4}" th:text="취소"></td>
                                 </tr>
-                                <tr th:unless="${not #lists.isEmpty(adminpaymentList)}">
-                                    <td colspan="7">등록된 회원의 글이 없습니다.</td>
+                                <tr th:unless="${not #lists.isEmpty(adminpaymentList)}" style="text-align: center;">
+                                    <td colspan="11">등록된 회원의 글이 없습니다.</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-
-                    <!-- <div th:if="${not #lists.isEmpty(paymentList)}" th:each="l : ${paymentList}">
-                        <td th:text="${l.pid}"></td>
-                    </div> -->
 
                     <div class="row">
                         <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers"
