@@ -8,20 +8,20 @@
   <select id="getUserPage" resultType="PaymentDTO">
     select
       p_id as pid, p_cardtype as pcardtype, p_name as pname,
-      p_time as ptime, p_curstate as pcurstate
+      p_time as ptime, p_curstate as pcurstate, s_id as sid
     from
       tbl_payment
     where
       m_id = #{mid} and p_check = 1
     order by
-      p_id desc
+      p_time desc
     limit
       #{skip}, #{size}
   </select>
 
   <select id="getAdminPage" resultType="FilterDTO">
     select
-      tbl_payment.m_id as mid, hq_name as hq, dept_name as dept, team_name as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice, s_name as sname
+      tbl_payment.m_id as mid, hq_name as hq, dept_name as dept, team_name as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice, s_name as sname,tbl_payment.s_id as sid
     from
       tbl_payment
     join
@@ -156,51 +156,63 @@
   </select>
 
 
-    <!-- 본인 소속의 모든 직원들 영수증 내역 조회 쿼리문 -->
-     <select id="getMidListByAuth" resultType="PaymentDTO">
-     SELECT p_id as pid, p_cardtype as pcardtype, p_name as pname,
-      p_time as ptime, s_id AS sid, team_name AS tname, hq_name AS hname, dept_name AS dname,
-      p1.m_id AS m_id, m1.m_name AS mname, p1.p_totalprice AS tprice
+  <!-- 본인 소속의 모든 직원들 영수증 내역 조회 쿼리문 -->
+  <!-- <select id="getMidListByAuth" resultType="com.ktds.zipzero.payment.dto.PaymentDTO"> -->
+  <select id="getMidListByAuth" resultType="PaymentDTO">
+    SELECT
+      p_id as pid, p_cardtype as pcardtype, p_name as pname,
+      p_time as ptime, s_id as sid, team_name AS tname, hq_name AS hname, dept_name AS dname,
+      p1.m_id AS m_id, m1.m_name AS mname,p1.p_totalprice As tprice
       
-        FROM 
-       (
-    tbl_payment p1
-      JOIN tbl_member m1 ON m1.m_id =p1.m_id
-      JOIN tbl_team t1 ON t1.team_id= m1.m_id
-      JOIN tbl_headquarter h1 ON h1.hq_id = m1.hq_id
-      JOIN tbl_department d1 ON d1.dept_id=m1.dept_id
-   )
-    WHERE p1.M_ID 
-    IN (
-    SELECT target2.M_ID m_id
-    FROM 
+    FROM
       (
-      SELECT 
-        m1.m_id m_id, 
-        if(gubun='T', target.team_id = m1.team_id, false) tResult, 
-        if(gubun='D', target.dept_id = m1.dept_id, false) dResult,
-        if(gubun='H', target.hq_id = m1.hq_id, false) hResult
-      FROM tbl_member m1 
-      LEFT OUTER JOIN (SELECT m_id, auth_id, hq_id, dept_id, team_id,
-        (case 
-          when auth_id = 2 then team_id
-          when auth_id = 3 then dept_id
-          when auth_id = 4 then hq_id
-        END) num,
-        (case 
-          when auth_id = 2 then 'T'
-          when auth_id = 3 then 'D'
-          when auth_id = 4 then 'H'
-        END) 
-          gubun   
-        FROM tbl_member WHERE m_id = 9) target ON m1.m_id = target.m_id OR m1.m_id != target.m_id
+        tbl_payment p1
+        JOIN tbl_member m1 ON m1.m_id =p1.m_id
+        JOIN tbl_team t1 ON t1.team_id= m1.m_id
+        JOIN tbl_headquarter h1 ON h1.hq_id = m1.hq_id
+        JOIN tbl_department d1 ON d1.dept_id=m1.dept_id
+      )
+    WHERE
+      p1.M_ID
+    IN
+    (
+      SELECT target2.M_ID m_id
+      FROM 
+        (
+          SELECT 
+            m1.m_id m_id, 
+            if(gubun='T', target.team_id = m1.team_id, false) tResult, 
+            if(gubun='D', target.dept_id = m1.dept_id, false) dResult,
+            if(gubun='H', target.hq_id = m1.hq_id, false) hResult
+          FROM tbl_member m1 
+          LEFT OUTER JOIN
+          (
+            SELECT m_id, auth_id, hq_id, dept_id, team_id,
+            (
+              case 
+                when auth_id = 2 then team_id
+                when auth_id = 3 then dept_id
+                when auth_id = 4 then hq_id
+              END
+            ) num,
+            (
+              case 
+                when auth_id = 2 then 'T'
+                when auth_id = 3 then 'D'
+                when auth_id = 4 then 'H'
+              END
+            ) gubun   
+            FROM 
+              tbl_member
+            WHERE
+              m_id = 9
+          )
+            target ON m1.m_id = target.m_id OR m1.m_id != target.m_id
         ) target2
-    WHERE tResult + dResult + hResult = 1
-    )   
-    ;
-
-
-
+      WHERE tResult + dResult + hResult = 1
+    )
+    order by
+      p_time desc
    </select>
 
   <select id="getPageByPid" resultType="PaymentDTO">

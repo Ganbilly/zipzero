@@ -1,6 +1,4 @@
-<html lang="en" 
-xmlns:th="http://www.thymeleaf.org" 
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{layout/layout}">
 
 <body id="page-top">
@@ -19,162 +17,171 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                     <h6 class="m-0 font-weight-bold text-primary">조회 및 출력하기</h6>
                 </div>
                 <!-- Card Body -->
-                    <div class="card-body">
-                        <form th:action="@{/payment/adminlist}"th:object="${filterDTO}" method="post" id="listForm">
-                            <div class="form-group row" style="width: 100%;">
-                                <label class="col-lg-1 col-form-label form-control-label" style="width: 100%; text-align: center;">유형</label>
-                                <div class="col-lg-2">
-                                    <select name="pcardtype" form="listForm" style="width: 150px;" class="form-control">
-                                        <option value="0">법인</option>
-                                        <option value="1">개인</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-9" style="width: 100%; text-align: right;">
-                                    <input type="submit" name="fileType" value="CSV 출력" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"></button>
-                                    <input type="submit" name="fileType" value="Excel 출력" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"></button>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group row" style="width: 100%; text-align: center;">
-                                <label class="col-lg-1 col-form-label form-control-label">검색 일자</label>
-                                <div class="col-lg-2">
-                                    <input type="date" name="startTime" th:value="${filterDTO.startTime}" class="form-control" style="width: 100%;" />
-                                </div>
-                                -
-                                <div class="col-lg-2">
-                                    <input type="date" name="endTime" th:value="${filterDTO.endTime}" class="form-control" style="width: 100%;" />
-                                </div>
-
-                                <div class="col-lg-1"></div>
-
-                                <label class="col-lg-1 col-form-label form-control-label">검색 금액</label>
-                                <div class="col-lg-2">
-                                    <input type="number" name="minptotalprice" th:value="${filterDTO.minptotalprice}" placeholder="최소 금액" class="form-control"
-                                        style="width: 100%;" />
-                                </div>
-                                -
-                                <div class="col-lg-2">
-                                    <input type="number" name="maxptotalprice" th:value="${filterDTO.maxptotalprice}" placeholder="최대 금액" class="form-control"
-                                        style="width: 100%;" />
-                                </div>
-
-                            </div>
-
-                            <div class="form-group row" style="width: 100%; text-align: center;">
-                                <label class="col-lg-1 col-form-label form-control-label">담당</label>
-                                <div class="col-lg-3">
-                                    <input type="text" name="dept" th:value="${filterDTO.dept}" placeholder="담당" class="form-control"
-                                        style="width: 100%;" />
-                                </div>
-
-                                <label class="col-lg-1 col-form-label form-control-label">본부</label>
-                                <div class="col-lg-3">
-                                    <input type="text" name="hq" th:value="${filterDTO.hq}" placeholder="본부" class="form-control"
-                                        style="width: 100%;" />
-                                </div>
-
-                                <label class="col-lg-1 col-form-label form-control-label">팀</label>
-                                <div class="col-lg-3">
-                                    <input type="text" name="team" th:value="${filterDTO.team}" placeholder="팀" class="form-control"
-                                        style="width: 100%;" />
-                                </div>
-                            </div>
-                        
-                            <div class="form-group row" style="width: 100%; text-align: center;">
-                                <label class="col-lg-1 col-form-label form-control-label">사번</label>
-                                <div class="col-lg-3">
-                                    <input type="number" name="mid" th:value="${filterDTO.mid}" placeholder="사번" class="form-control"
-                                        style="width: 100%;" />
-                                </div>
-
-                                <label class="col-lg-1 col-form-label form-control-label">성명</label>
-                                <div class="col-lg-3">
-                                    <input type="text" name="mname" th:value="${filterDTO.mname}" placeholder="이름" class="form-control"
-                                        style="width: 100%;" />
-                                </div>
-
-                                <label class="col-lg-1 col-form-label form-control-label">상태</label>
-                                <div class="col-lg-3">
-                                    <input type="text" name="sid" th:value="${filterDTO.sname}" placeholder="상태" class="form-control"
-                                        style="width: 100%;" />
-                                </div>
-                            </div>
-
-                            <div class="form-group row" style="width: 100%; text-align: center;">
-                                <label class="col-lg-1 col-form-label form-control-label">제목</label>
-                                <div class="col-lg-10">
-                                    <input type="text" name="pname" th:value="${filterDTO.pname}" placeholder="제목" class="form-control"
-                                        style="width: 100%;" />
-                                </div>
-                                <div class="col-lg-1">
-                                    <input type="submit" value="검색" style="width: 100%;"
-                                        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" />
-                                </div>
-                            </div>
-                        </form>
-
-                        <table border="1" style="width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th>본부</th>
-                                    <th>담당</th>
-                                    <th>팀</th>
-                                    <th>이름</th>
-                                    <th>결제카드유형</th>
-                                    <th>결제내역</th>
-                                    <th>결제시각</th>
-                                    <th>결제총액</th>
-                                    <th>승인상태</th>
-                                    <th>상태</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:if="${not #lists.isEmpty(filter)}" th:each="l:${filter}">
-
-                                    <!--1 고객서비스 2 플랫폼 서비스-->
-                                    <td th:text="${l.hq}"></td>
-
-                                    <!-- 1 CRM 2 빌링 3 플랫폼 서비스 4 DIGICO 서비스 -->
-                                    <td th:text="${l.dept}"></td>
-                                    <td th:text="${l.team}"></td>
-                                    <td th:text="${l.mid}"></td>
-                                    <td th:text="${l.mname}"></td>
-                                    <td th:text="${l.pcardtype}" style="width: 150px;"></td>
-                                    <td th:text="${l.pname}"
-                                        style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
-                                    </td>
-                                    <td th:text="${l.ptime}"
-                                        style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
-                                    </td>
-                                    <td th:text="${l.ptotalprice}"
-                                        style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
-                                    </td>
-
-                                    
-                                    <td th:text="${l.ptime}"
-                                        style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
-                                    </td>
-                                </tr>
-                                <tr th:unless="${not #lists.isEmpty(filter)}">
-                                    <td colspan="7">등록된 회원의 정보가 없습니다.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="row" style="margin-top: 50px;">
-                            <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers"
-                                style="margin: auto; text-align: center;">
-                                <ul class="pagination">
-                                    <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span
-                                                aria-hidden="true">«</span></a></li>
-
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span
-                                                aria-hidden="true">»</span></a></li>
-                                </ul>
-                            </nav>
+                <div class="card-body">
+                    <div class="form-group row" style="width: 100%;">
+                        <label class="col-lg-1 col-form-label form-control-label" style="width: 100%; text-align: center;">유형</label>
+                        <div class="col-lg-2">
+                            <select name="pcardtype" form="listForm" style="width: 150px;" class="form-control">
+                                <option value="0">법인</option>
+                                <option value="1">개인</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-9" style="width: 100%; text-align: right;">
+                            <button class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">CSV 출력</button>
+                            <button class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Excel 출력</button>
                         </div>
                     </div>
+
+
+                    <form th:action="@{/payment/adminlist}" th:object="${filterDTO}" method="post" id="listForm">
+                        <div class="form-group row" style="width: 100%; text-align: center;">
+                            <label class="col-lg-1 col-form-label form-control-label">검색 일자</label>
+                            <div class="col-lg-2">
+                                <input type="date" name="startTime" class="form-control" style="width: 100%;" />
+                            </div>
+                            -
+                            <div class="col-lg-2">
+                                <input type="date" name="endTime" class="form-control" style="width: 100%;" />
+                            </div>
+
+                            <div class="col-lg-1"></div>
+
+                            <label class="col-lg-1 col-form-label form-control-label">검색 금액</label>
+                            <div class="col-lg-2">
+                                <input type="number" name="minptotalprice" placeholder="최소 금액" class="form-control"
+                                    style="width: 100%;" />
+                            </div>
+                            -
+                            <div class="col-lg-2">
+                                <input type="number" name="maxptotalprice" placeholder="최대 금액" class="form-control"
+                                    style="width: 100%;" />
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row" style="width: 100%; text-align: center;">
+                            <label class="col-lg-1 col-form-label form-control-label">본부</label>
+                            <div class="col-lg-3">
+                                <input type="text" name="hq" placeholder="본부" class="form-control"
+                                    style="width: 100%;" />
+                            </div>
+
+                            <label class="col-lg-1 col-form-label form-control-label">담당</label>
+                            <div class="col-lg-3">
+                                <input type="text" name="dept" placeholder="담당" class="form-control"
+                                    style="width: 100%;" />
+                            </div>
+                            
+                            <label class="col-lg-1 col-form-label form-control-label">팀</label>
+                            <div class="col-lg-3">
+                                <input type="text" name="team" placeholder="팀" class="form-control"
+                                    style="width: 100%;" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row" style="width: 100%; text-align: center;">
+                            <label class="col-lg-1 col-form-label form-control-label">사번</label>
+                            <div class="col-lg-3">
+                                <input type="number" name="mid" placeholder="사번" class="form-control"
+                                    style="width: 100%;" />
+                            </div>
+
+                            <label class="col-lg-1 col-form-label form-control-label">성명</label>
+                            <div class="col-lg-3">
+                                <input type="text" name="mname" placeholder="이름" class="form-control"
+                                    style="width: 100%;" />
+                            </div>
+
+                            <label class="col-lg-1 col-form-label form-control-label">상태</label>
+                            <div class="col-lg-3">
+                                <input type="text" name="sid" placeholder="상태" class="form-control"
+                                    style="width: 100%;" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row" style="width: 100%; text-align: center;">
+                            <label class="col-lg-1 col-form-label form-control-label">제목</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="pname" placeholder="제목" class="form-control"
+                                    style="width: 100%;" />
+                            </div>
+                            <div class="col-lg-1">
+                                <input type="submit" value="검색" style="width: 100%;"
+                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" />
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <table border="1" style="width: 100%;text-align: center;">
+                        <thead>
+                            <tr>
+                                <th>본부</th>
+                                <th>담당</th>
+                                <th>팀</th>
+                                <th>이름</th>
+                                <th>결제카드유형</th>
+                                <th>결제내역</th>
+                                <th>결제시각</th>
+                                <th>결제총액</th>
+                                <th>승인상태</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${not #lists.isEmpty(filter)}" th:each="l:${filter}">
+
+                                <!--1 고객서비스 2 플랫폼 서비스-->
+                                <td th:text="${l.hq}" style="width: 100px;"></td>
+
+                                <!-- 1 CRM 2 빌링 3 플랫폼 서비스 4 DIGICO 서비스 -->
+                                <td th:text="${l.dept}" style="width: 100px;"></td>
+                                <td th:text="${l.team}" style="width: 100px;"></td>
+                                <td th:text="${l.mname}" style="width: 80px;"></td>
+
+                                <!--0 법인 1 개인-->
+                                <td th:if="${l.pcardtype}==0" th:text="법인" style="width: 80px;"></td>
+                                <td th:if="${l.pcardtype}==1" th:text="개인" style="width: 80px;"></td>
+                                
+                                <td th:text="${l.pname}"
+                                    style="width: 100px; max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+                                </td>
+                                <td th:text="${l.ptime}"
+                                    style="width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+                                </td>
+                                <td th:text="${l.ptotalprice}"
+                                    style="width: 150px; max-width: 200px;">
+                                </td>
+                                
+                                <!-- 결제 상태 -->
+                                <!-- 1 승인 2 반려 3 대기 4 취소  -->
+                                <td th:if="${l.sid}== 1" th:text="승인" style="width: 50px;"></td>
+                                <td th:if="${l.sid}== 2" th:text="반려" style="width: 50px;"></td>
+                                <td th:if="${l.sid}== 3" th:text="대기" style="width: 50px;"></td>
+                                <td th:if="${l.sid}== 4" th:text="취소" style="width: 50px;"></td>
+
+                            </tr>
+                            <tr th:unless="${not #lists.isEmpty(filter)}">
+                                <td colspan="11">등록된 회원의 정보가 없습니다.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row" style="margin-top: 50px;">
+                        <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers"
+                            style="margin: auto; text-align: center;">
+                            <ul class="pagination">
+                                <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span
+                                            aria-hidden="true">«</span></a></li>
+
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span
+                                            aria-hidden="true">»</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+
             </div>
 
         </div>

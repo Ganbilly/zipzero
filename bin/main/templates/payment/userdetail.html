@@ -11,7 +11,7 @@
             <p class="mb-4">신청 상태를 확인하세요</p>
 
             <!-- 신청 게시판 -->
-            <div class="card shadow" style="margin-bottom: 50px;">
+            <div class="card shadow">
                 <!-- Card Body -->
 
                 <div class="card-body">
@@ -75,17 +75,19 @@
                                             style="width: 150px; margin:20px;">
                                         <input type="hidden" name="pid" th:value="${payment.pid}">
                                     </form>
-
-                                    <form th:action="@{/payment/userlist}" method="get">
-                                        <input type="submit" value="목록으로" class="btn btn-info"
-                                            style="width: 150px; margin:20px;">
-                                        <input type="hidden" name="mid" th:value="${payment.mid}" />
-                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="form-group row"
+                style="width: 600px; margin: auto;display: flex; justify-content: center;  margin-top: 20px; margin-bottom: 20px;">
+                <form th:action="@{/payment/userlist}" method="get">
+                    <input type="submit" value="목록으로" class="btn btn-info" style="width: 300px; margin:20px;">
+                    <input type="hidden" name="mid" th:value="${payment.mid}" />
+                </form>
             </div>
 
             <!-- 답변 게시판 -->
