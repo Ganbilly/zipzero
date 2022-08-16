@@ -44,6 +44,8 @@ public class FilterDTO {
     @Builder.Default
     private String maxptotalprice = "9999999";
     private String ptotalprice;
+    @Builder.Default
+    private String sid = "";
 
     public LocalDate getEndTime() {
         if (this.endTime == null) {
