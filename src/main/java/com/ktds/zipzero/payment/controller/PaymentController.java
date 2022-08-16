@@ -479,12 +479,12 @@ public class PaymentController {
     /*
      * 만든 사람 : 정문경 (2022-08-16)
      * 최종 수정 : 정문경 (2022-08-16)
-     * 기능 : csv, excel 다운로드
+     * 기능 : csv download
      */
     @ResponseBody
-    @GetMapping(value = "download")
-    public ResponseEntity<String> download(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO) {
-		log.info("download");
+    @GetMapping(value = "downloadcsv")
+    public ResponseEntity<String> downloadCSV(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO) {
+		log.info("downloadCSV");
 		
 		List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, 0, 100000);
 		
@@ -493,13 +493,13 @@ public class PaymentController {
 		header.add("Content-Disposition", "attachment; filename=\""+LocalDate.now()+".csv"+"\"");
 		
 				
-		return new ResponseEntity<String>(setContent(filterList), header, HttpStatus.CREATED);
+		return new ResponseEntity<String>(setCSVContent(filterList), header, HttpStatus.CREATED);
 	}
 
-    public String setContent(List<FilterDTO> filterList) {
+    public String setCSVContent(List<FilterDTO> filterList) {
 		String data = "";
 		
-		data += "본부, 담당, 팀, 이름, 결제카드유형, 결제내역, 결제시각, 결제총액, 승인상태, 상태\n";
+		data += "본부, 담당, 팀, 이름, 결제카드유형, 결제내역, 결제시각, 결제총액, 승인상태\n";
 		
 		for (int i=0; i<filterList.size(); i++) {
 			data += filterList.get(i).getHq() + ",";
@@ -510,9 +510,16 @@ public class PaymentController {
 			data += filterList.get(i).getPname() + ",";
 			data += filterList.get(i).getPtime() + ",";
 			data += filterList.get(i).getPtotalprice() + ",";
-			data += filterList.get(i).getMname() + "\n";
+			data += filterList.get(i).getSnameBySid() + "\n";
 		}
 		
 		return data;
 	}
+
+    /*
+     * 만든 사람 : 정문경 (2022-08-16)
+     * 최종 수정 : 정문경 (2022-08-16)
+     * 기능 : 차트 (시각화)
+     */
+    
 }

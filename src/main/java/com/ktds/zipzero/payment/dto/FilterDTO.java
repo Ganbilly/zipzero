@@ -66,4 +66,19 @@ public class FilterDTO {
                 return "";
         }
     }
+
+    public String getSnameBySid() {
+        switch(sid) {
+            case "1":
+                return "승인";
+            case "2":
+                return "반려";
+            case "3":
+                return "대기";
+            case "4":
+                return "취소";
+            default:
+                return "";
+        }
+    }
 }
