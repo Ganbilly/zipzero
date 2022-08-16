@@ -21,6 +21,9 @@ import java.util.UUID;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -133,6 +136,10 @@ public class PaymentController {
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
         log.info("PaymentList");
+        filterDTO.setMinptotalprice("");
+        filterDTO.setMaxptotalprice("");
+        filterDTO.setMid("");
+        filterDTO.setStartTime(null);
 
         PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
         List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), size);
@@ -152,9 +159,12 @@ public class PaymentController {
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
         log.info("PaymentListFilter : " + filterDTO);
+
+
+        String fileType = filterDTO.getFileType();
+
         PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
         List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), size);
-        log.info("fileType: " + filterDTO.getFileType());
 
         model.addAttribute("filter", filterList);
 
@@ -466,17 +476,43 @@ public class PaymentController {
         return "payment/admindetail";
     }
 
-    @PostMapping("/download")
-    public String download(Model model, @RequestParam(value = "fileType") String fileType, @ModelAttribute("commentDTO") FilterDTO filterDTO) {
-        log.info("download");
+    /*
+     * 만든 사람 : 정문경 (2022-08-16)
+     * 최종 수정 : 정문경 (2022-08-16)
+     * 기능 : csv, excel 다운로드
+     */
+    @ResponseBody
+    @GetMapping(value = "download")
+    public ResponseEntity<String> download(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO) {
+		log.info("download");
+		
+		List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, 0, 100000);
+		
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-Type", "text/csv; charset=MS949");
+		header.add("Content-Disposition", "attachment; filename=\""+LocalDate.now()+".csv"+"\"");
+		
+				
+		return new ResponseEntity<String>(setContent(filterList), header, HttpStatus.CREATED);
+	}
 
-        if(fileType.contains("CSV")) {
-            log.info("================fileType: " + fileType);
-
-        } else {
-            log.info("fileType: " + fileType);
-        }
-
-        return "payment/adminlist";
-    }
+    public String setContent(List<FilterDTO> filterList) {
+		String data = "";
+		
+		data += "본부, 담당, 팀, 이름, 결제카드유형, 결제내역, 결제시각, 결제총액, 승인상태, 상태\n";
+		
+		for (int i=0; i<filterList.size(); i++) {
+			data += filterList.get(i).getHq() + ",";
+			data += filterList.get(i).getDept() + ",";
+			data += filterList.get(i).getTeam() + ",";
+			data += filterList.get(i).getMname() + ",";
+			data += filterList.get(i).getCardType() + ",";
+			data += filterList.get(i).getPname() + ",";
+			data += filterList.get(i).getPtime() + ",";
+			data += filterList.get(i).getPtotalprice() + ",";
+			data += filterList.get(i).getMname() + "\n";
+		}
+		
+		return data;
+	}
 }

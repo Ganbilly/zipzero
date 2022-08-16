@@ -83,19 +83,19 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                             <div class="form-group row" style="width: 100%; text-align: center;">
                                 <label class="col-lg-1 col-form-label form-control-label">사번</label>
                                 <div class="col-lg-3">
-                                    <input type="number" name="mid" placeholder="사번" class="form-control"
+                                    <input type="number" name="mid" th:value="${filterDTO.mid}" placeholder="사번" class="form-control"
                                         style="width: 100%;" />
                                 </div>
 
                                 <label class="col-lg-1 col-form-label form-control-label">성명</label>
                                 <div class="col-lg-3">
-                                    <input type="text" name="mname" placeholder="이름" class="form-control"
+                                    <input type="text" name="mname" th:value="${filterDTO.mname}" placeholder="이름" class="form-control"
                                         style="width: 100%;" />
                                 </div>
 
                                 <label class="col-lg-1 col-form-label form-control-label">상태</label>
                                 <div class="col-lg-3">
-                                    <input type="text" name="sid" placeholder="상태" class="form-control"
+                                    <input type="text" name="sid" th:value="${filterDTO.sname}" placeholder="상태" class="form-control"
                                         style="width: 100%;" />
                                 </div>
                             </div>
@@ -103,7 +103,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                             <div class="form-group row" style="width: 100%; text-align: center;">
                                 <label class="col-lg-1 col-form-label form-control-label">제목</label>
                                 <div class="col-lg-10">
-                                    <input type="text" name="pname" placeholder="제목" class="form-control"
+                                    <input type="text" name="pname" th:value="${filterDTO.pname}" placeholder="제목" class="form-control"
                                         style="width: 100%;" />
                                 </div>
                                 <div class="col-lg-1">

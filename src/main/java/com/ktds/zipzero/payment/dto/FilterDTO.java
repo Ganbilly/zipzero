@@ -48,7 +48,8 @@ public class FilterDTO {
 
     public LocalDate getEndTime() {
         if (this.endTime == null) {
-            return LocalDate.ofYearDay(9999, 360);
+            //return LocalDate.ofYearDay(9999, 360);
+            return LocalDate.now();
         }
         return this.endTime;
     }
