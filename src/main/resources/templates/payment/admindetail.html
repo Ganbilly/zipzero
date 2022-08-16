@@ -95,10 +95,29 @@
                     <div class="float-container">
                         <h3>반려 사유</h3>
                         <hr style="padding:3px">
+                        <table>
+                            <tr>
+                                <th>반려 사유</th>
+                                <th>작성 시간</th>
+                                <th>작성자</th>
+                            </tr>
+                            <tr th:each="comment : ${comments}">
+                                <td th:text="${comment.ccontent}"></td>
+                                <td th:text="${comment.cmoddate}"></td>
+                                <td th:text="${comment.mid}"></td>
+                                
+                            </tr>
+
+
+                        </table>
+
                         <div style="margin: 50px;">
                             <div class="form-group row" style="margin: auto;display: flex; justify-content: right;">
                                 <textarea type="text" name="reply_content" class="form-control" style='height:100px;'
-                                    readonly></textarea>
+                                readonly>
+                                
+                                
+                                </textarea>
                             </div>
 
                             <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px; display: none;">
@@ -122,7 +141,7 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+             <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -143,24 +162,19 @@
                             </div>
                         </form>
                     </div>
-                </div>
+                </div> 
 
-                <tr th:each="comment : ${comments}">
-                    <td th:text="${comment.ccontent}"></td>
-                    <td th:text="${comment.cmoddate}"></td>
-                    
-                </tr>
         
             </div>
 
         </div>
 
-        <button type="button" class ="btn btn-primary registerBtn">반려 사유 등록</button>
+        <!--*<button type="button" class ="btn btn-primary registerBtn">반려 사유 등록</button> *-->
 
 
 
     
-    <div class="modal registerModal" tabindex="-1">
+    <!--* <div class="modal registerModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -183,17 +197,19 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> *-->
 
     <!--* <h1>[[${comments[0].pid}]]</h1> *-->
 
     </th:block>
 
 
-
+    
+        
+    
+    
     <script layout:fragment="scriptFragment" >
-
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        
     
         //댓글 등록 모달
         const registerModal = new bootstrap.Modal(document.querySelector(".registerModal"))
@@ -233,11 +249,6 @@
                 ccontent: document.querySelector('.replyText').value,
                 mid: document.querySelector('.replyer').value
             }
-            console.log(reply)
-            console.log("hi")
-            
-
-
 
 
             $.ajax({
