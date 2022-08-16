@@ -128,12 +128,13 @@ public class PaymentController {
      * 기능 : 영수증 전체 목록 조회 (검색 기능 포함)
      */
     @GetMapping("/adminlist")
-    public String adminPaymentList(Model model, @RequestParam(value = "mid") long mid,
+    public String adminPaymentList(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO, 
+            @RequestParam(value = "mid") long mid,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
         log.info("PaymentList");
+
         PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
-        FilterDTO filterDTO = FilterDTO.builder().build();
         List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), size);
 
         model.addAttribute("filter", filterList);
@@ -153,6 +154,7 @@ public class PaymentController {
         log.info("PaymentListFilter : " + filterDTO);
         PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
         List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), size);
+        log.info("fileType: " + filterDTO.getFileType());
 
         model.addAttribute("filter", filterList);
 
@@ -457,11 +459,24 @@ public class PaymentController {
      */
     @GetMapping("/admindetail")
     public String adminDetail(Model model, @RequestParam(value = "pid") long pid) {
-        log.info("AdminrDetail");
+        log.info("AdminDetail");
 
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
 
         return "payment/admindetail";
     }
 
+    @PostMapping("/download")
+    public String download(Model model, @RequestParam(value = "fileType") String fileType, @ModelAttribute("commentDTO") FilterDTO filterDTO) {
+        log.info("download");
+
+        if(fileType.contains("CSV")) {
+            log.info("================fileType: " + fileType);
+
+        } else {
+            log.info("fileType: " + fileType);
+        }
+
+        return "payment/adminlist";
+    }
 }
