@@ -47,6 +47,7 @@
                     </div>
 
                     <form th:action="@{/payment/adminlist}" th:object="${filterDTO}" method="post" id="listForm">
+                        <input type="hidden" name="mid" th:value="${mid}"/>
                         <div class="form-group row" style="width: 100%; text-align: center;">
                             <label class="col-lg-1 col-form-label form-control-label">검색 일자</label>
                             <div class="col-lg-2">
@@ -183,12 +184,24 @@
                         <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers"
                             style="margin: auto; text-align: center;">
                             <ul class="pagination">
-                                <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span
-                                            aria-hidden="true">«</span></a></li>
 
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span
-                                            aria-hidden="true">»</span></a></li>
+                                <li th:if="${page.prev}" class="page-item">
+                                    <a class="page-link" aria-label="Previous" th:data-num="${page.start - 1}">
+                                        <span aria-hidden="true">«</span>
+                                    </a>
+                                </li>
+                                <th:block th:each="i: ${#numbers.sequence(page.start, page.end)}">
+                                    <li th:class="${page.page == i} ? 'page-item active' : 'page-item'">
+                                        <a class="page-link" th:data-num="${i}">[[${i}]]</a>
+                                    </li>
+                                </th:block>
+
+                                <li th:if="${page.next}" class="page-item">
+                                    <a class="page-link" aria-label="Next" th:data-num="${page.end + 1}">
+                                        <span aria-hidden="true">»</span>
+                                    </a>
+                                </li>
+                                            
                             </ul>
                         </nav>
                     </div>
@@ -198,6 +211,30 @@
             </div>
 
         </div>
+        <script layout:fragment="script" th:inline="javascript">
+            const values = [[${filter}]]
+        
+            document.querySelector(".pagination").addEventListener("click", function (e) {
+                e.preventDefault()
+                e.stopPropagation()
+        
+                const target = e.target
+        
+                if(target.tagName !== 'A') {
+                    return
+                }
+        
+                const num = target.getAttribute("data-num")
+        
+                const formObj = document.querySelector("form")
+        
+                formObj.innerHTML += `<input type='hidden' name='page' value='${num}'>`
+                formObj.innerHTML += `<input type='hidden' name='mid' value='[[${mid}]]'>`
+        
+                formObj.submit();
+        
+            }, false)
+        </script>
     </th:block>
 </body>
 </html>

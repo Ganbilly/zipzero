@@ -77,10 +77,30 @@ public interface PaymentService {
   public List<PaymentDTO> getAuthList(long mid);
 
   /*
+   * 만든 사람 : 정문경(2022-08-10)
+   * 최종 수정 : 정문경(2022-08-12)
+   * 기능 : 본인 소속의 직원 영수증 내역 조회
+   */
+  public List<PaymentDTO> getAuthPage(long mid, int skip, int size);
+
+  /*
    * 만든 사람 : 정문경 (2022-08-12)
    * 최종 수정 : 정문경 (2022-08-12)
    * 기능 : 댓글 등록
    */
   public void registComment(CommentDTO commentDTO);
 
+  /*
+   * 만든 사람 : 정문경(2022-08-12)
+   * 최종 수정 : 정문경(2022-08-12)
+   * 기능 : 필터링된 영수증 전체 목록
+   */
+  public List<FilterDTO> getAllPaymentFilter(FilterDTO filterDTO);
+
+  /*
+   * 만든 사람 : 정문경(2022-08-16)
+   * 최종 수정 : 정문경(2022-08-16)
+   * 기능 : 본인 영수증 전체 목록
+   */
+  public List<PaymentDTO> getAllPaymentList(long mid);
 }

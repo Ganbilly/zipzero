@@ -81,6 +81,17 @@ public class PaymentServiceImpl implements PaymentService {
         return adminpaymentList;
 
     }
+    /*
+     * 만든 사람 : 정문경(2022-08-16)
+     * 최종 수정 : 정문경(2022-08-16)
+     * 기능 : 본인 소속의 모든 직원 영수증 내역 조회
+     */
+    @Override
+    public List<PaymentDTO> getAuthPage(long mid, int skip, int size) {
+        List<PaymentDTO> adminpaymentList = paymentMapper.getMidPageByAuth(mid, skip, size);
+        return adminpaymentList;
+
+    }
 
     /*
      * 만든 사람 : 정문경(2022-08-12)
@@ -92,4 +103,23 @@ public class PaymentServiceImpl implements PaymentService {
         paymentMapper.registComment(commentDTO);
     }
 
+
+    /*
+    * 만든 사람 : 정문경(2022-08-12)
+    * 최종 수정 : 정문경(2022-08-12)
+    * 기능 : 필터링된 영수증 전체 목록
+    */
+    @Override
+    public List<FilterDTO> getAllPaymentFilter(FilterDTO filterDTO) {
+        return paymentMapper.getAllAdminPage(filterDTO);
+    }
+
+    /*
+    * 만든 사람 : 정문경(2022-08-16)
+    * 최종 수정 : 정문경(2022-08-16)
+    * 기능 : 본인 영수증 전체 목록
+    */
+    public List<PaymentDTO> getAllPaymentList(long mid) {
+        return paymentMapper.getAllUserPage(mid);
+    }
 }

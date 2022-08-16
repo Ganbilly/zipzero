@@ -69,10 +69,14 @@ public class PaymentController {
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
         log.info("PaymentList");
-        PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
-        List<PaymentDTO> paymentList = paymentService.getPaymentList(mid, pageDTO.getSkip(), size);
 
-        model.addAttribute("paymentList", paymentList);
+        List<PaymentDTO> filterList = paymentService.getAllPaymentList(mid);
+        PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
+        pageDTO.setPaging();
+
+        model.addAttribute("mid", mid);
+        model.addAttribute("paymentList", paymentService.getPaymentList(mid, pageDTO.getSkip(), size));
+        model.addAttribute("page", pageDTO);
 
         return "payment/userlist";
     }
@@ -141,10 +145,13 @@ public class PaymentController {
         filterDTO.setMid("");
         filterDTO.setStartTime(null);
 
-        PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
-        List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), size);
+        List<FilterDTO> filterList = paymentService.getAllPaymentFilter(filterDTO);
+        PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
+        pageDTO.setPaging();
 
-        model.addAttribute("filter", filterList);
+        model.addAttribute("mid", mid);
+        model.addAttribute("filter", paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), pageDTO.getSize()));
+        model.addAttribute("page", pageDTO);
 
         return "payment/adminlist";
     }
@@ -156,14 +163,18 @@ public class PaymentController {
      */
     @PostMapping("/adminlist")
     public String adminPaymentListFilter(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO,
+            @RequestParam(value = "mid") long mid,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
-        log.info("PaymentListFilter : " + filterDTO);
+        log.info("PaymentListFilter : ");
 
-        PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
-        List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), size);
+        List<FilterDTO> filterList = paymentService.getAllPaymentFilter(filterDTO);
+        PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
+        pageDTO.setPaging();
 
-        model.addAttribute("filter", filterList);
+        model.addAttribute("mid", mid);
+        model.addAttribute("filter", paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), pageDTO.getSize()));
+        model.addAttribute("page", pageDTO);
 
         return "payment/adminlist";
     }
@@ -413,10 +424,18 @@ public class PaymentController {
      * 기능 : 본인 소속의 모든 직원 영수증 내역 조회
      */
     @GetMapping("/adminmanage")
-    public String adminlist(Model model, @RequestParam(value = "mid") long mid) {
+    public String adminlist(Model model, @RequestParam(value = "mid") long mid,
+        @RequestParam(value = "page", defaultValue = "1") int page,
+        @RequestParam(value = "size", defaultValue = "10") int size) {
         log.info("adminManage");
 
-        model.addAttribute("adminpaymentList", paymentService.getAuthList(mid));
+        List<PaymentDTO> paymentList = paymentService.getAuthList(mid);
+        PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(paymentList.size()).build();
+        pageDTO.setPaging();
+
+        model.addAttribute("mid", mid);
+        model.addAttribute("adminpaymentList", paymentService.getAuthPage(mid, pageDTO.getSkip(), size));
+        model.addAttribute("page", pageDTO);
 
         return "payment/adminmanage";
     }
