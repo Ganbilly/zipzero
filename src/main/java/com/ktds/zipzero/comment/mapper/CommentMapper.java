@@ -12,10 +12,10 @@ import com.ktds.zipzero.payment.dto.PaymentDTO;
 public interface CommentMapper {
     
     
-    public int write(CommentDTO commentDTO);
+    public Long registerComment(CommentDTO commentDTO);
 
-    @Select("")
-    void delete(CommentDTO commentDTO);
+    
+    void deleteComment(CommentDTO commentDTO);
 
     
     public List<CommentDTO> getCommentList(@Param("pid") long pid, @Param("skip") int skip, @Param("size") int size);

@@ -6,10 +6,12 @@ import com.ktds.zipzero.comment.dto.CommentDTO;
 
 public interface CommentService {
     
-    public boolean write(CommentDTO commentDTO);
+    public Long registerComment(CommentDTO commentDTO);
 
     public List<CommentDTO> getCommentList(long pid, int skip, int size);
         
     public void modifyComment(CommentDTO commentDTO);
+
+    public void deleteComment(Long cid);
 
 }

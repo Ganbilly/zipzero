@@ -28,11 +28,11 @@
                 <h1>[[${payment.pcurstate}]]</h1>
                 <h1>[[${payment.pfinstate}]]</h1>
 
-                <div class="card-body">
+                <!--* <div class="card-body">
                     <p style="font-size : 13px ;">게시물을 확인하고 승인하세요</p>
                     <hr style="padding:3px">
 
-                </div>
+                </div> *-->
             </div>
 
         </div>
@@ -47,7 +47,7 @@
         </tr>
 
 
-        <form th:action="@{/comment/modify}" method="post">
+        <!--* <form th:action="@{/comment/modify}" method="post">
             <input type="submit" value="수정" class="btn btn-primary"
                 style="width: 150px; margin:20px;">
             <input type="hidden" name="pid" th:value="${payment.pid}">
@@ -59,12 +59,12 @@
             <input type="hidden" name="pid" th:value="${payment.pid}">
         </form>
 
-        <button class ="registerBtn">댓글 등록</button>
+        <button class ="registerBtn">댓글 등록</button> *-->
 
 
 
     
-    <div class="modal registerModal" tabindex="-1">
+    <!--* <div class="modal registerModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -87,14 +87,14 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> *-->
 
 
 
 </th:block>
 
 
-<script layout:fragment="scriptFragment">
+<!--* <script layout:fragment="scriptFragment">
 
     console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 
@@ -114,7 +114,7 @@
 
     },false);
 
-</script>
-
+</script> *-->
+ 
 
 </body>

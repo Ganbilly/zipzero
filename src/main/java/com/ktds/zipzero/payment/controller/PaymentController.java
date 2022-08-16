@@ -115,6 +115,8 @@ public class PaymentController {
 
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
 
+        model.addAttribute("comments", commentService.getCommentList(pid, 0, 5));
+
         return "payment/admindetail";
     }
     /*

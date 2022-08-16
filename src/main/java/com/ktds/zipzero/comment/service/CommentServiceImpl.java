@@ -28,14 +28,26 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public boolean write(CommentDTO commentDTO) {
+    public Long registerComment(CommentDTO commentDTO) {
 
-        return false;
+
+        
+        
+        commentMapper.registerComment(commentDTO);
+        
+        return commentDTO.getPid();
+        
     }
 
     @Override
     public void modifyComment(CommentDTO commentDTO){
         commentMapper.modifyComment(commentDTO);
+    }
+
+    @Override
+    public void deleteComment(Long cid) {
+        
+        
     }
 
 

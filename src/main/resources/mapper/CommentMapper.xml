@@ -17,16 +17,20 @@
     
   </select>
 
-  <insert id="write">
+  <insert id="registerComment">
     INSERT INTO tbl_comment (
-      c_content as ccontent,
-      c_moddate as cmoddate,
-      p_id as pid
+      c_content,
+      c_regdate,
+      c_moddate,
+      m_id,
+      p_id
 
     ) VALUES (
-      #{c_content},
+      #{ccontent},
       NOW(),
-      #{p_id}
+      NOW(),
+      #{mid},
+      #{pid}
     )
   </insert>
 
@@ -40,4 +44,14 @@
       c_id = #{cid}
   </update>
 
+
+  <update id="deleteComment">
+    UPDATE
+      tbl_comment
+    SET
+      c_check = 0
+    WHERE
+      c_id = #{cid}
+  </update>
+  
 </mapper>
