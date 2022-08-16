@@ -160,9 +160,6 @@ public class PaymentController {
             @RequestParam(value = "size", defaultValue = "10") int size) {
         log.info("PaymentListFilter : " + filterDTO);
 
-
-        String fileType = filterDTO.getFileType();
-
         PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
         List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), size);
 
@@ -521,5 +518,5 @@ public class PaymentController {
      * 최종 수정 : 정문경 (2022-08-16)
      * 기능 : 차트 (시각화)
      */
-    
+
 }

@@ -44,7 +44,6 @@ public class FilterDTO {
     @Builder.Default
     private String maxptotalprice = "9999999";
     private String ptotalprice;
-    private String fileType;
     @Builder.Default
     private String sid = "";
 
