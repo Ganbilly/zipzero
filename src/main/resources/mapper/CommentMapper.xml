@@ -12,6 +12,7 @@
 
     <select id="getCommentsByPid" resultType="CommentDTO">
       select 
+        c_id as cid,
         c_content as ccontent,
         c_regdate as cregdate,
         m_name as mname

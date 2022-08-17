@@ -37,8 +37,6 @@ public class CommentServiceImpl implements CommentService{
     public List<CommentDTO> getCommentsByPid(Long pid) {
         List<CommentDTO> comments = commentMapper.getCommentsByPid(pid);
 
-        log.info(comments);
-
         return comments;
         
     }

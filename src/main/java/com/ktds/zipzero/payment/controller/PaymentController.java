@@ -489,9 +489,12 @@ public class PaymentController {
      */
     @GetMapping("/admindetail")
     public String adminDetail(Model model, @RequestParam(value = "pid") long pid) {
-        log.info("AdminDetail");
-
+        log.info("AdminDetail-------------------------------------");
+        
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
+        model.addAttribute("comments", commentService.getCommentsByPid(pid));
+        log.info("result-------------------------------------");
+        log.info(commentService.getCommentsByPid(pid));
 
         return "payment/admindetail";
     }
