@@ -84,13 +84,6 @@ public interface PaymentService {
   public List<PaymentDTO> getAuthPage(long mid, int skip, int size);
 
   /*
-   * 만든 사람 : 정문경 (2022-08-12)
-   * 최종 수정 : 정문경 (2022-08-12)
-   * 기능 : 댓글 등록
-   */
-  public void registComment(CommentDTO commentDTO);
-
-  /*
    * 만든 사람 : 정문경(2022-08-12)
    * 최종 수정 : 정문경(2022-08-12)
    * 기능 : 필터링된 영수증 전체 목록

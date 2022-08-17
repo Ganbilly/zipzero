@@ -378,9 +378,5 @@
       m_id = #{mid}
   </select>
 
-  <insert id="registComment">
-    INSERT INTO tbl_comment (c_content, c_regdate, c_moddate, p_id, m_id, c_check)
-    VALUES (#{comment.ccontent}, #{comment.cregdate}, #{comment.cmoddate}, #{comment.pid}, #{comment.mid}, #{comment.ccheck})
-  </insert>
 
 </mapper>
