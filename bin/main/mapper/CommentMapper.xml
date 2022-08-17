@@ -20,4 +20,13 @@
       where p_id=${pid} and c_check=1
     </select>
 
+    <update id="removeCommentByCid">
+      update 
+        tbl_comment
+      set
+        c_check = 0
+      where
+        c_id = ${cid}
+    </update>
+
 </mapper>
