@@ -38,6 +38,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.all.dto.TimeDTO;
 import com.ktds.zipzero.comment.dto.CommentDTO;
+import com.ktds.zipzero.comment.mapper.CommentMapper;
+import com.ktds.zipzero.comment.service.CommentService;
 import com.ktds.zipzero.payment.dto.FilterDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 import com.ktds.zipzero.payment.service.PaymentService;
@@ -52,6 +54,8 @@ import lombok.extern.log4j.Log4j2;
 public class PaymentController {
 
     private final PaymentService paymentService;
+
+    private final CommentService commentService;
 
     @Value("${com.ktds.upload.path}")
     private String uploadPath;
@@ -452,7 +456,7 @@ public class PaymentController {
         commentDTO.setCmoddate(LocalDateTime.now());
         commentDTO.setCcheck(1);
         commentDTO.setMid(paymentService.getMidByPid(commentDTO.getPid()));
-        paymentService.registComment(commentDTO);
+        commentService.registComment(commentDTO);
 
         PaymentDTO paymentDTO = paymentService.getPaymentDetail(commentDTO.getPid());
         paymentDTO.setSid(2L);

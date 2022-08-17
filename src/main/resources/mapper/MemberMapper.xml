@@ -17,5 +17,4 @@
             team_id AS tid
         from tbl_member where m_id=#{mid}
     </select>
-
 </mapper>
