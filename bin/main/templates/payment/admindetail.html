@@ -95,6 +95,22 @@
                     <div class="float-container">
                         <h3>반려 사유</h3>
                         <hr style="padding:3px">
+                        <table>
+                            <tr>
+                                <th>반려 사유</th>
+                                <th>작성 시간</th>
+                                <th>작성자</th>
+                            </tr>
+                            <tr th:each="comment : ${comments}">
+                                <td th:text="${comment.ccontent}"></td>
+                                <td th:text="${comment.cmoddate}"></td>
+                                <td th:text="${comment.mid}"></td>
+                                
+                            </tr>
+
+
+                        </table>
+
                         <div style="margin: 50px;">
                             <div class="form-group row" style="margin: auto;display: flex; justify-content: right;">
                                 <textarea type="text" name="reply_content" class="form-control" style='height:100px;'
@@ -143,10 +159,69 @@
                             </div>
                         </form>
                     </div>
-                </div>
+                </div> 
+
+        
             </div>
 
         </div>
+
+        <!-- *<button type="button" class ="btn btn-primary registerBtn">반려 사유 등록</button> * -->
+
+
+
+    
+    <!--* <div class="modal registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">반려 사유 등록</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">반려 사유</span>
+                        <input type="text" class="form-control replyText" name="ccontent">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">작성자</span>
+                        <input type="text" class="form-control replyer" name="mid">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary saveBtn">저장</button>
+                    <button type="button" class="btn btn-outline-dark closeRegisterBtn" >닫기</button>
+>>>>>>> Stashed changes
+                </div>
+            </div>
+
+<<<<<<< Updated upstream
+        </div>
+=======
+    
+    <div class="modal modifyModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title replyHeader"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Reply Text</span>
+                        <input type="text" class="form-control modifyText" >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info modifyBtn">Modify</button>
+                    <button type="button" class="btn btn-danger removeBtn">Remove</button>
+                    <button type="button" class="btn btn-outline-dark closeModifyBtn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+>>>>>>> Stashed changes
     </th:block>
 </body>
 
