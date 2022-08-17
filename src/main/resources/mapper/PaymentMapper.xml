@@ -226,7 +226,9 @@
       p_storename as pstorename, p_totalprice as ptotalprice,
       p_cardtype as pcardtype, p_receipt as preceipt,
       p_curstate as pcurstate, p_finstate as pfinstate,
-      s_id as sid, m_id as mid, ptype_code as ptypecode
+      s_id as sid, m_id as mid, ptype_code as ptypecode,
+      CONCAT(TO_CHAR(p_regdate, 'yyyy'), TO_CHAR(p_regdate, 'MM')) as preceiptmonth,
+      TO_CHAR(p_regdate, 'dd') AS preceiptdate
     from
       tbl_payment
     where

@@ -287,8 +287,8 @@ public class PaymentController {
             uploadPathFolder.mkdirs();
         }
 
-        String saveName = folderPath + File.separator + uuid + "_" + fileName;
-        Path savePath = Paths.get(uploadPath + File.separator + saveName);
+        String saveName = uuid + "_" + fileName;
+        Path savePath = Paths.get(uploadPath + File.separator + folderPath + File.separator + saveName);
 
         log.info("-------------------------------------" + saveName);
 
@@ -301,7 +301,7 @@ public class PaymentController {
         // API 호출
         String apiURL = "https://9bpsb8rl83.apigw.ntruss.com/custom/v1/17635/3f8a9f00642ae1ed5a37e05854e1ed8f7b295c6a7cf2b987b31dfa2a5740aec3/document/receipt";
         String secretKey = key;
-        String imageFile = uploadPath +  File.separator + saveName;
+        String imageFile = uploadPath +  File.separator + folderPath + File.separator + saveName;
 
         String result = null;
 
