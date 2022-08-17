@@ -21,6 +21,9 @@ import java.util.UUID;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -68,10 +71,14 @@ public class PaymentController {
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
         log.info("PaymentList");
-        PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
-        List<PaymentDTO> paymentList = paymentService.getPaymentList(mid, pageDTO.getSkip(), size);
 
-        model.addAttribute("paymentList", paymentList);
+        List<PaymentDTO> filterList = paymentService.getAllPaymentList(mid);
+        PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
+        pageDTO.setPaging();
+
+        model.addAttribute("mid", mid);
+        model.addAttribute("paymentList", paymentService.getPaymentList(mid, pageDTO.getSkip(), size));
+        model.addAttribute("page", pageDTO);
 
         return "payment/userlist";
     }
@@ -130,16 +137,23 @@ public class PaymentController {
      * 기능 : 영수증 전체 목록 조회 (검색 기능 포함)
      */
     @GetMapping("/adminlist")
-    public String adminPaymentList(Model model, @RequestParam(value = "mid") long mid,
+    public String adminPaymentList(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO, 
+            @RequestParam(value = "mid") long mid,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
         log.info("PaymentList");
-        PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
-        FilterDTO filterDTO = FilterDTO.builder().build();
-        List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), size);
+        filterDTO.setMinptotalprice("");
+        filterDTO.setMaxptotalprice("");
+        filterDTO.setMid("");
+        filterDTO.setStartTime(null);
 
-        model.addAttribute("filter", filterList);
-        
+        List<FilterDTO> filterList = paymentService.getAllPaymentFilter(filterDTO);
+        PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
+        pageDTO.setPaging();
+
+        model.addAttribute("mid", mid);
+        model.addAttribute("filter", paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), pageDTO.getSize()));
+        model.addAttribute("page", pageDTO);
 
         return "payment/adminlist";
     }
@@ -151,13 +165,18 @@ public class PaymentController {
      */
     @PostMapping("/adminlist")
     public String adminPaymentListFilter(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO,
+            @RequestParam(value = "mid") long mid,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
-        log.info("PaymentListFilter : " + filterDTO);
-        PageDTO pageDTO = PageDTO.builder().page(page).size(size).build();
-        List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), size);
+        log.info("PaymentListFilter : ");
 
-        model.addAttribute("filter", filterList);
+        List<FilterDTO> filterList = paymentService.getAllPaymentFilter(filterDTO);
+        PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
+        pageDTO.setPaging();
+
+        model.addAttribute("mid", mid);
+        model.addAttribute("filter", paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), pageDTO.getSize()));
+        model.addAttribute("page", pageDTO);
 
         return "payment/adminlist";
     }
@@ -407,10 +426,18 @@ public class PaymentController {
      * 기능 : 본인 소속의 모든 직원 영수증 내역 조회
      */
     @GetMapping("/adminmanage")
-    public String adminlist(Model model, @RequestParam(value = "mid") long mid) {
+    public String adminlist(Model model, @RequestParam(value = "mid") long mid,
+        @RequestParam(value = "page", defaultValue = "1") int page,
+        @RequestParam(value = "size", defaultValue = "10") int size) {
         log.info("adminManage");
 
-        model.addAttribute("adminpaymentList", paymentService.getAuthList(mid));
+        List<PaymentDTO> paymentList = paymentService.getAuthList(mid);
+        PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(paymentList.size()).build();
+        pageDTO.setPaging();
+
+        model.addAttribute("mid", mid);
+        model.addAttribute("adminpaymentList", paymentService.getAuthPage(mid, pageDTO.getSkip(), size));
+        model.addAttribute("page", pageDTO);
 
         return "payment/adminmanage";
     }
@@ -461,7 +488,7 @@ public class PaymentController {
      */
     @GetMapping("/admindetail")
     public String adminDetail(Model model, @RequestParam(value = "pid") long pid) {
-        log.info("AdminrDetail");
+        log.info("AdminDetail");
 
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
 
@@ -469,5 +496,51 @@ public class PaymentController {
 
         return "payment/admindetail";
     }
+
+    /*
+     * 만든 사람 : 정문경 (2022-08-16)
+     * 최종 수정 : 정문경 (2022-08-16)
+     * 기능 : csv download
+     */
+    @ResponseBody
+    @GetMapping(value = "downloadcsv")
+    public ResponseEntity<String> downloadCSV(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO) {
+		log.info("downloadCSV");
+		
+		List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, 0, 100000);
+		
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-Type", "text/csv; charset=MS949");
+		header.add("Content-Disposition", "attachment; filename=\""+LocalDate.now()+".csv"+"\"");
+		
+				
+		return new ResponseEntity<String>(setCSVContent(filterList), header, HttpStatus.CREATED);
+	}
+
+    public String setCSVContent(List<FilterDTO> filterList) {
+		String data = "";
+		
+		data += "본부, 담당, 팀, 이름, 결제카드유형, 결제내역, 결제시각, 결제총액, 승인상태\n";
+		
+		for (int i=0; i<filterList.size(); i++) {
+			data += filterList.get(i).getHq() + ",";
+			data += filterList.get(i).getDept() + ",";
+			data += filterList.get(i).getTeam() + ",";
+			data += filterList.get(i).getMname() + ",";
+			data += filterList.get(i).getCardType() + ",";
+			data += filterList.get(i).getPname() + ",";
+			data += filterList.get(i).getPtime() + ",";
+			data += filterList.get(i).getPtotalprice() + ",";
+			data += filterList.get(i).getSnameBySid() + "\n";
+		}
+		
+		return data;
+	}
+
+    /*
+     * 만든 사람 : 정문경 (2022-08-16)
+     * 최종 수정 : 정문경 (2022-08-16)
+     * 기능 : 차트 (시각화)
+     */
 
 }

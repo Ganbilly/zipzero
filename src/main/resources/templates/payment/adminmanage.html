@@ -43,9 +43,9 @@
                             style="margin: auto; text-align: center; width: 1550px;">
                             <thead>
                                 <tr>
-                                    <th style="width: 50px">번호</th>
-                                    <th width="100">결제카드 유형</th>
-                                    <th width="10">결제 내역</th>
+                                    <!-- <th style="width: 50px">번호</th> -->
+                                    <th width="60">결제카드 유형</th>
+                                    <th width="100">결제 내역</th>
                                     <th width="10">결제 날짜</th>
                                     <th width="50">본부</th>
                                     <th width="10">담당</th>
@@ -61,7 +61,7 @@
                                 <tr th:if="${not #lists.isEmpty(adminpaymentList)}"
                                     th:each="l,state:${adminpaymentList}">
                                     <!-- 번호 -->
-                                    <td th:text="${state.size-state.index}"></td>
+                                    <!-- <td th:text="${state.size-state.index}"></td> -->
 
                                     <!-- 0 법인 1개인 -->
                                     <td th:if="${l.pcardtype} == 0" th:text="법인"></td>
@@ -100,19 +100,52 @@
                         <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers"
                             style="margin: auto; text-align: center;">
                             <ul class="pagination">
-                                <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span
-                                            aria-hidden="true">«</span></a></li>
+                                <li th:if="${page.prev}" class="page-item">
+                                    <a class="page-link" aria-label="Previous" th:data-num="${page.start - 1}">
+                                        <span aria-hidden="true">«</span>
+                                    </a>
+                                </li>
+                                <th:block th:each="i: ${#numbers.sequence(page.start, page.end)}">
+                                    <li th:class="${page.page == i} ? 'page-item active' : 'page-item'">
+                                        <a class="page-link" th:data-num="${i}">[[${i}]]</a>
+                                    </li>
+                                </th:block>
 
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span
-                                            aria-hidden="true">»</span></a></li>
+                                <li th:if="${page.next}" class="page-item">
+                                    <a class="page-link" aria-label="Next" th:data-num="${page.end + 1}">
+                                        <span aria-hidden="true">»</span>
+                                    </a>
+                                </li>
                             </ul>
                         </nav>
                     </div>
 
                 </div>
             </div>
-
         </div>
+        <script layout:fragment="script" th:inline="javascript">
+            const values = [[${filter}]]
+        
+            document.querySelector(".pagination").addEventListener("click", function (e) {
+                e.preventDefault()
+                e.stopPropagation()
+        
+                const target = e.target
+        
+                if(target.tagName !== 'A') {
+                    return
+                }
+        
+                const num = target.getAttribute("data-num")
+        
+                const formObj = document.querySelector("form")
+        
+                formObj.innerHTML += `<input type='hidden' name='page' value='${num}'>`
+                formObj.innerHTML += `<input type='hidden' name='mid' value='[[${mid}]]'>`
+        
+                formObj.submit();
+        
+            }, false)
+        </script>
     </th:block>
 </body>

@@ -15,14 +15,16 @@ public interface PaymentMapper {
      * 기능 : 영수증 상세 내역
     */
     PaymentDTO getDetail(PaymentDTO paymentDTO);
+    List<PaymentDTO> getAllUserPage(@Param("mid") long mid);
 
     /*
      * 만든사람 : 정문경(2022-08-10)
-     * 최종수정 : 정문경(2022-08-10)
+     * 최종수정 : 정문경(2022-08-16)
      * 기능 : 영수증 목록 가져오기
      */
     public List<PaymentDTO> getUserPage(@Param("mid") long mid, @Param("skip") int skip, @Param("size") int size);
     public List<FilterDTO> getAdminPage(@Param("filter") FilterDTO filterDTO, @Param("skip") int skip, @Param("size") int size);
+    public List<FilterDTO> getAllAdminPage(@Param("filter") FilterDTO filterDTO);
 
     /*
      * 만든사람 : 정문경(2022-08-12)
@@ -67,6 +69,7 @@ public interface PaymentMapper {
     * 기능 : 본인 소속의 모든 영수증 내역 조회
     */
     public List<PaymentDTO> getMidListByAuth(@Param("mid") Long mid);
+    public List<PaymentDTO> getMidPageByAuth(@Param("mid") Long mid, @Param("skip") int skip, @Param("size") int size);
    
     /*
      * 만든사람 : 정문경(2022-08-12)

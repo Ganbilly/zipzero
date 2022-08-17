@@ -49,7 +49,8 @@ public class FilterDTO {
 
     public LocalDate getEndTime() {
         if (this.endTime == null) {
-            return LocalDate.ofYearDay(9999, 360);
+            //return LocalDate.ofYearDay(9999, 360);
+            return LocalDate.now();
         }
         return this.endTime;
     }
@@ -60,6 +61,21 @@ public class FilterDTO {
                 return "법인";
             case 1:
                 return "개인";
+            default:
+                return "";
+        }
+    }
+
+    public String getSnameBySid() {
+        switch(sid) {
+            case "1":
+                return "승인";
+            case "2":
+                return "반려";
+            case "3":
+                return "대기";
+            case "4":
+                return "취소";
             default:
                 return "";
         }

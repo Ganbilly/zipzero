@@ -21,40 +21,54 @@
                     <div class="form-group row" style="width: 100%;">
                         <label class="col-lg-1 col-form-label form-control-label" style="width: 100%; text-align: center;">유형</label>
                         <div class="col-lg-2">
-                            <select name="pcardtype" form="listForm" style="width: 150px;" class="form-control">
+                            <select id="pcardtype" name="pcardtype" form="listForm" style="width: 150px;" class="form-control">
                                 <option value="0">법인</option>
                                 <option value="1">개인</option>
                             </select>
                         </div>
                         <div class="col-lg-9" style="width: 100%; text-align: right;">
-                            <button class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">CSV 출력</button>
-                            <button class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Excel 출력</button>
+                            <form th:action="@{/payment/downloadcsv}" th:object="${filterDTO}" method="get">
+                                <button onclick="location.href='/payment/downloadcsv'" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">CSV 출력</button>
+                                <button onclick="location.href='/payment/downloadexcel'" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Excel 출력</button>
+                                <input type="hidden" name="pcardtype" th:value="${filterDTO.pcardtype}"/>
+                                <input type="hidden" name="startTime" th:value="${filterDTO.startTime}"/>
+                                <input type="hidden" name="endTime" th:value="${filterDTO.endTime}"/>
+                                <input type="hidden" name="minptotalprice" th:value="${filterDTO.minptotalprice}"/>
+                                <input type="hidden" name="maxptotalprice" th:value="${filterDTO.maxptotalprice}"/>
+                                <input type="hidden" name="hq" th:value="${filterDTO.hq}"/>
+                                <input type="hidden" name="dept" th:value="${filterDTO.dept}"/>
+                                <input type="hidden" name="team" th:value="${filterDTO.team}"/>
+                                <input type="hidden" name="mid" th:value="${filterDTO.mid}"/>
+                                <input type="hidden" name="mname" th:value="${filterDTO.mname}"/>
+                                <input type="hidden" name="sid" th:value="${filterDTO.sid}"/>
+                                <input type="hidden" name="pname" th:value="${filterDTO.pname}"/>
+                            </form>
                         </div>
                     </div>
 
-
                     <form th:action="@{/payment/adminlist}" th:object="${filterDTO}" method="post" id="listForm">
+                        <input type="hidden" name="mid" th:value="${mid}"/>
                         <div class="form-group row" style="width: 100%; text-align: center;">
                             <label class="col-lg-1 col-form-label form-control-label">검색 일자</label>
                             <div class="col-lg-2">
-                                <input type="date" name="startTime" class="form-control" style="width: 100%;" />
+                                <input id="startTime" type="date" name="startTime" class="form-control" style="width: 100%;" th:value="${filterDTO.startTime}"/>
                             </div>
                             -
                             <div class="col-lg-2">
-                                <input type="date" name="endTime" class="form-control" style="width: 100%;" />
+                                <input id="endTime" type="date" name="endTime" class="form-control" style="width: 100%;" th:value="${filterDTO.endTime}"/>
                             </div>
 
                             <div class="col-lg-1"></div>
 
                             <label class="col-lg-1 col-form-label form-control-label">검색 금액</label>
                             <div class="col-lg-2">
-                                <input type="number" name="minptotalprice" placeholder="최소 금액" class="form-control"
-                                    style="width: 100%;" />
+                                <input id="minptotalprice" type="number" name="minptotalprice" placeholder="최소 금액" class="form-control"
+                                    style="width: 100%;" th:value="${filterDTO.minptotalprice}"/>
                             </div>
                             -
                             <div class="col-lg-2">
-                                <input type="number" name="maxptotalprice" placeholder="최대 금액" class="form-control"
-                                    style="width: 100%;" />
+                                <input id="maxptotalprice" type="number" name="maxptotalprice" placeholder="최대 금액" class="form-control"
+                                    style="width: 100%;" th:value="${filterDTO.maxptotalprice}"/>
                             </div>
 
                         </div>
@@ -62,48 +76,48 @@
                         <div class="form-group row" style="width: 100%; text-align: center;">
                             <label class="col-lg-1 col-form-label form-control-label">본부</label>
                             <div class="col-lg-3">
-                                <input type="text" name="hq" placeholder="본부" class="form-control"
-                                    style="width: 100%;" />
+                                <input id="hq" type="text" name="hq" placeholder="본부" class="form-control"
+                                    style="width: 100%;" th:value="${filterDTO.hq}"/>
                             </div>
 
                             <label class="col-lg-1 col-form-label form-control-label">담당</label>
                             <div class="col-lg-3">
-                                <input type="text" name="dept" placeholder="담당" class="form-control"
-                                    style="width: 100%;" />
+                                <input id="dept" type="text" name="dept" placeholder="담당" class="form-control"
+                                    style="width: 100%;" th:value="${filterDTO.dept}"/>
                             </div>
                             
                             <label class="col-lg-1 col-form-label form-control-label">팀</label>
                             <div class="col-lg-3">
-                                <input type="text" name="team" placeholder="팀" class="form-control"
-                                    style="width: 100%;" />
+                                <input id="team" type="text" name="team" placeholder="팀" class="form-control"
+                                    style="width: 100%;" th:value="${filterDTO.team}"/>
                             </div>
                         </div>
 
                         <div class="form-group row" style="width: 100%; text-align: center;">
                             <label class="col-lg-1 col-form-label form-control-label">사번</label>
                             <div class="col-lg-3">
-                                <input type="number" name="mid" placeholder="사번" class="form-control"
-                                    style="width: 100%;" />
+                                <input id="mid" type="number" name="mid" placeholder="사번" class="form-control"
+                                    style="width: 100%;" th:value="${filterDTO.mid}"/>
                             </div>
 
                             <label class="col-lg-1 col-form-label form-control-label">성명</label>
                             <div class="col-lg-3">
-                                <input type="text" name="mname" placeholder="이름" class="form-control"
-                                    style="width: 100%;" />
+                                <input id="mname" type="text" name="mname" placeholder="이름" class="form-control"
+                                    style="width: 100%;" th:value="${filterDTO.mname}"/>
                             </div>
 
                             <label class="col-lg-1 col-form-label form-control-label">상태</label>
                             <div class="col-lg-3">
-                                <input type="text" name="sid" placeholder="상태" class="form-control"
-                                    style="width: 100%;" />
+                                <input id="sid" type="text" name="sname" placeholder="상태" class="form-control"
+                                    style="width: 100%;" th:value="${filterDTO.sname}"/>
                             </div>
                         </div>
 
                         <div class="form-group row" style="width: 100%; text-align: center;">
                             <label class="col-lg-1 col-form-label form-control-label">제목</label>
                             <div class="col-lg-10">
-                                <input type="text" name="pname" placeholder="제목" class="form-control"
-                                    style="width: 100%;" />
+                                <input id="pname" type="text" name="pname" placeholder="제목" class="form-control"
+                                    style="width: 100%;" th:value="${filterDTO.pname}"/>
                             </div>
                             <div class="col-lg-1">
                                 <input type="submit" value="검색" style="width: 100%;"
@@ -170,12 +184,24 @@
                         <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers"
                             style="margin: auto; text-align: center;">
                             <ul class="pagination">
-                                <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span
-                                            aria-hidden="true">«</span></a></li>
 
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span
-                                            aria-hidden="true">»</span></a></li>
+                                <li th:if="${page.prev}" class="page-item">
+                                    <a class="page-link" aria-label="Previous" th:data-num="${page.start - 1}">
+                                        <span aria-hidden="true">«</span>
+                                    </a>
+                                </li>
+                                <th:block th:each="i: ${#numbers.sequence(page.start, page.end)}">
+                                    <li th:class="${page.page == i} ? 'page-item active' : 'page-item'">
+                                        <a class="page-link" th:data-num="${i}">[[${i}]]</a>
+                                    </li>
+                                </th:block>
+
+                                <li th:if="${page.next}" class="page-item">
+                                    <a class="page-link" aria-label="Next" th:data-num="${page.end + 1}">
+                                        <span aria-hidden="true">»</span>
+                                    </a>
+                                </li>
+                                            
                             </ul>
                         </nav>
                     </div>
@@ -185,7 +211,30 @@
             </div>
 
         </div>
+        <script layout:fragment="script" th:inline="javascript">
+            const values = [[${filter}]]
+        
+            document.querySelector(".pagination").addEventListener("click", function (e) {
+                e.preventDefault()
+                e.stopPropagation()
+        
+                const target = e.target
+        
+                if(target.tagName !== 'A') {
+                    return
+                }
+        
+                const num = target.getAttribute("data-num")
+        
+                const formObj = document.querySelector("form")
+        
+                formObj.innerHTML += `<input type='hidden' name='page' value='${num}'>`
+                formObj.innerHTML += `<input type='hidden' name='mid' value='[[${mid}]]'>`
+        
+                formObj.submit();
+        
+            }, false)
+        </script>
     </th:block>
 </body>
-
 </html>
