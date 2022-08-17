@@ -46,7 +46,7 @@
                                     <!-- <th style="width: 50px">번호</th> -->
                                     <th width="60">결제카드 유형</th>
                                     <th width="100">결제 내역</th>
-                                    <th width="10">결제 날짜</th>
+                                    <th width="10">신청 날짜</th>
                                     <th width="50">본부</th>
                                     <th width="10">담당</th>
                                     <th width="10">팀</th>
@@ -72,8 +72,8 @@
                                         <a href="#" th:href="@{admindetail(pid=${l.pid})}" th:text="${l.pname}"></a>
                                     </td>
 
-                                    <!-- 결제 날짜 -->
-                                    <td th:text="${l.ptime}"></td>
+                                    <!-- 신청 날짜 -->
+                                    <td th:text="${l.pmoddate}"></td>
 
                                     <td th:text="${l.hname}"></td>
                                     <td th:text="${l.dname}"></td>
