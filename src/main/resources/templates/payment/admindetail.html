@@ -97,9 +97,9 @@
                         <hr style="padding:3px">
                         <div style="margin: 50px;">
                             <table style="margin: auto;display: flex; justify-content: center; width: auto;">
-                                <tr th:each="comments : ${payment}">
+                                <tr th:each="coment: ${comments}">
                                     <!-- <td th:text="${comment.ccontent}" style="max-width: 50px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"></td> -->
-                                    <!-- <td th:text="${comment.ccontent}" style="width: 1000px; margin:20px; text-align: left;"></td>
+                                    <td th:text="${comment.ccontent}" style="width: 1000px; margin:20px; text-align: left;"></td>
                                     <td th:text="${comment.cmoddate}" style="width: 200px; margin:20px; text-align: right;"></td>
                                     <td th:text="${comment.mid}" style="width: 100px; margin:20px; text-align: right;"></td>
                                     <td >
@@ -107,9 +107,7 @@
                                             <input type="submit" value="삭제" class="btn btn-danger" style="width: 60px; margin:20px;">
                                             <input type="hidden" name="cid" th:value="${comment.cid}">
                                         </form>
-                                    </td> -->
-
-                                    <td th:text="${comments}" style="width: 100px; margin:20px; text-align: right;"></td>
+                                    </td>
                                 </tr>
                             </table>
                         </div>

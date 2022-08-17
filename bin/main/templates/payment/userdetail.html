@@ -110,9 +110,14 @@
                         <h3>반려 사유</h3>
                         <hr style="padding:3px">
                         <div style="margin: 50px;">
-                            <div class="form-group row" style="margin: auto;display: flex; justify-content: right;">
-                                <input type="text" name="reply_content" class="form-control" style='height:auto;' readonly></input>
-                            </div>
+                            <table style="margin: auto;display: flex; justify-content: center; width: auto;">
+                                <tr th:each="coment: ${comments}">
+                                    <!-- <td th:text="${comment.ccontent}" style="max-width: 50px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"></td> -->
+                                    <td th:text="${comment.ccontent}" style="width: 1000px; margin:20px; text-align: left;"></td>
+                                    <td th:text="${comment.cmoddate}" style="width: 200px; margin:20px; text-align: right;"></td>
+                                    <td th:text="${comment.mid}" style="width: 100px; margin:20px; text-align: right;"></td>
+                                </tr>
+                            </table>
                         </div>
 
                     </div>
