@@ -3,15 +3,15 @@
 
 <body id="page-top">
     <th:block layout:fragment="content">
-        <!-- Begin Page Content -->
+        <!--* Begin Page Content *-->
         <div class="container-fluid">
-            <!-- 신청관리 게시판 -->
+            <!--* 신청관리 게시판 *-->
             <h1 class="h3 mb-2 text-gray-800">관리자 상세 페이지</h1>
             <p class="mb-4">영수증 신청 관리</p>
 
-            <!-- 신청관리 게시판 -->
+            <!--* 신청관리 게시판 *-->
             <div class="card shadow">
-                <!-- Card Header - Dropdown -->
+                <!--* Card Header - Dropdown *-->
                 <div class="card-body">
                     <div class="float-container">
                         <h2>[[${payment.pname}]]</h2>
@@ -88,9 +88,9 @@
                 </form>
             </div>
 
-            <!-- 답변 게시판 -->
+            <!--* 답변 게시판 *-->
             <div class="card shadow" style="margin-bottom: 50px;">
-                <!-- Card Body -->
+                <!--* Card Body *-->
                 <div class="card-body">
                     <div class="float-container">
                         <h3>반려 사유</h3>
@@ -114,31 +114,34 @@
                         <div style="margin: 50px;">
                             <div class="form-group row" style="margin: auto;display: flex; justify-content: right;">
                                 <textarea type="text" name="reply_content" class="form-control" style='height:100px;'
-                                    readonly></textarea>
+                                readonly>
+                                
+                                
+                                </textarea>
                             </div>
 
                             <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px; display: none;">
 
-                                <!-- 수정 버튼 -->
-                                <!-- <form th:action="@{/payment/adminsuccess}" method="post"> -->
+                                <!--* 수정 버튼 *-->
+                                <!--* <form th:action="@{/payment/adminsuccess}" method="post"> *-->
                                     <input type="submit" value="수정" class="btn btn-primary"
                                         style="width: 150px; margin:20px;">
                                     <input type="hidden" name="pid" th:value="${payment.pid}">
-                                <!-- </form> -->
+                                <!--* </form> *-->
     
-                                <!-- 삭제 버튼 -->
-                                <!-- <form th:action="@{/payment/adminsuccess}" method="post"> -->
+                                <!--* 삭제 버튼 *-->
+                                <!--* <form th:action="@{/payment/adminsuccess}" method="post"> *-->
                                     <input type="submit" value="삭제" class="btn btn-danger"
                                         style="width: 150px; margin:20px;">
                                     <input type="hidden" name="pid" th:value="${payment.pid}">
-                                <!-- </form> -->
+                                <!--* </form> *-->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+             <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -162,6 +165,7 @@
                 </div> 
 
         
+<<<<<<< Updated upstream
             </div>
 
         </div>
@@ -193,10 +197,13 @@
                     <button type="button" class="btn btn-outline-dark closeRegisterBtn" >닫기</button>
 >>>>>>> Stashed changes
                 </div>
+=======
+>>>>>>> Stashed changes
             </div>
 
 <<<<<<< Updated upstream
         </div>
+<<<<<<< Updated upstream
 =======
     
     <div class="modal modifyModal" tabindex="-1">
@@ -204,10 +211,24 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title replyHeader"></h5>
+=======
+
+        <!--*<button type="button" class ="btn btn-primary registerBtn">반려 사유 등록</button> *-->
+
+
+
+    
+    <!--* <div class="modal registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">반려 사유 등록</h5>
+>>>>>>> Stashed changes
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="input-group mb-3">
+<<<<<<< Updated upstream
                         <span class="input-group-text">Reply Text</span>
                         <input type="text" class="form-control modifyText" >
                     </div>
@@ -222,9 +243,99 @@
     </div>
     
 >>>>>>> Stashed changes
+=======
+                        <span class="input-group-text">반려 사유</span>
+                        <input type="text" class="form-control replyText" name="ccontent">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">작성자</span>
+                        <input type="text" class="form-control replyer" name="mid">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary saveBtn">저장</button>
+                    <button type="button" class="btn btn-outline-dark closeRegisterBtn" >닫기</button>
+                </div>
+            </div>
+        </div>
+    </div> *-->
+
+    <!--* <h1>[[${comments[0].pid}]]</h1> *-->
+
+>>>>>>> Stashed changes
     </th:block>
+
+
+    
+        
+    
+    
+    <script layout:fragment="scriptFragment" >
+        
+    
+        //댓글 등록 모달
+        const registerModal = new bootstrap.Modal(document.querySelector(".registerModal"))
+        //registerModel
+        const registerBtn = document.querySelector(".registerBtn")
+        const replyText = document.querySelector(".replyText")
+        const replyer = document.querySelector(".replyer")
+        const closeRegisterBtn = document.querySelector(".closeRegisterBtn")
+    
+        document.querySelector(".registerBtn").addEventListener("click",() => {
+    
+            registerModal.show()
+
+            $('input[name="ccontent"]').val('')
+            $('input[name="mid"]').val('')
+
+            $(".modal-footer .btn").hide()
+            $(".saveBtn, .closeRegisterBtn").show()
+
+    
+        },false);
+
+        closeRegisterBtn.addEventListener("click", function (e){
+            registerModal.hide()
+        },false)
+
+        //pid 이렇게 가져오는 게 맞는지
+        const pid = '[[${comments[0].pid}]]'
+
+        document.querySelector(".saveBtn").addEventListener("click",() => {
+
+            //console.log("-------------------------------")
+            //console.log(document.querySelector('.replyText').value)
+
+            const reply = {
+                pid: pid,
+                ccontent: document.querySelector('.replyText').value,
+                mid: document.querySelector('.replyer').value
+            }
+
+
+            $.ajax({
+                url: '/comments/'+pid,
+                method: 'post',
+                data: JSON.stringify(reply),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function(data){
+                    console.log(data)
+
+                    const newCid = parseInt(data)
+
+                    alert("댓글이 등록되었습니다.")
+                    registerModal.hide()
+                    // loadJSONData()
+                }
+            })
+
+
+        },false);
+    </script>
+    
+
+
 </body>
 
 </html>
-
-<!-- Button trigger modal -->

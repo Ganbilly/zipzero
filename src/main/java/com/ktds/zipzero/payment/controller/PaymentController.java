@@ -35,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.all.dto.TimeDTO;
 import com.ktds.zipzero.comment.dto.CommentDTO;
+import com.ktds.zipzero.comment.service.CommentService;
 import com.ktds.zipzero.payment.dto.FilterDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 import com.ktds.zipzero.payment.service.PaymentService;
@@ -49,6 +50,7 @@ import lombok.extern.log4j.Log4j2;
 public class PaymentController {
 
     private final PaymentService paymentService;
+    private final CommentService commentService;
 
     @Value("${com.ktds.upload.path}")
     private String uploadPath;
@@ -137,6 +139,7 @@ public class PaymentController {
         List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), size);
 
         model.addAttribute("filter", filterList);
+        
 
         return "payment/adminlist";
     }
@@ -438,7 +441,7 @@ public class PaymentController {
 
     /*
      * 만든 사람 : 정문경 (2022-08-12)
-     * 최종 수정 : 정문경 (2022-08-12)
+     * 최종 수정 : 박유진 (2022-08-16)
      * 기능 : pid로 유저의 영수증 상세 페이지 조회
      */
     @GetMapping("/userdetail")
@@ -447,12 +450,13 @@ public class PaymentController {
 
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
 
+        model.addAttribute("comments", commentService.getCommentList(pid, 0, 5));
         return "payment/userdetail";
     }
 
     /*
      * 만든 사람 : 정문경 (2022-08-12)
-     * 최종 수정 : 정문경 (2022-08-12)
+     * 최종 수정 : 박유진 (2022-08-16)
      * 기능 : pid로 관리자의 영수증 상세 페이지 조회
      */
     @GetMapping("/admindetail")
@@ -460,6 +464,8 @@ public class PaymentController {
         log.info("AdminrDetail");
 
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
+
+        model.addAttribute("comments", commentService.getCommentList(pid, 0, 5));
 
         return "payment/admindetail";
     }
