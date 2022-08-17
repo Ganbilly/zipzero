@@ -29,18 +29,20 @@ public class CommentServiceImpl implements CommentService{
     }
 
     /*
-     * 만든사람 : 이은성(2022-08-17)
-     * 최종수정 : 이은성(2022-08-17)
-     * 기능 : 게시글 댓글 조회(mid -> mname으로 대체)
+     * 만든 사람 : 이은성(2022-08-17)
+     * 최종 수정 : 이은성(2022-08-17)
+     * 기능 : 댓글 등록
      */
     @Override
-    public void getCommentsByPid(Long pid) {
+    public List<CommentDTO> getCommentsByPid(Long pid) {
         List<CommentDTO> comments = commentMapper.getCommentsByPid(pid);
 
         log.info(comments);
+
+        return comments;
         
     }
-
+    
     /*
      * 만든사람 : 이은성(2022-08-17)
      * 최종수정 : 이은성(2022-08-17)
@@ -50,6 +52,7 @@ public class CommentServiceImpl implements CommentService{
     public void removeCommentByCid(Long cid) {
        commentMapper.removeCommentByCid(cid); 
     }
+
     
     
 }

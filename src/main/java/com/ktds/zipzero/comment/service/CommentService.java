@@ -1,5 +1,7 @@
 package com.ktds.zipzero.comment.service;
 
+import java.util.List;
+
 import com.ktds.zipzero.comment.dto.CommentDTO;
 
 public interface CommentService {
@@ -16,7 +18,7 @@ public interface CommentService {
      * 최종수정 : 이은성(2022-08-17)
      * 기능 : 게시글 댓글 조회(mid -> mname으로 대체)
      */
-    public void getCommentsByPid(Long pid);
+    public List<CommentDTO> getCommentsByPid(Long pid);
 
     /*
      * 만든사람 : 이은성(2022-08-17)
