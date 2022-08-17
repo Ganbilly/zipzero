@@ -478,6 +478,8 @@ public class PaymentController {
         log.info("UserDetail");
 
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
+        model.addAttribute("comments", commentService.getCommentsByPid(pid));
+        log.info(commentService.getCommentsByPid(pid));
 
         return "payment/userdetail";
     }

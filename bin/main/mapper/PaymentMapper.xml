@@ -8,7 +8,7 @@
   <select id="getUserPage" resultType="PaymentDTO">
     select
       p_id as pid, p_cardtype as pcardtype, p_name as pname,
-      p_time as ptime, p_curstate as pcurstate, s_id as sid
+      p_time as ptime, p_curstate as pcurstate, s_id as sid,p_moddate as pmoddate
     from
       tbl_payment
     where
@@ -31,7 +31,7 @@
 
   <select id="getAdminPage" resultType="FilterDTO">
     select
-      tbl_payment.m_id as mid, hq_name as hq, dept_name as dept, team_name as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice, s_name as sname,tbl_payment.s_id as sid
+      tbl_payment.m_id as mid, hq_name as hq, dept_name as dept, team_name as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice, s_name as sname,tbl_payment.s_id as sid,p_moddate as pmoddate
     from
       tbl_payment
     join

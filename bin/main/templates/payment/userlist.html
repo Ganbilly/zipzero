@@ -35,20 +35,20 @@
                             <tbody>
                                 <tr th:if="${not #lists.isEmpty(paymentList)}" th:each="l,state:${paymentList}">
                                     <!-- 0 법인 1개인 -->
-                                    <td th:if="${l.pcardtype} == 0" th:text="법인"></td>
-                                    <td th:if="${l.pcardtype} == 1" th:text="개인"></td>
+                                    <td th:if="${l.pcardtype} == 0" th:text="법인" width="100"></td>
+                                    <td th:if="${l.pcardtype} == 1" th:text="개인" width="100"></td>
 
                                     <td>
-                                        <a href="#" th:href="@{userdetail(pid=${l.pid})}" th:text="${l.pname}"></a>
+                                        <a href="#" th:href="@{userdetail(pid=${l.pid})}" th:text="${l.pname}" width="10"></a>
                                     </td>
-                                    <td th:text="${l.ptime}"></td>
+                                    <td th:text="${l.pmoddate}" width="10"></td>
 
                                     <!-- 결제 상태 -->
                                     <!-- 1 승인 2 반려 3 대기 4 취소  -->
-                                    <td th:if="${l.sid}== 1" th:text="승인"></td>
-                                    <td th:if="${l.sid}== 2" th:text="반려"></td>
-                                    <td th:if="${l.sid}== 3" th:text="대기"></td>
-                                    <td th:if="${l.sid}== 4" th:text="취소"></td>
+                                    <td th:if="${l.sid}== 1" th:text="승인" width="50"></td>
+                                    <td th:if="${l.sid}== 2" th:text="반려" width="50"></td>
+                                    <td th:if="${l.sid}== 3" th:text="대기" width="50"></td>
+                                    <td th:if="${l.sid}== 4" th:text="취소" width="50"></td>
                                 </tr>
                                 <tr th:unless="${not #lists.isEmpty(paymentList)}" style="text-align: center;">
                                     <td colspan="5">등록된 회원의 글이 없습니다.</td>
