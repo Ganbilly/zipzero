@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="ko">
+<head>
+    <title>Zip Zero</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/bootstrap/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- Custom styles for this template-->
+    <link th:href="@{/bootstrap/css/sb-admin-2.min.css}" rel="stylesheet"/>
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body id="page-top" class="sidebar-toggled">
+    <div id="wrapper">
+        <sidebar th:replace="~{fragments/sidebar :: sidebar}" />
+        
+        <!-- 각 화면 컨텐츠 -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <header th:replace="~{fragments/header :: header}" />
+                <th:block layout:fragment="content" />
+            </div>
+            <footer th:replace="~{fragments/footer :: footer}" />
+        </div>
+    </div>
+
+        <!-- Bootstrap core JavaScript-->
+        <script th:src="@{/bootstrap/vendor/jquery/jquery.min.js}"></script>
+        <script th:src="@{/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    
+        <!-- Core plugin JavaScript-->
+        <script th:src="@{/bootstrap/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    
+        <!-- Custom scripts for all pages-->
+        <script th:src="@{/bootstrap/js/sb-admin-2.min.js}"></script>
+        <th:block layout:fragment="scriptFragment" >
+        </th:block>
+
+
+</body>
+
+
+</html>
