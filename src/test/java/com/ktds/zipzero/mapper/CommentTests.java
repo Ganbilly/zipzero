@@ -33,4 +33,10 @@ public class CommentTests {
         log.info(commentMapper.getCommentsByPid(pid));
 
     }  
+
+    @Test
+    public void removeCommentByCid(){
+        Long cid = 59L;
+        commentMapper.removeCommentByCid(cid);
+    }
 }
