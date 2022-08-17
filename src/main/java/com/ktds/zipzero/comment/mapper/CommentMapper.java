@@ -20,5 +20,7 @@ public interface CommentMapper {
      * 최종수정 : 이은성(2022-08-17)
      * 기능 : 댓글 등록
      */
-    public void registComment(@Param("comment") CommentDTO commentDTO);
+    public void registComment(CommentDTO commentDTO);
+
+    public List<CommentDTO> getCommentsByPid(Long pid);
 }

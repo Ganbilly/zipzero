@@ -11,4 +11,5 @@ public interface CommentService {
      */
     public void registComment(CommentDTO commentDTO);
     
+    public void getCommentsByPid(Long pid);
 }

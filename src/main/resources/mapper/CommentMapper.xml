@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktds.zipzero.comment.mapper.CommentMapper">
+
+    <insert id="registComment">
+      INSERT INTO tbl_comment (c_content, c_regdate, c_moddate, p_id, m_id, c_check)
+      VALUES (#{ccontent}, #{cregdate}, #{cmoddate}, #{pid}, #{mid}, #{ccheck})
+    </insert>
+
+    <select id="getCommentsByPid" resultType="CommentDTO">
+      select 
+        c_content as ccontent,
+        c_regdate as cregdate,
+        m_name as mname
+      from tbl_comment as c
+      join tbl_member as m on m.m_id = c.m_id 
+      where p_id=${pid} and c_check=1
+    </select>
+
+</mapper>
