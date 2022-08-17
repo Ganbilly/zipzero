@@ -12,9 +12,9 @@
     from
       tbl_payment
     where
-      m_id = #{mid} and p_check = 1
+      m_id = #{mid}
     order by
-      p_time desc
+      p_moddate desc
     limit
       #{skip}, #{size}
   </select>
@@ -31,7 +31,7 @@
 
   <select id="getAdminPage" resultType="FilterDTO">
     select
-      tbl_payment.m_id as mid, hq_name as hq, dept_name as dept, team_name as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice, s_name as sname,tbl_payment.s_id as sid,p_moddate as pmoddate
+      tbl_payment.m_id as mid, hq_name as hq, dept_name as dept, team_name as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice, s_name as sname,tbl_payment.s_id as sid
     from
       tbl_payment
     join
@@ -304,7 +304,7 @@
     SELECT
       p_id as pid, p_cardtype as pcardtype, p_name as pname,
       p_time as ptime, s_id as sid, team_name AS tname, hq_name AS hname, dept_name AS dname,
-      p1.m_id AS m_id, m1.m_name AS mname,p1.p_totalprice As tprice
+      p1.m_id AS m_id, m1.m_name AS mname,p1.p_totalprice As tprice,p_moddate as pmoddate
       
     FROM
       (
@@ -354,7 +354,7 @@
       WHERE tResult + dResult + hResult = 1
     )
     order by
-      p_time desc
+      p_moddate desc
     limit #{skip}, #{size}
    </select>
 
