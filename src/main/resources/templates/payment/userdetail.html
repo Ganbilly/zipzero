@@ -23,7 +23,8 @@
                             <div class="column-2 left"
                                 style="width: 500px; height:600px; background-color: #00308f; margin-right: 50px;">
                                 <div>
-                                    <img th:src="@{/views/${payment.receipt}}" id="imgbox" name="image"
+                                    <!-- <img th:src="@{/views/${payment.receipt}}" id="imgbox" name="image" -->
+                                    <img th:src="${payment.preceipt}" id="imgbox" name="image"
                                         style="width:500px; height:600px; object-fit: contain;">
                                 </div>
                             </div>
@@ -57,7 +58,6 @@
                                         <input class="form-control" type="text" th:value="${payment.ptime}" readonly />
                                     </div>
                                 </div>
-
                                 <div class="form-group row" style="width: 600px;">
                                     <label class="col-lg-3 col-form-label form-control-label">상호</label>
                                     <div class="col-lg-9">
@@ -116,7 +116,13 @@
                                     <td th:text="${comment.ccontent}" style="width: 1000px; margin:20px; text-align: left;"></td>
                                     <td th:text="${comment.cregdate}" style="width: 200px; margin:20px; text-align: right;"></td>
                                     <td th:text="${comment.mname}" style="width: 100px; margin:20px; text-align: right;"></td>
-
+                                    <td >
+                                        <form method="post" th:action="@{/comment/delete}">
+                                            <input type="submit" value="삭제" class="btn btn-danger" style="width: 60px; margin:20px;">
+                                            <input type="hidden" name="cid" th:value="${comment.cid}">
+                                            <input type="hidden" name="pid" th:value="${payment.pid}">
+                                        </form>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
