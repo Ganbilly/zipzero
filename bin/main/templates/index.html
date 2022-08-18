@@ -50,13 +50,13 @@
 
                                     <!-- 결제 내역 -->
                                     <td>
-                                        <a href="#" th:href="@{payment/admindetail(pid=${l.pid})}" th:text="${l.pname}"></a>
+                                        <a href="#" th:href="@{payment/admindetail(pid=${l.pid})}" th:text="${l.pname}" style="width: 50px; max-width: 50px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"></a>
                                     </td>
 
                                     <!-- 결제 날짜 -->
                                     <td th:text="${l.ptime}"></td>
 
-                                    <td th:text="${l.hname}"></td>
+                                    <td th:text="${l.hname}" style="width: 80px;"></td>
                                     <td th:text="${l.dname}"></td>
                                     <td th:text="${l.tname}"></td>
                                     <td th:text="${l.m_id}"></td>
