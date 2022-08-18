@@ -52,7 +52,7 @@
         update
             tbl_member
         set
-            m_empno = #{member.mempno}
+            m_empno = #{member.empno},
             m_pw = #{member.mpw},
             m_name = #{member.mname},
             m_check = 1,

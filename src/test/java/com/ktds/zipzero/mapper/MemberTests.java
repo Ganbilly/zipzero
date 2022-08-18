@@ -40,9 +40,11 @@ public class MemberTests {
 
     @Test
     public void changePWencoder() {
-        MemberDTO memberDTO = mapper.getMemberById(2L);
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        memberDTO.setMpw(encoder.encode(memberDTO.getMpw()));
-        mapper.setMember(memberDTO);
+        for(int i = 2; i <= 107; i++) {
+            MemberDTO memberDTO = mapper.getMemberById((long)i);
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            memberDTO.setMpw(encoder.encode(memberDTO.getMpw()));
+            mapper.setMember(memberDTO);
+        }
     }
 }
