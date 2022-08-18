@@ -11,11 +11,38 @@
             m_pw AS mpw,
             m_name AS mname,
             m_check AS mcheck,
-            auth_id AS aid,
+            tbl_auth.auth_name AS authname,
+            tbl_member.auth_id AS authid,
             hq_id AS hqid,
-            dept_id AS did,
-            team_id AS tid
-        from tbl_member where m_id=#{mid}
+            dept_id AS deptid,
+            team_id AS teamid
+        from tbl_member
+        JOIN tbl_auth ON tbl_auth.auth_id = tbl_member.auth_id
+        where m_id=#{mid}
     </select>
+
+    <select id="getMemberAuth" resultType="AuthDTO">
+        select
+            tbl_auth.auth_id AS authid, tbl_auth.auth_name AS authname
+        from
+            tbl_auth, tbl_member
+        where
+            tbl_member.auth_id = tbl_auth.auth_id AND tbl_member.m_id=#{mid}
+    </select>
+
+    <update id="setMember">
+        update
+            tbl_member
+        set
+            m_pw = #{member.mpw},
+            m_name = #{member.mname},
+            m_check = 1,
+            auth_id = #{member.authid},
+            hq_id = #{member.hqid},
+            dept_id = #{member.deptid},
+            team_id = #{member.teamid}
+        where
+            m_id = #{member.mid}
+    </update>
 
 </mapper>

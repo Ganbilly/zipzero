@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -135,6 +136,7 @@ public class PaymentController {
      * 기능 : 영수증 전체 목록 조회 (검색 기능 포함)
      */
     @GetMapping("/adminlist")
+    @PreAuthorize("hasRole('관리자')")
     public String adminPaymentList(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO, 
             @RequestParam(value = "mid") long mid,
             @RequestParam(value = "page", defaultValue = "1") int page,
@@ -162,6 +164,7 @@ public class PaymentController {
      * 기능 : 검색 조건에 맞춰 검색한 결과
      */
     @PostMapping("/adminlist")
+    @PreAuthorize("hasRole('관리자')")
     public String adminPaymentListFilter(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO,
             @RequestParam(value = "mid") long mid,
             @RequestParam(value = "page", defaultValue = "1") int page,
@@ -424,6 +427,7 @@ public class PaymentController {
      * 기능 : 본인 소속의 모든 직원 영수증 내역 조회
      */
     @GetMapping("/adminmanage")
+    @PreAuthorize("hasAnyRole('팀장', '담당', '본부장', '관리자')")
     public String adminlist(Model model, @RequestParam(value = "mid") long mid,
         @RequestParam(value = "page", defaultValue = "1") int page,
         @RequestParam(value = "size", defaultValue = "10") int size) {
@@ -446,6 +450,7 @@ public class PaymentController {
      * 기능 : detail에서 작성한 모달의 결과를 저장하고 adminmanage 페이지 반환
      */
     @PostMapping("/adminmanage")
+    @PreAuthorize("hasAnyRole('팀장', '담당', '본부장', '관리자')")
     public String adminManageComment(Model model, @ModelAttribute("commentDTO") CommentDTO commentDTO) {
         log.info("adminManageComment");
         commentDTO.setCregdate(LocalDateTime.now());
@@ -484,6 +489,7 @@ public class PaymentController {
      * 기능 : pid로 관리자의 영수증 상세 페이지 조회
      */
     @GetMapping("/admindetail")
+    @PreAuthorize("hasAnyRole('팀장', '담당', '본부장', '관리자')")
     public String adminDetail(Model model, @RequestParam(value = "pid") long pid) {
         log.info("AdminDetail");
 
@@ -499,6 +505,7 @@ public class PaymentController {
      */
     @ResponseBody
     @GetMapping(value = "downloadcsv")
+    @PreAuthorize("hasAnyRole('팀장', '담당', '본부장', '관리자')")
     public ResponseEntity<String> downloadCSV(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO) {
 		log.info("downloadCSV");
 		

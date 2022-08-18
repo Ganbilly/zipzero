@@ -1,9 +1,16 @@
 package com.ktds.zipzero.mapper;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.ktds.zipzero.member.dto.MemberDTO;
+import com.ktds.zipzero.member.dto.MemberRole;
 import com.ktds.zipzero.member.mapper.MemberMapper;
 
 import lombok.extern.log4j.Log4j2;
@@ -15,6 +22,9 @@ public class MemberTests {
     @Autowired(required = false)
     MemberMapper mapper;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Test
     public void getMemberByIdTests() {
         Long id = 3L;
@@ -22,4 +32,17 @@ public class MemberTests {
 
     }
 
+    @Test
+    public void getMemberAuth() {
+        long mid = 1L;
+        log.info(Stream.of(MemberRole.values()).map(Enum::name).collect(Collectors.toList()));
+    }
+
+    @Test
+    public void changePWencoder() {
+        MemberDTO memberDTO = mapper.getMemberById(2L);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        memberDTO.setMpw(encoder.encode(memberDTO.getMpw()));
+        mapper.setMember(memberDTO);
+    }
 }
