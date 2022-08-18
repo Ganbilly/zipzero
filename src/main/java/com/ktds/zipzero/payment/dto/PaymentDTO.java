@@ -29,6 +29,9 @@ public class PaymentDTO {
     private String mname;
     private Long tprice;
 
+    private String preceiptmonth;
+    private String preceiptdate;
+
     private Long sid;
     private Long mid;
     private Long ptypecode;

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -21,6 +22,8 @@ import java.util.UUID;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +33,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,6 +43,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.all.dto.TimeDTO;
 import com.ktds.zipzero.comment.dto.CommentDTO;
+import com.ktds.zipzero.comment.service.CommentService;
 import com.ktds.zipzero.payment.dto.FilterDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 import com.ktds.zipzero.payment.service.PaymentService;
@@ -53,6 +58,8 @@ import lombok.extern.log4j.Log4j2;
 public class PaymentController {
 
     private final PaymentService paymentService;
+
+    private final CommentService commentService;
 
     @Value("${com.ktds.upload.path}")
     private String uploadPath;
@@ -264,8 +271,7 @@ public class PaymentController {
     /*
      * 만든사람 : 이은성(2022-08-11)
      * 최종수정 : 이은성(2022-08-11)
-     * 기능 : /payment/regist 페이지에서 이미지 등록시 api를 통해 객체로 반환 ( image -> json ->
-     * PaymentDTO )
+     * 기능 : /payment/regist 페이지에서 이미지 등록시 api를 통해 객체로 반환 ( image -> json -> PaymentDTO )
      */
     @CrossOrigin
     @PostMapping(value = "/registrec", produces = { "application/json" })
@@ -284,8 +290,8 @@ public class PaymentController {
             uploadPathFolder.mkdirs();
         }
 
-        String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
-        Path savePath = Paths.get(saveName);
+        String saveName = uuid + "_" + fileName;
+        Path savePath = Paths.get(uploadPath + File.separator + folderPath + File.separator + saveName);
 
         log.info("-------------------------------------" + saveName);
 
@@ -298,7 +304,7 @@ public class PaymentController {
         // API 호출
         String apiURL = "https://9bpsb8rl83.apigw.ntruss.com/custom/v1/17635/3f8a9f00642ae1ed5a37e05854e1ed8f7b295c6a7cf2b987b31dfa2a5740aec3/document/receipt";
         String secretKey = key;
-        String imageFile = saveName;
+        String imageFile = uploadPath +  File.separator + folderPath + File.separator + saveName;
 
         String result = null;
 
@@ -422,6 +428,34 @@ public class PaymentController {
     }
 
     /*
+     * 만든사람 : 이은성(2022-08-17)
+     * 최종수정 : 이은성(2022-08-17)
+     * 기능 : 저장된 파일 표시
+     */
+    @GetMapping("/view/{pathName1}/{pathName2}/{fileName}")
+    public ResponseEntity<Resource> viewFileGET(
+            @PathVariable String pathName1,
+            @PathVariable String pathName2,
+            @PathVariable String fileName){
+        String path = uploadPath + File.separator + pathName1 + File.separator + pathName2 + File.separator + fileName;
+        // String[] array = fileName.split("\\");
+        // for (String str : array) {
+        //     path += File.separator + str; 
+        //     log.info(str);
+        // }
+        Resource resource = new FileSystemResource(path);
+        String resourceName = resource.getFilename();
+        HttpHeaders headers = new HttpHeaders();
+
+        try{
+            headers.add("Content-Type", Files.probeContentType( resource.getFile().toPath() ));
+        } catch(Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.ok().headers(headers).body(resource);
+    }
+
+    /*
      * 만든 사람 : 김예림(2022-08-10)
      * 최종 수정 : 김예림(2022-08-12)
      * 기능 : 본인 소속의 모든 직원 영수증 내역 조회
@@ -457,7 +491,7 @@ public class PaymentController {
         commentDTO.setCmoddate(LocalDateTime.now());
         commentDTO.setCcheck(1);
         commentDTO.setMid(paymentService.getMidByPid(commentDTO.getPid()));
-        paymentService.registComment(commentDTO);
+        commentService.registComment(commentDTO);
 
         PaymentDTO paymentDTO = paymentService.getPaymentDetail(commentDTO.getPid());
         paymentDTO.setSid(2L);
@@ -479,6 +513,8 @@ public class PaymentController {
         log.info("UserDetail");
 
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
+        model.addAttribute("comments", commentService.getCommentsByPid(pid));
+        log.info(commentService.getCommentsByPid(pid));
 
         return "payment/userdetail";
     }
@@ -491,9 +527,12 @@ public class PaymentController {
     @GetMapping("/admindetail")
     @PreAuthorize("hasAnyRole('팀장', '담당', '본부장', '관리자')")
     public String adminDetail(Model model, @RequestParam(value = "pid") long pid) {
-        log.info("AdminDetail");
-
+        log.info("AdminDetail-------------------------------------");
+        
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
+        model.addAttribute("comments", commentService.getCommentsByPid(pid));
+        log.info("result-------------------------------------");
+        log.info(commentService.getCommentsByPid(pid));
 
         return "payment/admindetail";
     }

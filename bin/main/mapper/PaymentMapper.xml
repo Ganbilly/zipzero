@@ -8,13 +8,13 @@
   <select id="getUserPage" resultType="PaymentDTO">
     select
       p_id as pid, p_cardtype as pcardtype, p_name as pname,
-      p_time as ptime, p_curstate as pcurstate, s_id as sid
+      p_time as ptime, p_curstate as pcurstate, s_id as sid,p_moddate as pmoddate
     from
       tbl_payment
     where
-      m_id = #{mid} and p_check = 1
+      m_id = #{mid}
     order by
-      p_time desc
+      p_moddate desc
     limit
       #{skip}, #{size}
   </select>
@@ -226,7 +226,9 @@
       p_storename as pstorename, p_totalprice as ptotalprice,
       p_cardtype as pcardtype, p_receipt as preceipt,
       p_curstate as pcurstate, p_finstate as pfinstate,
-      s_id as sid, m_id as mid, ptype_code as ptypecode
+      s_id as sid, m_id as mid, ptype_code as ptypecode,
+      CONCAT(TO_CHAR(p_regdate, 'yyyy'), TO_CHAR(p_regdate, 'MM')) as preceiptmonth,
+      TO_CHAR(p_regdate, 'dd') AS preceiptdate
     from
       tbl_payment
     where
@@ -302,7 +304,7 @@
     SELECT
       p_id as pid, p_cardtype as pcardtype, p_name as pname,
       p_time as ptime, s_id as sid, team_name AS tname, hq_name AS hname, dept_name AS dname,
-      p1.m_id AS m_id, m1.m_name AS mname,p1.p_totalprice As tprice
+      p1.m_id AS m_id, m1.m_name AS mname,p1.p_totalprice As tprice,p_moddate as pmoddate
       
     FROM
       (
@@ -352,7 +354,7 @@
       WHERE tResult + dResult + hResult = 1
     )
     order by
-      p_time desc
+      p_moddate desc
     limit #{skip}, #{size}
    </select>
 
@@ -378,9 +380,5 @@
       m_id = #{mid}
   </select>
 
-  <insert id="registComment">
-    INSERT INTO tbl_comment (c_content, c_regdate, c_moddate, p_id, m_id, c_check)
-    VALUES (#{comment.ccontent}, #{comment.cregdate}, #{comment.cmoddate}, #{comment.pid}, #{comment.mid}, #{comment.ccheck})
-  </insert>
 
 </mapper>

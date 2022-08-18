@@ -71,12 +71,7 @@ public interface PaymentMapper {
     public List<PaymentDTO> getMidListByAuth(@Param("mid") Long mid);
     public List<PaymentDTO> getMidPageByAuth(@Param("mid") Long mid, @Param("skip") int skip, @Param("size") int size);
    
-    /*
-     * 만든사람 : 정문경(2022-08-12)
-     * 최종수정 : 정문경(2022-08-12)
-     * 기능 : 댓글 등록
-     */
-    public void registComment(@Param("comment") CommentDTO commentDTO);
+
 }
 
    

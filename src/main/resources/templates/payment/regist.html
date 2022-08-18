@@ -34,24 +34,26 @@
 
                 <div class="card-body">
                     <div class="float-container">
-                        <div class="row double" style="margin: auto;display: flex; justify-content: center; margin-bottom: 50px;">
+                        <div class="row double" style="margin: auto;display: flex; justify-content: center; margin-top: 50px; margin-bottom: 10px;">
                             <div class="column-2 left"
-                                style="width: 500px; height:600px; background-color: #00308f; margin-right: 50px;">
+                                style="width: 500px; height:600px; background-color: #ffffff; margin-right: 50px;">
                                 <div>
-                                    <img th:src="@{/bootstrap/img/logo.png}" id="imgbox" name="image" style="width:500px; height:600px; object-fit: contain;">
+                                    <img th:src="@{/bootstrap/img/upload.png}" id="imgbox" name="image"
+                                        style="width:500px; height:500px; object-fit: contain;">
                                 </div>
 
                                 <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
-                                    <input type="file" name="ab_img" id='ab_img' accept="image/*" onchange="previewFile()">
-                                    <button id="btnrec" class="btn btn-success uploadBtn">인식</button>
-                                </div> 
+                                    <input type="file" name="ab_img" id='ab_img' accept="image/*"
+                                        onchange="previewFile()" required>
+                                    <button id="btnrec" class="btn btn-success uploadBtn" style="width: 150px;">인식</button>
+                                </div>
                             </div>
 
-                            <div class="row" style="width: 600px; height:300px;">
+                            <div class="row" style="width: 600px; height:auto;">
                                 <form method="post" action="/payment/registadd">
                                     <input class="form-control" type="hidden" name="mid" th:value="1" />
                                     <input type="text" name="pname" class="form-control" id="pname" placeholder="제목"
-                                        style="height:50px;">
+                                        style="height:50px;" required>
                                     <hr style="padding:3px">
                                     <input class="form-control" type="hidden" name="mid" th:value="1" />
                                     <div class="form-group row" style="width: 600px;">
@@ -80,17 +82,17 @@
                                     <div class="form-group row" style="width: 600px;">
                                         <label class="col-lg-3 col-form-label form-control-label">이용 날짜</label>
                                         <div class="col-lg-2">
-                                            <input class="form-control" type="text" name="year" />
+                                            <input class="form-control" type="text" name="year" required/>
                                         </div>
                                         <label class="col-lg-1 col-form-label form-control-label">년</label>
                                         
                                         <div class="col-lg-2">
-                                            <input class="form-control" type="text" name="month" />
+                                            <input class="form-control" type="text" name="month" required/>
                                         </div>
                                         <label class="col-lg-1 col-form-label form-control-label">월</label>
 
                                         <div class="col-lg-2">
-                                            <input class="form-control" type="text" name="date" />
+                                            <input class="form-control" type="text" name="date" required/>
                                         </div>
                                         <label class="col-lg-1 col-form-label form-control-label">일</label>
                                     </div>
@@ -98,15 +100,15 @@
                                     <div class="form-group row" style="width: 600px;">
                                         <label class="col-lg-3 col-form-label form-control-label">이용 시간</label>
                                         <div class="col-lg-2">
-                                            <input class="form-control" type="text" name="hour" />
+                                            <input class="form-control" type="text" name="hour" required/>
                                         </div>
                                         <label class="col-lg-1 col-form-label form-control-label">시</label>
                                         <div class="col-lg-2">
-                                            <input class="form-control" type="text" name="min" />
+                                            <input class="form-control" type="text" name="min" required/>
                                         </div>
                                         <label class="col-lg-1 col-form-label form-control-label">분</label>
                                         <div class="col-lg-2">
-                                            <input class="form-control" type="text" name="sec" />
+                                            <input class="form-control" type="text" name="sec" required/>
                                         </div>
                                         <label class="col-lg-1 col-form-label form-control-label">초</label>
                                     </div>
@@ -114,14 +116,14 @@
                                     <div class="form-group row" style="width: 600px;">
                                         <label class="col-lg-3 col-form-label form-control-label">상호</label>
                                         <div class="col-lg-9">
-                                            <input class="form-control" type="text" name="pstorename" />
+                                            <input class="form-control" type="text" name="pstorename" required/>
                                         </div>
                                     </div>
 
                                     <div class="form-group row" style="width: 600px;">
                                         <label class="col-lg-3 col-form-label form-control-label">사용 금액합계</label>
                                         <div class="col-lg-9">
-                                            <input class="form-control" type="text" name="ptotalprice" />
+                                            <input class="form-control" type="text" name="ptotalprice" required/>
                                         </div>
                                     </div>
                                     <input type="hidden" name="preceipt"/>

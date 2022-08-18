@@ -12,20 +12,22 @@
             <!-- 신청관리 게시판 -->
             <div class="card shadow">
                 <!-- Card Header - Dropdown -->
-                <div class="card-body">
-                    <div class="float-container">
+                <div class="card-body" style="height: auto;">
+                    <div class="float-container" style="height: auto;">
                         <h2>[[${payment.pname}]]</h2>
                         <div class="border-bottom-primary" style="padding:3px; margin-bottom: 50px"></div>
                         <div class="row double"
-                            style="margin: auto;display: flex; justify-content: center; margin-bottom: 50px">
+                            style="margin: auto;display: flex; justify-content: center; margin-bottom: 50px; height: auto;">
                             <div class="column-2 left"
-                                style="width: 500px; height:600px; background-color: #00308f; margin-right: 50px;">
+                                style="width: auto; height:auto; background-color: #00308f; margin-right: 50px; height: auto">
                                 <div class="col-sm-10">
-                                    <img th:src="@{/bootstrap/img/logo.png}">
+                                    <!-- <img th:src="@{/views/${payment.receipt}}" id="imgbox" name="image" style="width:500px; height:600px; object-fit: contain;"> -->
+                                    <img  th:src="@{view/{path1}/{path2}/{path3}(path1=${payment.preceiptmonth}, path2=${payment.preceiptdate}, path3=${payment.preceipt})}" id="imgbox" name="image"
+                                        style="width:500px; height:600px; object-fit: contain;">
                                 </div>
                             </div>
 
-                            <div class="row" style="width: 600px; height:300px;">
+                            <div class="row" style="width: 600px; margin-top: 50px;">
 
                                 <div class="form-group row" style="width: 600px;">
                                     <label class="col-lg-3 col-form-label form-control-label">카드 유형</label>
@@ -63,7 +65,7 @@
                                 <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
 
                                     <form th:action="@{/payment/adminsuccess}" method="post">
-                                        <input type="submit" value="승인" class="btn btn-primary"
+                                        <input type="submit" value="승인" class="btn btn-success"
                                             style="width: 150px; margin:20px;">
                                         <input type="hidden" name="pid" th:value="${payment.pid}">
                                     </form>
@@ -96,11 +98,6 @@
                         <h3>반려 사유</h3>
                         <hr style="padding:3px">
                         <div style="margin: 50px;">
-                            <div class="form-group row" style="margin: auto;display: flex; justify-content: right;">
-                                <textarea type="text" name="reply_content" class="form-control" style='height:100px;'
-                                    readonly></textarea>
-                            </div>
-
                             <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px; display: none;">
 
                                 <!-- 수정 버튼 -->
@@ -117,6 +114,21 @@
                                     <input type="hidden" name="pid" th:value="${payment.pid}">
                                 <!-- </form> -->
                             </div>
+                            <table style="margin: auto;display: flex; justify-content: center; width: auto;">
+                                <tr th:each="comment: ${comments}">
+                                    <!-- <td th:text="${comment.ccontent}" style="max-width: 50px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"></td> -->
+                                    <td th:text="${comment.ccontent}" style="width: 1000px; margin:20px; text-align: left;"></td>
+                                    <td th:text="${comment.cregdate}" style="width: 200px; margin:20px; text-align: right;"></td>
+                                    <td th:text="${comment.mname}" style="width: 100px; margin:20px; text-align: right;"></td>
+                                    <td >
+                                        <form method="post" th:action="@{/comment/delete}">
+                                            <input type="submit" value="삭제" class="btn btn-danger" style="width: 60px; margin:20px;">
+                                            <input type="hidden" name="cid" th:value="${comment.cid}">
+                                            <input type="hidden" name="pid" th:value="${payment.pid}">
+                                        </form>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>

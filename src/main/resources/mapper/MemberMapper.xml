@@ -20,7 +20,6 @@
         JOIN tbl_auth ON tbl_auth.auth_id = tbl_member.auth_id
         where m_id=#{mid}
     </select>
-
     <select id="getMemberAuth" resultType="AuthDTO">
         select
             tbl_auth.auth_id AS authid, tbl_auth.auth_name AS authname
@@ -44,5 +43,4 @@
         where
             m_id = #{member.mid}
     </update>
-
 </mapper>
