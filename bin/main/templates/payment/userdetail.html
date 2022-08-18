@@ -1,0 +1,147 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<body id="page-top">
+
+    <th:block layout:fragment="content">
+        <!-- Begin Page Content -->
+
+        <div class="container-fluid">
+            <h1 class="h3 mb-2 text-gray-800">나의 신청현황 조회</h1>
+            <p class="mb-4">신청 상태를 확인하세요</p>
+
+            <!-- 신청 게시판 -->
+            <div class="card shadow">
+                <!-- Card Body -->
+
+                <div class="card-body">
+                    <div class="float-container">
+                        <h2>[[${payment.pname}]]</h2>
+                        <div class="border-bottom-primary" style="padding:3px; margin-bottom: 50px"></div>
+                        <div class="row double"
+                            style="margin: auto;display: flex; justify-content: center; margin-bottom: 20px;">
+                            <div class="column-2 left"
+                                style="width: 500px; height:600px; margin-right: 50px;">
+                                <div>
+                                    <img  th:src="@{view/{path1}/{path2}/{path3}(path1=${payment.preceiptmonth}, path2=${payment.preceiptdate}, path3=${payment.preceipt})}" id="imgbox" name="image"
+                                        style="width:500px; height:600px; object-fit: contain;">
+                                </div>
+                            </div>
+
+                            <div class="row" style="width: 600px;">
+                                <input class="form-control" type="hidden" name="mid" th:value="1" />
+                                <div class="form-group row" style="width: 600px;margin-top: 50px;">
+                                    <label class="col-lg-3 col-form-label form-control-label">카드 유형</label>
+                                    <div class="col-lg-9">
+                                        <input class="form-control" type="text" th:if="${payment.pcardtype}==0"
+                                            th:value="법인" readonly />
+                                        <input class="form-control" type="text" th:if="${payment.pcardtype}==1"
+                                            th:value="개인" readonly />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" style="width: 600px;">
+                                    <label class="col-lg-3 col-form-label form-control-label">사용 목적</label>
+                                    <div class="col-lg-9">
+                                        <input class="form-control" type="text" th:if="${payment.ptypecode}==1" th:value="회식" readonly />
+                                        <input class="form-control" type="text" th:if="${payment.ptypecode}==2" th:value="택시" readonly />
+                                        <input class="form-control" type="text" th:if="${payment.ptypecode}==3" th:value="비품" readonly />
+                                        <input class="form-control" type="text" th:if="${payment.ptypecode}==4" th:value="라이센스" readonly />
+                                        <input class="form-control" type="text" th:if="${payment.ptypecode}==5" th:value="기타" readonly />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" style="width: 600px;">
+                                    <label class="col-lg-3 col-form-label form-control-label">이용 날짜</label>
+                                    <div class="col-lg-9">
+                                        <input class="form-control" type="text" th:value="${payment.ptime}" readonly />
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="width: 600px;">
+                                    <label class="col-lg-3 col-form-label form-control-label">상호</label>
+                                    <div class="col-lg-9">
+                                        <input class="form-control" type="text" th:value="${payment.pstorename}"
+                                            readonly />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" style="width: 600px;">
+                                    <label class="col-lg-3 col-form-label form-control-label">사용 금액합계</label>
+                                    <div class="col-lg-9">
+                                        <input class="form-control" type="text" th:value="${payment.ptotalprice}"
+                                            readonly />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row" style="width: 600px;">
+                                    <label class="col-lg-3 col-form-label form-control-label">상태</label>
+                                    <div class="col-lg-9">
+                                        <input th:if="${payment.sid == 1}" class="form-control" type="text" value="승인" readonly />
+                                        <input th:if="${payment.sid == 2}" class="form-control" type="text" value="반려" readonly />
+                                        <input th:if="${payment.sid == 3}" class="form-control" type="text" value="대기" readonly />
+                                        <input th:if="${payment.sid == 4}" class="form-control" type="text" value="취소" readonly />
+                                    </div>
+                                </div>
+
+                                <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
+
+                                    <form th:action="@{/payment/modify}" method="post">
+                                        <input type="submit" value="수정" class="btn btn-primary"
+                                            style="width: 150px; margin:20px;">
+                                        <input type="hidden" name="pid" th:value="${payment.pid}">
+                                    </form>
+
+                                    <form th:action="@{/payment/delete}" method="post">
+                                        <input type="submit" value="삭제" class="btn btn-danger"
+                                            style="width: 150px; margin:20px;">
+                                        <input type="hidden" name="pid" th:value="${payment.pid}">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row"
+                style="width: 600px; margin: auto;display: flex; justify-content: center;  margin-top: 20px; margin-bottom: 20px;">
+                <form th:action="@{/payment/userlist}" method="get">
+                    <input type="submit" value="목록으로" class="btn btn-info" style="width: 300px; margin:20px;">
+                    <input type="hidden" name="mid" th:value="${payment.mid}" />
+                </form>
+            </div>
+
+            <!-- 답변 게시판 -->
+            <div class="card shadow" style="margin-bottom: 50px;">
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="float-container">
+                        <h3>반려 사유</h3>
+                        <hr style="padding:3px">
+                        <div style="margin: 50px;">
+                            <table style="margin: auto;display: flex; justify-content: center; width: auto;">
+                                <tr th:each="comment: ${comments}">
+                                    <!-- <td th:text="${comment.ccontent}" style="max-width: 50px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"></td> -->
+                                    <td th:text="${comment.ccontent}" style="width: 1000px; margin:20px; text-align: left;"></td>
+                                    <td th:text="${comment.cregdate}" style="width: 200px; margin:20px; text-align: right;"></td>
+                                    <td th:text="${comment.mname}" style="width: 100px; margin:20px; text-align: right;"></td>
+                                    <td >
+                                        <form method="post" th:action="@{/comment/delete}">
+                                            <input type="submit" value="삭제" class="btn btn-danger" style="width: 60px; margin:20px;">
+                                            <input type="hidden" name="cid" th:value="${comment.cid}">
+                                            <input type="hidden" name="pid" th:value="${payment.pid}">
+                                        </form>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </th:block>
+</body>
+
+</html>
