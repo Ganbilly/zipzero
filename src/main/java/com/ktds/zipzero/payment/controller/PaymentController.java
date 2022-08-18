@@ -78,7 +78,7 @@ public class PaymentController {
         log.info("PaymentList");
 
         List<PaymentDTO> filterList = paymentService.getAllPaymentList(mid);
-        PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
+        PageDTO pageDTO = PageDTO.builder().page(page).size(10).total(filterList.size()).build();
         pageDTO.setPaging();
 
         model.addAttribute("mid", mid);
