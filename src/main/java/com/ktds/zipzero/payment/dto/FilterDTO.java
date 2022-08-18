@@ -17,8 +17,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class FilterDTO {
     @Builder.Default
-    private LocalDate startTime = LocalDate.parse("1000-01-01");
-
+    private LocalDate startTime = LocalDate.parse("0001-01-01");
     private LocalDate endTime;
     private LocalDate ptime;
 
@@ -49,7 +48,6 @@ public class FilterDTO {
 
     public LocalDate getEndTime() {
         if (this.endTime == null) {
-            //return LocalDate.ofYearDay(9999, 360);
             return LocalDate.now();
         }
         return this.endTime;
