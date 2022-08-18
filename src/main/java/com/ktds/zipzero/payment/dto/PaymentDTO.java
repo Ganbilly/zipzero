@@ -36,4 +36,5 @@ public class PaymentDTO {
     private Long mid;
     private String mname;
     private Long ptypecode;
+    private String empno;
 }

@@ -36,6 +36,8 @@ public class WebController {
         PageDTO pageDTO = PageDTO.builder().page(1).size(5).total(5).build();
         pageDTO.setPaging();
 
+        log.info("=================== " + paymentService.getMyPaymentsForMain(mymid).size());
+
         model.addAttribute("myPaymentList", paymentService.getMyPaymentsForMain(mymid));
         model.addAttribute("adminPaymentList", paymentService.getAdminPaymentsForMain(mymid));
         log.info("index");

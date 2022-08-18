@@ -59,7 +59,7 @@
                                     <td th:text="${l.hname}" style="width: 80px;"></td>
                                     <td th:text="${l.dname}"></td>
                                     <td th:text="${l.tname}"></td>
-                                    <td th:text="${l.m_id}"></td>
+                                    <td th:text="${l.empno}"></td>
                                     <td th:text="${l.mname}"></td>
                                     <td th:text="${l.tprice}"></td>
 
@@ -85,7 +85,7 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
                     style="background-color: #00308f;">
                     <h6 class="m-0 font-weight-bold" style="color: #fff;">나의 신청현황 조회(최신순 최대 5개 출력)</h6>
-                    <a style="color: #fff;" href="/payment/userlist?mid=1"> 더보기 </a>
+                    <a style="color: #fff;" th:href="@{/payment/userlist(mid=${user.member.mid})}"> 더보기 </a>
                 </div>
                 <!-- Card Body -->
 

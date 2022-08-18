@@ -400,7 +400,7 @@
       SELECT
       p_id as pid, p_cardtype as pcardtype, p_name as pname,
       p_time as ptime, s_id as sid, team_name AS tname, hq_name AS hname, dept_name AS dname,
-      p1.m_id AS mid, m1.m_name AS mname,p1.p_totalprice As tprice
+      p1.m_id AS mid, m1.m_name AS mname,p1.p_totalprice As tprice, m1.m_empno as empno
       
     FROM
       (
@@ -462,6 +462,7 @@
       p_name as pname,
       p_moddate as pmoddate,
       s_name as sname
+
     from
       tbl_payment
     join
