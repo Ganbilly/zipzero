@@ -12,7 +12,7 @@
     from
       tbl_payment
     where
-      m_id = #{mid} and p_check = 1
+      m_id = #{mid}
     order by
       p_moddate desc
     limit
@@ -64,7 +64,7 @@
       <if test="filter.mname != ''">
         AND m_name LIKE concat('%', #{filter.mname}, '%')
       </if>
-      AND (#{filter.pcardtype} = 2 OR p_cardtype = #{filter.pcardtype})
+        AND (#{filter.pcardtype} = 2 OR p_cardtype = #{filter.pcardtype})
       <if test="filter.pname != ''">
         AND p_name LIKE concat('%', #{filter.pname}, '%')
       </if>
@@ -312,7 +312,7 @@
     SELECT
       p_id as pid, p_cardtype as pcardtype, p_name as pname, p_moddate as pmoddate,
       p_time as ptime, s_id as sid, team_name AS tname, hq_name AS hname, dept_name AS dname,
-      p1.m_id AS m_id, m1.m_name AS mname,p1.p_totalprice As tprice
+      p1.m_id AS m_id, m1.m_name AS mname,p1.p_totalprice As tprice,p_moddate as pmoddate
       
     FROM
       (

@@ -1,5 +1,7 @@
 package com.ktds.zipzero.member.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -14,5 +16,6 @@ public class MemberDTO {
     private Long hqid;
     private Long deptid;
     private Long teamid;
-
+    private String authname;
+    private List<AuthDTO> authList;
 }
