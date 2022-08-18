@@ -1,0 +1,237 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<body id="page-top">
+
+    <th:block layout:fragment="content">
+        <!-- Begin Page Content -->
+
+        <!-- 스피너 start -->
+        <div id="loader">
+            <div style="font-size: 10px; color:rgb(11, 255, 214);">
+                <i class="fas fa-spinner fa-10x fa-spin fa-spinner"></i>
+            </div>
+        </div>
+
+        <style>
+            #loader{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                z-index: 10;
+                visibility: hidden;
+            }
+        </style>
+        <!-- 스피너 end -->
+        
+        <div class="container-fluid">
+            <h1 class="h3 mb-2 text-gray-800">청구 신청</h1>
+            <p class="mb-4">영수증 청구를 신청하시오.</p>
+
+            <!-- 신청 게시판 -->
+            <div class="card shadow" style="margin-bottom: 50px;">
+                <!-- Card Body -->
+
+                <div class="card-body">
+                    <div class="float-container">
+                        <div class="row double" style="margin: auto;display: flex; justify-content: center; margin-top: 50px; margin-bottom: 10px;">
+                            <div class="column-2 left"
+                                style="width: 500px; height:600px; background-color: #ffffff; margin-right: 50px;">
+                                <div>
+                                    <img th:src="@{/bootstrap/img/upload.png}" id="imgbox" name="image"
+                                        style="width:500px; height:500px; object-fit: contain;">
+                                </div>
+
+                                <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
+                                    <input type="file" name="ab_img" id='ab_img' accept="image/*"
+                                        onchange="previewFile()" required>
+                                    <button id="btnrec" class="btn btn-success uploadBtn" style="width: 150px;">인식</button>
+                                </div>
+                            </div>
+
+                            <div class="row" style="width: 600px; height:auto;">
+                                <form method="post" action="/payment/registadd">
+                                    <input class="form-control" type="hidden" name="mid" th:value="1" />
+                                    <input type="text" name="pname" class="form-control" id="pname" placeholder="제목"
+                                        style="height:50px;" required>
+                                    <hr style="padding:3px">
+                                    <input class="form-control" type="hidden" name="mid" th:value="1" />
+                                    <div class="form-group row" style="width: 600px;">
+                                        <label class="col-lg-3 col-form-label form-control-label">카드 유형</label>
+                                        <div class="col-lg-9">
+                                            <select class="form-control" name="pcardtype">
+                                                <option value="0">법인</option>
+                                                <option value="1">개인</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row" style="width: 600px;">
+                                        <label class="col-lg-3 col-form-label form-control-label">사용 목적</label>
+                                        <div class="col-lg-9">
+                                            <select class="form-control" name="ptypecode">
+                                                <option value="1">회식</option>
+                                                <option value="2">택시</option>
+                                                <option value="3">비품</option>
+                                                <option value="4">라이센스</option>
+                                                <option value="5">기타</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row" style="width: 600px;">
+                                        <label class="col-lg-3 col-form-label form-control-label">이용 날짜</label>
+                                        <div class="col-lg-2">
+                                            <input class="form-control" type="text" name="year" required/>
+                                        </div>
+                                        <label class="col-lg-1 col-form-label form-control-label">년</label>
+                                        
+                                        <div class="col-lg-2">
+                                            <input class="form-control" type="text" name="month" required/>
+                                        </div>
+                                        <label class="col-lg-1 col-form-label form-control-label">월</label>
+
+                                        <div class="col-lg-2">
+                                            <input class="form-control" type="text" name="date" required/>
+                                        </div>
+                                        <label class="col-lg-1 col-form-label form-control-label">일</label>
+                                    </div>
+
+                                    <div class="form-group row" style="width: 600px;">
+                                        <label class="col-lg-3 col-form-label form-control-label">이용 시간</label>
+                                        <div class="col-lg-2">
+                                            <input class="form-control" type="text" name="hour" required/>
+                                        </div>
+                                        <label class="col-lg-1 col-form-label form-control-label">시</label>
+                                        <div class="col-lg-2">
+                                            <input class="form-control" type="text" name="min" required/>
+                                        </div>
+                                        <label class="col-lg-1 col-form-label form-control-label">분</label>
+                                        <div class="col-lg-2">
+                                            <input class="form-control" type="text" name="sec" required/>
+                                        </div>
+                                        <label class="col-lg-1 col-form-label form-control-label">초</label>
+                                    </div>
+
+                                    <div class="form-group row" style="width: 600px;">
+                                        <label class="col-lg-3 col-form-label form-control-label">상호</label>
+                                        <div class="col-lg-9">
+                                            <input class="form-control" type="text" name="pstorename" required/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row" style="width: 600px;">
+                                        <label class="col-lg-3 col-form-label form-control-label">사용 금액합계</label>
+                                        <div class="col-lg-9">
+                                            <input class="form-control" type="text" name="ptotalprice" required/>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="preceipt"/>
+                                    <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
+                                        <input class="btn btn-primary" type="submit" role="button" value="신청"
+                                            style="width: 200px; margin:20px;">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <script>
+
+            var a;
+            const ptime = document.getElementsByName("ptime");
+            const pstorename = document.getElementsByName("pstorename");
+            const ptotalprice = document.getElementsByName("ptotalprice");
+            const ptypecode = document.getElementsByName("ptypecode");
+            const loader = document.getElementById("loader");
+            $('#btnrec').click(function () {
+                var formData = new FormData();
+                var inputFile = $("input[type='file']");
+                var imageFile = inputFile[0].files[0];
+
+                formData.append('receipt', imageFile);
+                console.log(imageFile);
+
+                loader.style.visibility='visible';
+                
+                //upload ajax
+                $.ajax({
+                    url: '/payment/registrec',
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (result) {
+                        console.log(result);
+                        // 성공시 이후 수정
+                        a = result;
+                        var name;
+                        var subName;
+                        try {
+                            name = result['images'][0]["receipt"]["result"]["storeInfo"]["name"]['text'];
+                        } catch (e) {
+                            name = "";
+                        }
+                        try {
+                            subName = result['images'][0]["receipt"]["result"]["storeInfo"]["subName"]['text'];
+                        } catch (e) {
+                            subName = "";
+                        }
+                        $('input[name="pstorename"]').val(name.concat(' ', subName));
+                        var year = result['images'][0]["receipt"]["result"]["paymentInfo"]["date"]["formatted"]["year"];
+                        if (year == '') {
+                            if(result['images'][0]["receipt"]["result"]["paymentInfo"]["date"]["text"].split('-')[0].length == 4){
+                                year = result['images'][0]["receipt"]["result"]["paymentInfo"]["date"]["text"].split('-')[0];
+                            }
+                            else if(result['images'][0]["receipt"]["result"]["paymentInfo"]["date"]["text"].split('-')[0].length == 2){
+                                year = "20" + result['images'][0]["receipt"]["result"]["paymentInfo"]["date"]["text"].split('-')[0];
+                            }
+                        }
+                        $('input[name="year"]').val(year);
+                        $('input[name="month"]').val(result['images'][0]["receipt"]["result"]["paymentInfo"]["date"]["formatted"]["month"]);
+                        $('input[name="date"]').val(result['images'][0]["receipt"]["result"]["paymentInfo"]["date"]["formatted"]["day"]);
+                        $('input[name="hour"]').val(result['images'][0]["receipt"]["result"]["paymentInfo"]["time"]["formatted"]["hour"]);
+                        $('input[name="min"]').val(result['images'][0]["receipt"]["result"]["paymentInfo"]["time"]["formatted"]["minute"]);
+                        $('input[name="sec"]').val(result['images'][0]["receipt"]["result"]["paymentInfo"]["time"]["formatted"]["second"]);
+                        $('input[name="ptotalprice"]').val(result['images'][0]["receipt"]["result"]["totalPrice"]["price"]["formatted"]["value"]);
+                        $('input[name="preceipt"]').val(result['images'][0]['name']);
+                        
+                        loader.style.visibility='hidden';
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus);
+                    }
+                });
+
+                
+            });
+
+            function previewFile() {
+                const reader = new FileReader();
+                const imgbox = document.getElementById('imgbox');
+                var file = document.querySelector('input[type="file"]').files[0];
+        
+                reader.addEventListener(
+                  'load',
+                  function () {
+                    imgbox.src = reader.result;
+                  },
+                  false
+                );
+        
+                reader.readAsDataURL(file);
+        
+              }
+              
+        </script>
+    </th:block>
+
+
+</body>
+
+</html>
