@@ -48,4 +48,10 @@ public class WebController {
 
         return "nodirect";
     }
+
+    @GetMapping("/deniedMid")
+    public String deniedMid(@AuthenticationPrincipal CustomUser customUser){
+
+        return "deniedMid";
+    }
 }

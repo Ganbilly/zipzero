@@ -81,17 +81,21 @@ public class PaymentController {
             @RequestParam(value = "size", defaultValue = "10") int size,
             @AuthenticationPrincipal CustomUser customUser) {
         log.info("PaymentList");
+        
+        if(customUser.getMember().getMid() == mid) {
+            List<PaymentDTO> filterList = paymentService.getAllPaymentList(mid);
+            PageDTO pageDTO = PageDTO.builder().page(page).size(10).total(filterList.size()).build();
+            pageDTO.setPaging();
+    
+            model.addAttribute("user", customUser);
+            model.addAttribute("mid", mid);
+            model.addAttribute("paymentList", paymentService.getPaymentList(mid, pageDTO.getSkip(), size));
+            model.addAttribute("page", pageDTO);
 
-        List<PaymentDTO> filterList = paymentService.getAllPaymentList(mid);
-        PageDTO pageDTO = PageDTO.builder().page(page).size(10).total(filterList.size()).build();
-        pageDTO.setPaging();
-
-        model.addAttribute("user", customUser);
-        model.addAttribute("mid", mid);
-        model.addAttribute("paymentList", paymentService.getPaymentList(mid, pageDTO.getSkip(), size));
-        model.addAttribute("page", pageDTO);
-
-        return "payment/userlist";
+            return "payment/userlist";
+        } else {
+            return "deniedMid";
+        }
     }
 
     /*

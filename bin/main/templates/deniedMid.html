@@ -1,0 +1,28 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout2}">
+
+<body id="page-top">
+    <th:block layout:fragment="content">
+        <!-- Begin Page Content -->
+        <div class="container-fluid" >
+            <!-- 권한 없음 돌아가 -->
+            <div class="card" style="margin: 50px; height: 300px;">
+                <!-- Card Header - Dropdown -->
+                <div class="card-body" style="display: flex; justify-content: center; margin-top: 20px; text-align: center;">
+                    <div class="float-container" style="margin: 50px;">
+                        <div style="margin: auto;">
+                            <h3>목록을 찾을 수 없습니다.</h3>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" type="button" onclick="location.href='/index' " style="width: 180px; margin-top:50px;height: 50px;">
+                                메인으로 돌아가기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>
