@@ -28,7 +28,7 @@ public class CustomUser extends User {
 	}
 
 	public CustomUser(MemberDTO memberDTO) {
-		super(Long.toString(memberDTO.getMid()),memberDTO.getMpw(),
+		super(memberDTO.getEmpno(), memberDTO.getMpw(),
 			memberDTO.getAuthList().stream().map(auth -> new SimpleGrantedAuthority("ROLE_" + auth.getAuthname())).collect(Collectors.toList()));	
 		// Stream.of(memberDTO.getAuthList()).map(roleName -> new SimpleGrantedAuthority("ROLE_"+roleName)).collect(Collectors.toList()));
 		log.info("getAuthorities============================ " + this.getAuthorities());

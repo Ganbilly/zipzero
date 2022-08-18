@@ -31,7 +31,9 @@
 
   <select id="getAdminPage" resultType="FilterDTO">
     select
-      tbl_payment.m_id as mid, 
+      tbl_payment.m_id as mid,
+      tbl_member.m_empno as empno, 
+      tbl_payment.m_id as mid,
       hq_name as hq, dept_name as dept, 
       team_name as team, m_name as mname, 
       p_cardtype as pcardtype, 
@@ -52,8 +54,8 @@
     join tbl_state on tbl_state.s_id = tbl_payment.s_id
     WHERE
       1=1
-      <if test="filter.mid != ''">
-        AND tbl_member.m_id = #{filter.mid}
+      <if test="filter.empno != ''">
+        AND tbl_member.m_empno = #{filter.empno}
       </if>
       <if test="filter.hq != ''">
         AND hq_name LIKE concat('%', #{filter.hq}, '%')
@@ -114,7 +116,7 @@
 
   <select id="getAllAdminPage" resultType="FilterDTO">
     select
-      tbl_payment.m_id as mid, hq_name as hq, dept_name as dept, team_name as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice, s_name as sname,tbl_payment.s_id as sid
+      tbl_member.m_empno as empno, tbl_payment.m_id as mid, hq_name as hq, dept_name as dept, team_name as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice, s_name as sname,tbl_payment.s_id as sid
     from
       tbl_payment
     join
@@ -127,8 +129,8 @@
     join tbl_state on tbl_state.s_id = tbl_payment.s_id
     WHERE
       1=1
-      <if test="filter.mid != ''">
-        AND tbl_member.m_id = #{filter.mid}
+      <if test="filter.empno != ''">
+        AND tbl_member.m_empno = #{filter.empno}
       </if>
       <if test="filter.hq != ''">
         AND hq_name LIKE concat('%', #{filter.hq}, '%')
@@ -259,7 +261,7 @@
     SELECT
       p_id as pid, p_cardtype as pcardtype, p_name as pname, p_moddate as pmoddate,
       p_time as ptime, s_id as sid, team_name AS tname, hq_name AS hname, dept_name AS dname,
-      p1.m_id AS m_id, m1.m_name AS mname,p1.p_totalprice As tprice
+      p1.m_id AS m_id, m1.m_name AS mname,p1.p_totalprice As tprice,p_moddate as pmoddate
       
     FROM
       (
@@ -302,7 +304,7 @@
             FROM 
               tbl_member
             WHERE
-              m_id = #{mid}
+              m_id = 9
           )
             target ON m1.m_id = target.m_id OR m1.m_id != target.m_id
         ) target2

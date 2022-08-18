@@ -39,7 +39,7 @@
                                 <input type="hidden" name="hq" th:value="${filterDTO.hq}"/>
                                 <input type="hidden" name="dept" th:value="${filterDTO.dept}"/>
                                 <input type="hidden" name="team" th:value="${filterDTO.team}"/>
-                                <input type="hidden" name="mid" th:value="${filterDTO.mid}"/>
+                                <input type="hidden" name="empno" th:value="${filterDTO.empno}"/>
                                 <input type="hidden" name="mname" th:value="${filterDTO.mname}"/>
                                 <input type="hidden" name="sid" th:value="${filterDTO.sid}"/>
                                 <input type="hidden" name="pname" th:value="${filterDTO.pname}"/>
@@ -96,8 +96,8 @@
                         <div class="form-group row" style="width: 100%; text-align: center;">
                             <label class="col-lg-1 col-form-label form-control-label">사번</label>
                             <div class="col-lg-3">
-                                <input id="mid" type="number" name="mid" placeholder="사번" class="form-control"
-                                    style="width: 100%;" th:value="${filterDTO.mid}"/>
+                                <input id="empno" type="text" name="empno" placeholder="사번" class="form-control"
+                                    style="width: 100%;" th:value="${filterDTO.empno}"/>
                             </div>
 
                             <label class="col-lg-1 col-form-label form-control-label">성명</label>
@@ -230,7 +230,7 @@
                 const formObj = document.querySelector("form")
         
                 formObj.innerHTML += `<input type='hidden' name='page' value=` + num +`>`
-                formObj.innerHTML += `<input type='hidden' name='mid' value='${filterDTO.mid}'>`
+                formObj.innerHTML += `<input type='hidden' name='empno' value='${filterDTO.empno}'>`
                 formObj.innerHTML += `<input type='hidden' name='startTime' value='${filterDTO.startTime}'>`
                 formObj.innerHTML += `<input type='hidden' name='endTime' value='${filterDTO.endTime}'>`
                 formObj.innerHTML += `<input type='hidden' name='pcardtype' value='${filterDTO.pcardtype}'>`

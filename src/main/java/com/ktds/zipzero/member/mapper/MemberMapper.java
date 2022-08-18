@@ -25,6 +25,8 @@ public interface MemberMapper {
      */
     public MemberDTO getMemberById(@Param("mid") Long mid);
 
+    public MemberDTO getMemberByEmpno(@Param("empno") String username);
+
     public List<AuthDTO> getMemberAuth(@Param("mid") long mid);
 
     public void setMember(@Param("member") MemberDTO memberDTO);

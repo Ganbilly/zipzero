@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        MemberDTO memberDTO = memberMapper.getMemberById(Long.parseLong(username));
+        MemberDTO memberDTO = memberMapper.getMemberByEmpno(username);
         memberDTO.setAuthList(memberMapper.getMemberAuth(memberDTO.getMid()));
 
         log.info("memberDTO================ " + memberDTO);

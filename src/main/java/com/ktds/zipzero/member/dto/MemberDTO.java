@@ -10,6 +10,7 @@ public class MemberDTO {
     
     private String mpw;
     private String mname;
+    private String empno;
     private boolean mcheck;
   
     private Long authid;

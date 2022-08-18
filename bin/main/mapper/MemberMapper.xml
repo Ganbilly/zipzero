@@ -8,6 +8,7 @@
     <select id="getMemberById" resultType="com.ktds.zipzero.member.dto.MemberDTO">
         select 
             m_id AS mid,
+            m_empno AS empno,
             m_pw AS mpw,
             m_name AS mname,
             m_check AS mcheck,
@@ -20,6 +21,24 @@
         JOIN tbl_auth ON tbl_auth.auth_id = tbl_member.auth_id
         where m_id=#{mid}
     </select>
+
+    <select id="getMemberByEmpno" resultType="com.ktds.zipzero.member.dto.MemberDTO">
+        select 
+            m_id AS mid,
+            m_empno AS empno,
+            m_pw AS mpw,
+            m_name AS mname,
+            m_check AS mcheck,
+            tbl_auth.auth_name AS authname,
+            tbl_member.auth_id AS authid,
+            hq_id AS hqid,
+            dept_id AS deptid,
+            team_id AS teamid
+        from tbl_member
+        JOIN tbl_auth ON tbl_auth.auth_id = tbl_member.auth_id
+        where m_empno=#{empno}
+    </select>
+
     <select id="getMemberAuth" resultType="AuthDTO">
         select
             tbl_auth.auth_id AS authid, tbl_auth.auth_name AS authname
@@ -33,6 +52,7 @@
         update
             tbl_member
         set
+            m_empno = #{member.mempno}
             m_pw = #{member.mpw},
             m_name = #{member.mname},
             m_check = 1,

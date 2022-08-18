@@ -178,27 +178,27 @@ public class PaymentController {
      * 최종수정 : 정문경(2022-08-12)
      * 기능 : 검색 조건에 맞춰 검색한 결과
      */
-    @PostMapping("/adminlist")
-    @PreAuthorize("hasRole('관리자')")
-    public String adminPaymentListFilter(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO,
-            @RequestParam(value = "mid") long mid,
-            @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size,
-            @AuthenticationPrincipal CustomUser customUser) {
-        log.info("==================== PaymentListFilter : " + filterDTO);
+    // @PostMapping("/adminlist")
+    // @PreAuthorize("hasRole('관리자')")
+    // public String adminPaymentListFilter(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO,
+    //         @RequestParam(value = "mid") long mid,
+    //         @RequestParam(value = "page", defaultValue = "1") int page,
+    //         @RequestParam(value = "size", defaultValue = "10") int size,
+    //         @AuthenticationPrincipal CustomUser customUser) {
+    //     log.info("==================== PaymentListFilter : " + filterDTO);
 
-        filterDTO.setMid(Long.toString(mid));
-        List<FilterDTO> filterList = paymentService.getAllPaymentFilter(filterDTO);
-        PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
-        pageDTO.setPaging();
+    //     filterDTO.setMid(Long.toString(mid));
+    //     List<FilterDTO> filterList = paymentService.getAllPaymentFilter(filterDTO);
+    //     PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
+    //     pageDTO.setPaging();
 
-        model.addAttribute("user", customUser);
-        model.addAttribute("mid", mid);
-        model.addAttribute("filter", paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), pageDTO.getSize()));
-        model.addAttribute("page", pageDTO);
+    //     model.addAttribute("user", customUser);
+    //     model.addAttribute("mid", mid);
+    //     model.addAttribute("filter", paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), pageDTO.getSize()));
+    //     model.addAttribute("page", pageDTO);
 
-        return "payment/adminlist";
-    }
+    //     return "payment/adminlist";
+    // }
 
     /*
      * 만든사람 : 정문경(2022-08-12)
@@ -493,6 +493,8 @@ public class PaymentController {
         model.addAttribute("adminpaymentList", paymentService.getAuthPage(mid, pageDTO.getSkip(), size));
         model.addAttribute("page", pageDTO);
         model.addAttribute("user", customUser);
+ 
+        log.info(paymentService.getAuthList(mid).size() + "==========================" + paymentService.getAuthPage(mid, pageDTO.getSkip(), size).size() + "===================" + pageDTO.getPage());
 
         return "payment/adminmanage";
     }
