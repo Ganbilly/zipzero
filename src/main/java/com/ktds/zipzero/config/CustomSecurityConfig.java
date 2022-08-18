@@ -52,7 +52,7 @@ public class CustomSecurityConfig {
         http.csrf().disable();
 
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler()); //403
-        http.authorizeRequests().antMatchers("/member/login").permitAll().anyRequest().authenticated();
+        http.authorizeRequests().antMatchers("/member/login").permitAll();
         http.rememberMe().tokenValiditySeconds(60*60*24).userDetailsService(userDetailsService);
         http.formLogin().successHandler(authenticationSuccessHandler());
         http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/member/login").invalidateHttpSession(true);
