@@ -68,7 +68,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a th:if="${user != null}" class="nav-link" th:href="@{/payment/adminlist(mid=${user.member.mid})}">
+                <a th:if="${user != null}" class="nav-link" href="/payment/adminlist">
                     <i class="fas fa-fw fa-table"></i>
                     <span>조회 및 출력</span></a>
                 <a th:unless="${user != null}" class="nav-link" href="/member/login">

@@ -153,22 +153,20 @@ public class PaymentController {
     @GetMapping("/adminlist")
     @PreAuthorize("hasRole('관리자')")
     public String adminPaymentList(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO, 
-            @RequestParam(value = "mid") long mid,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
             @AuthenticationPrincipal CustomUser customUser) {
-        log.info("PaymentList");
-        filterDTO.setMinptotalprice("");
-        filterDTO.setMaxptotalprice("");
-        filterDTO.setMid("");
-        filterDTO.setStartTime(null);
+        log.info("============== PaymentList : " + filterDTO);
+        if(filterDTO.getMinptotalprice() == null) filterDTO.setMinptotalprice("");
+        if(filterDTO.getMaxptotalprice() == null) filterDTO.setMaxptotalprice("");
+        if(filterDTO.getMid() == null) filterDTO.setMid("");
+        // if(filterDTO.getStartTime().getYear() < 1001) filterDTO.setStartTime(null);
 
         List<FilterDTO> filterList = paymentService.getAllPaymentFilter(filterDTO);
         PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
         pageDTO.setPaging();
 
         model.addAttribute("user", customUser);
-        model.addAttribute("mid", mid);
         model.addAttribute("filter", paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), pageDTO.getSize()));
         model.addAttribute("page", pageDTO);
 
@@ -187,8 +185,9 @@ public class PaymentController {
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
             @AuthenticationPrincipal CustomUser customUser) {
-        log.info("PaymentListFilter : ");
+        log.info("==================== PaymentListFilter : " + filterDTO);
 
+        filterDTO.setMid(Long.toString(mid));
         List<FilterDTO> filterList = paymentService.getAllPaymentFilter(filterDTO);
         PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
         pageDTO.setPaging();

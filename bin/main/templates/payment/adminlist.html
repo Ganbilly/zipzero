@@ -22,6 +22,7 @@
                         <label class="col-lg-1 col-form-label form-control-label" style="width: 100%; text-align: center;">유형</label>
                         <div class="col-lg-2">
                             <select id="pcardtype" name="pcardtype" form="listForm" style="width: 150px;" class="form-control">
+                                <option value="2">전체</option>
                                 <option value="0">법인</option>
                                 <option value="1">개인</option>
                             </select>
@@ -29,7 +30,7 @@
                         <div class="col-lg-9" style="width: 100%; text-align: right;">
                             <form th:action="@{/payment/downloadcsv}" th:object="${filterDTO}" method="get">
                                 <button onclick="location.href='/payment/downloadcsv'" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">CSV 출력</button>
-                                <button onclick="location.href='/payment/downloadexcel'" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Excel 출력</button>
+                                <!-- <button onclick="location.href='/payment/downloadexcel'" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">Excel 출력</button> -->
                                 <input type="hidden" name="pcardtype" th:value="${filterDTO.pcardtype}"/>
                                 <input type="hidden" name="startTime" th:value="${filterDTO.startTime}"/>
                                 <input type="hidden" name="endTime" th:value="${filterDTO.endTime}"/>
@@ -46,8 +47,7 @@
                         </div>
                     </div>
 
-                    <form th:action="@{/payment/adminlist}" th:object="${filterDTO}" method="post" id="listForm">
-                        <input type="hidden" name="mid" th:value="${mid}"/>
+                    <form th:action="@{/payment/adminlist}" th:object="${filterDTO}" method="get" id="listForm">
                         <div class="form-group row" style="width: 100%; text-align: center;">
                             <label class="col-lg-1 col-form-label form-control-label">검색 일자</label>
                             <div class="col-lg-2">
@@ -214,6 +214,10 @@
         </div>
         <script layout:fragment="script" th:inline="javascript">
             const values = [[${filter}]]
+
+            const filterDTO = [[${filterDTO}]]
+            console.log(filterDTO)
+            
         
             document.querySelector(".pagination").addEventListener("click", function (e) {
                 e.preventDefault()
@@ -221,17 +225,43 @@
         
                 const target = e.target
         
-                if(target.tagName !== 'A') {
-                    return
-                }
-        
                 const num = target.getAttribute("data-num")
         
                 const formObj = document.querySelector("form")
         
-                formObj.innerHTML += `<input type='hidden' name='page' value='${num}'>`
-                formObj.innerHTML += `<input type='hidden' name='mid' value='[[${mid}]]'>`
-        
+                formObj.innerHTML += `<input type='hidden' name='page' value=` + num +`>`
+                formObj.innerHTML += `<input type='hidden' name='mid' value='${filterDTO.mid}'>`
+                formObj.innerHTML += `<input type='hidden' name='startTime' value='${filterDTO.startTime}'>`
+                formObj.innerHTML += `<input type='hidden' name='endTime' value='${filterDTO.endTime}'>`
+                formObj.innerHTML += `<input type='hidden' name='pcardtype' value='${filterDTO.pcardtype}'>`
+                formObj.innerHTML += `<input type='hidden' name='minptotalprice' value='${filterDTO.minptotalprice}''>`
+                formObj.innerHTML += `<input type='hidden' name='maxptotalprice' value='${filterDTO.maxptotalprice}''>`
+                formObj.innerHTML += `<input type='hidden' name='sname' value='${filterDTO.sname}'>`
+                if(filterDTO.hq != "") {
+                    formObj.innerHTML += `<input type='hidden' name='hq' value='${filterDTO.hq}'>`
+                } else {
+                    formObj.innerHTML += `<input type='hidden' name='hq' value=''>`
+                }
+                if(filterDTO.dept != "") {
+                    formObj.innerHTML += `<input type='hidden' name='dept' value=${filterDTO.dept}>`
+                } else {
+                    formObj.innerHTML += `<input type='hidden' name='dept' value='''>`
+                }
+                if(filterDTO.team != "") {
+                    formObj.innerHTML += `<input type='hidden' name='team' value=${filterDTO.team}>`
+                } else {
+                    formObj.innerHTML += `<input type='hidden' name='team' value=''>`
+                }
+                if(filterDTO.mname != "") {
+                    formObj.innerHTML += `<input type='hidden' name='mname' value=${filterDTO.mname}>`
+                } else {
+                    formObj.innerHTML += `<input type='hidden' name='mname' value=''>`
+                }
+                if(filterDTO.pname != "") {
+                    formObj.innerHTML += `<input type='hidden' name='pname' value=${filterDTO.pname}>`
+                } else {
+                    formObj.innerHTML += `<input type='hidden' name='pname' value=''>`
+                }
                 formObj.submit();
         
             }, false)
