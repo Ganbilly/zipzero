@@ -112,4 +112,24 @@ public class PaymentServiceImpl implements PaymentService {
     public List<PaymentDTO> getAllPaymentList(long mid) {
         return paymentMapper.getAllUserPage(mid);
     }
+
+    /*
+     * 만든 사람 : 이은성(2022-08-18)
+     * 최종 수정 : 이은성(2022-18-18)
+     * 기능 : 메인페이지에서 관리 리스트 5개 출력(최신순으로 정렬)
+     */
+    @Override
+    public List<PaymentDTO> getAdminPaymentsForMain(Long mid) {
+        return paymentMapper.getAdminPaymentsForMain(mid);
+    }
+
+    /*
+     * 만든 사람 : 이은성(2022-08-18)
+     * 최종 수정 : 이은성(2022-18-18)
+     * 기능 : 메인페이지에서 내 payment 5개 출력(최신순으로 정렬)
+     */
+    @Override
+    public List<PaymentDTO> getMyPaymentsForMain(Long mid) {
+        return paymentMapper.getMyPaymentsForMain(mid);
+    }
 }
