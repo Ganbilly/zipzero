@@ -32,7 +32,7 @@ public class WebController {
     @GetMapping("/index")
     @PreAuthorize("isAuthenticated()")
     public String main(Model model, @AuthenticationPrincipal CustomUser customUser){
-        Long mymid = 1L;
+        Long mymid = customUser.getMember().getMid();
         PageDTO pageDTO = PageDTO.builder().page(1).size(5).total(5).build();
         pageDTO.setPaging();
 

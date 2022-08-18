@@ -218,7 +218,7 @@
       p_totalprice = #{ptotalprice}, <!-- 결제총액 -->
       p_cardtype = #{pcardtype}, <!-- 결제카드유형 -->
       p_receipt = #{preceipt}, <!-- 영수증 -->
-      p_curstate = 2, <!-- 결제 상태 -->
+      p_curstate = #{pcurstate}, <!-- 결제 상태 -->
       p_finstate = #{pfinstate}, <!-- 최종 결제 상태 -->
       p_check = #{pcheck}, <!-- 삭제 여부 -->
       s_id = #{sid}, <!-- 상태아이디 -->
@@ -235,6 +235,7 @@
       p_cardtype as pcardtype, p_receipt as preceipt,
       p_curstate as pcurstate, p_finstate as pfinstate,
       s_id as sid, m_id as mid, ptype_code as ptypecode,
+      p_check as pcheck,
       CONCAT(TO_CHAR(p_regdate, 'yyyy'), TO_CHAR(p_regdate, 'MM')) as preceiptmonth,
       TO_CHAR(p_regdate, 'dd') AS preceiptdate
     from
@@ -255,8 +256,7 @@
     SELECT
       p_id as pid, p_cardtype as pcardtype, p_name as pname, p_moddate as pmoddate,
       p_time as ptime, s_id as sid, team_name AS tname, hq_name AS hname, dept_name AS dname,
-      p1.m_id AS m_id, m1.m_name AS mname,p1.p_totalprice As tprice
-      
+      p_curstate as pcurstate, p1.m_id AS m_id, m1.m_name AS mname,p1.p_totalprice As tprice
     FROM
       (
         tbl_payment p1
@@ -303,7 +303,8 @@
             target ON m1.m_id = target.m_id OR m1.m_id != target.m_id
         ) target2
       WHERE tResult + dResult + hResult = 1
-    )
+    ) AND
+    p_check = 1
     order by
       p_moddate desc
    </select>
@@ -312,7 +313,7 @@
     SELECT
       p_id as pid, p_cardtype as pcardtype, p_name as pname, p_moddate as pmoddate,
       p_time as ptime, s_id as sid, team_name AS tname, hq_name AS hname, dept_name AS dname,
-      p1.m_id AS m_id, m1.m_name AS mname,p1.p_totalprice As tprice,p_moddate as pmoddate
+      p_curstate as pcurstate, p1.m_id AS m_id, m1.m_name AS mname,p1.p_totalprice As tprice,p_moddate as pmoddate
       
     FROM
       (
@@ -360,7 +361,8 @@
             target ON m1.m_id = target.m_id OR m1.m_id != target.m_id
         ) target2
       WHERE tResult + dResult + hResult = 1
-    )
+    ) AND
+    p_check = 1
     order by
       p_moddate desc
     limit #{skip}, #{size}
@@ -440,7 +442,8 @@
             target ON m1.m_id = target.m_id OR m1.m_id != target.m_id
         ) target2
       WHERE tResult + dResult + hResult = 1
-    )
+    ) and
+    p_check = 1
     order by
       p_moddate desc
     limit 5
@@ -458,7 +461,7 @@
     join
       tbl_state on tbl_payment.s_id = tbl_state.s_id
     where
-      m_id = #{mid}
+      m_id = #{mid} and p_check = 1
     order by
       p_moddate desc
     limit 5

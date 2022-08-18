@@ -53,8 +53,8 @@
                                     <th width="10">사번</th>
                                     <th width="10">이름</th>
                                     <th width="10">금액</th>
-                                    <th width="50">결제 상태</th>
-
+                                    <th width="50">결재자</th>
+                                    <th width="50">결재 상태</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -81,6 +81,11 @@
                                     <td th:text="${l.m_id}"></td>
                                     <td th:text="${l.mname}"></td>
                                     <td th:text="${l.tprice}"></td>
+
+                                    <!-- 결재자 -->
+                                    <td th:if="${l.pcurstate == 2}" th:text="팀장"></td>
+                                    <td th:if="${l.pcurstate == 3}" th:text="담당"></td>
+                                    <td th:if="${l.pcurstate == 4}" th:text="본부장"></td>
 
                                     <!-- 결제 상태 -->
                                     <!-- 1 승인 2 반려 3 대기 4 취소  -->

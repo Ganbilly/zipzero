@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -117,6 +118,7 @@ public class PaymentController {
     public String paymentModifyResult(Model model, @ModelAttribute("paymentDTO") PaymentDTO paymentDTO, @AuthenticationPrincipal CustomUser customUser) {
         log.info("PaymentModifyResult");
         paymentDTO.setPmoddate(LocalDateTime.now());
+        paymentDTO.setPcurstate(2L);
         paymentDTO.setSid(3L);
         paymentDTO.setPcheck(1);
         paymentService.modifyPayment(paymentDTO);
@@ -211,7 +213,12 @@ public class PaymentController {
         log.info("AdminManage");
         log.info("============  pid : " + pid);
         PaymentDTO paymentDTO = paymentService.getPaymentDetail(pid);
-        paymentDTO.setSid(1L);
+        if(paymentDTO.getPcurstate() == paymentDTO.getPfinstate()){
+            paymentDTO.setSid(1L);
+        }
+        else{
+            paymentDTO.setPcurstate(paymentDTO.getPcurstate() + 1);
+        }
         paymentService.modifyPayment(paymentDTO);
 
         model.addAttribute("user", customUser);
@@ -244,13 +251,13 @@ public class PaymentController {
     @PostMapping("/regist")
     public String PostPaymentRegist(Model model, PaymentDTO paymentDTO, TimeDTO timeDTO, @AuthenticationPrincipal CustomUser customUser) {
         log.info("PostPaymentRegist===================== ");
-        paymentDTO = paymentService.getPaymentDetail(1);
-        timeDTO.setYear("2022");
-        timeDTO.setMonth("08");
-        timeDTO.setDate("22");
-        timeDTO.setHour("12");
-        timeDTO.setMin("22");
-        timeDTO.setSec("12");
+        paymentDTO = paymentService.getPaymentDetail(customUser.getMember().getMid());
+        timeDTO.setYear(String.valueOf(LocalDateTime.now().getYear()));
+        timeDTO.setMonth(String.valueOf(LocalDateTime.now().getMonth()));
+        timeDTO.setDate(String.valueOf(LocalDateTime.now().getDayOfMonth()));
+        timeDTO.setHour(String.valueOf(LocalDateTime.now().getHour()));
+        timeDTO.setMin(String.valueOf(LocalDateTime.now().getMinute()));
+        timeDTO.setSec(String.valueOf(LocalDateTime.now().getSecond()));
         log.info(timeDTO.toString());
 
         model.addAttribute("paymentDTO", paymentDTO);
@@ -273,16 +280,15 @@ public class PaymentController {
         paymentDTO.setPregdate(LocalDateTime.now());
         paymentDTO.setPmoddate(LocalDateTime.now());
         paymentDTO.setPcheck(1);
-        paymentDTO.setPcurstate(1L);
-        paymentDTO.setPfinstate(1L);
-        paymentDTO.setSid(1L);
-        paymentDTO.setMid(1L);
+        paymentDTO.setPcurstate(2L);
+        paymentDTO.setSid(3L); // 대기상태
+        paymentDTO.setMid(customUser.getMember().getMid());
 
         log.info(paymentDTO);
         paymentService.registPayment(paymentDTO);
         model.addAttribute("user", customUser);
 
-        return "redirect:/payment/regist";
+        return "redirect:/payment/userlist?mid=" + customUser.getMember().getMid();
 
     }
 
@@ -501,7 +507,7 @@ public class PaymentController {
     /*
      * 만든 사람 : 정문경 (2022-08-12)
      * 최종 수정 : 정문경 (2022-08-18)
-     * 기능 : detail에서 작성한 모달의 결과를 저장하고 adminmanage 페이지 반환
+     * 기능 : detail에서 작성한 모달의 결과를 저장하고 adminmanage 페이지 반환(결재 반려)
      */
     @PostMapping("/adminmanage")
     @PreAuthorize("hasAnyRole('팀장', '담당', '본부장', '관리자')")

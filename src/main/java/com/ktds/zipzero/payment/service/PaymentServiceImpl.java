@@ -57,6 +57,15 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public void modifyPayment(PaymentDTO paymentDTO) {
+        if(paymentDTO.getPtotalprice() <= 100000){
+            paymentDTO.setPfinstate(2L);
+        }
+        else if(paymentDTO.getPtotalprice() <= 500000){
+            paymentDTO.setPfinstate(3L);
+        }
+        else{
+            paymentDTO.setPfinstate(4L);
+        }
         paymentMapper.modifyPayment(paymentDTO);
     }
 
@@ -67,6 +76,15 @@ public class PaymentServiceImpl implements PaymentService {
      */
     @Override
     public void registPayment(PaymentDTO paymentDTO) {
+        if(paymentDTO.getPtotalprice() <= 100000){
+            paymentDTO.setPfinstate(2L);
+        }
+        else if(paymentDTO.getPtotalprice() <= 500000){
+            paymentDTO.setPfinstate(3L);
+        }
+        else{
+            paymentDTO.setPfinstate(4L);
+        }
         paymentMapper.registPayment(paymentDTO);
     }
 
