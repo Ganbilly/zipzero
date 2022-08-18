@@ -21,7 +21,7 @@
                         <div class="row double"
                             style="margin: auto;display: flex; justify-content: center; margin-bottom: 20px;">
                             <div class="column-2 left"
-                                style="width: 500px; height:600px; background-color: #00308f; margin-right: 50px;">
+                                style="width: 500px; height:600px; margin-right: 50px;">
                                 <div>
                                     <img  th:src="@{view/{path1}/{path2}/{path3}(path1=${payment.preceiptmonth}, path2=${payment.preceiptdate}, path3=${payment.preceipt})}" id="imgbox" name="image"
                                         style="width:500px; height:600px; object-fit: contain;">
@@ -70,6 +70,16 @@
                                     <div class="col-lg-9">
                                         <input class="form-control" type="text" th:value="${payment.ptotalprice}"
                                             readonly />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row" style="width: 600px;">
+                                    <label class="col-lg-3 col-form-label form-control-label">상태</label>
+                                    <div class="col-lg-9">
+                                        <input th:if="${payment.sid == 1}" class="form-control" type="text" value="승인" readonly />
+                                        <input th:if="${payment.sid == 2}" class="form-control" type="text" value="반려" readonly />
+                                        <input th:if="${payment.sid == 3}" class="form-control" type="text" value="대기" readonly />
+                                        <input th:if="${payment.sid == 4}" class="form-control" type="text" value="취소" readonly />
                                     </div>
                                 </div>
 
