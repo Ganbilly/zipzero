@@ -42,4 +42,10 @@ public class WebController {
         model.addAttribute("user", customUser);
         return "index";
     }
+
+    @GetMapping("/nodirect")
+    public String needAuth(@AuthenticationPrincipal CustomUser customUser){
+
+        return "nodirect";
+    }
 }
