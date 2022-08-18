@@ -62,8 +62,17 @@
                                     </div>
                                 </div>
 
-                                <div style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
+                                <div class="form-group row" style="width: 600px;">
+                                    <label class="col-lg-3 col-form-label form-control-label">상태</label>
+                                    <div class="col-lg-9">
+                                        <input th:if="${payment.sid == 1}" class="form-control" type="text" value="승인" readonly />
+                                        <input th:if="${payment.sid == 2}" class="form-control" type="text" value="반려" readonly />
+                                        <input th:if="${payment.sid == 3}" class="form-control" type="text" value="대기" readonly />
+                                        <input th:if="${payment.sid == 4}" class="form-control" type="text" value="취소" readonly />
+                                    </div>
+                                </div>
 
+                                <div th:if="${user.member.authid >= payment.pcurstate}" style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
                                     <form th:action="@{/payment/adminsuccess}" method="post">
                                         <input type="submit" value="승인" class="btn btn-success"
                                             style="width: 150px; margin:20px;">
@@ -159,6 +168,7 @@
             </div>
 
         </div>
+        
     </th:block>
 </body>
 
