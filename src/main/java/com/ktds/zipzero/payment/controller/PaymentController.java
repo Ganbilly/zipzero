@@ -28,6 +28,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -47,6 +48,7 @@ import com.ktds.zipzero.comment.service.CommentService;
 import com.ktds.zipzero.payment.dto.FilterDTO;
 import com.ktds.zipzero.payment.dto.PaymentDTO;
 import com.ktds.zipzero.payment.service.PaymentService;
+import com.ktds.zipzero.security.domain.CustomUser;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -75,13 +77,15 @@ public class PaymentController {
     @GetMapping("/userlist")
     public String userPaymentList(Model model, @RequestParam(value = "mid") long mid,
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size) {
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @AuthenticationPrincipal CustomUser customUser) {
         log.info("PaymentList");
 
         List<PaymentDTO> filterList = paymentService.getAllPaymentList(mid);
         PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
         pageDTO.setPaging();
 
+        model.addAttribute("user", customUser);
         model.addAttribute("mid", mid);
         model.addAttribute("paymentList", paymentService.getPaymentList(mid, pageDTO.getSkip(), size));
         model.addAttribute("page", pageDTO);
@@ -95,8 +99,10 @@ public class PaymentController {
      * 기능 : 영수증 상세 페이지에서 수정 페이지로 이동
      */
     @PostMapping("/modify")
-    public String paymentModify(Model model, @ModelAttribute("pid") long pid) {
+    public String paymentModify(Model model, @ModelAttribute("pid") long pid, @AuthenticationPrincipal CustomUser customUser) {
         log.info("PaymentModify");
+
+        model.addAttribute("user", customUser);
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
 
         return "payment/modify";
@@ -108,13 +114,14 @@ public class PaymentController {
      * 기능 : 영수증 수정 페이지에서 수정한 내용을 반영
      */
     @PostMapping("/modifyresult")
-    public String paymentModifyResult(Model model, @ModelAttribute("paymentDTO") PaymentDTO paymentDTO) {
+    public String paymentModifyResult(Model model, @ModelAttribute("paymentDTO") PaymentDTO paymentDTO, @AuthenticationPrincipal CustomUser customUser) {
         log.info("PaymentModifyResult");
         paymentDTO.setPmoddate(LocalDateTime.now());
         paymentDTO.setSid(3L);
         paymentDTO.setPcheck(1);
         paymentService.modifyPayment(paymentDTO);
 
+        model.addAttribute("user", customUser);
         model.addAttribute("mid", paymentService.getPaymentDetail(paymentDTO.getPid()).getMid());
 
         return "redirect:userlist";
@@ -126,12 +133,13 @@ public class PaymentController {
      * 기능 : 영수증 상세 페이지에서 영수증을 삭제
      */
     @PostMapping("/delete")
-    public String paymentDelete(Model model, long pid) {
+    public String paymentDelete(Model model, long pid, @AuthenticationPrincipal CustomUser customUser) {
         log.info("PaymentDelete");
         PaymentDTO paymentDTO = paymentService.getPaymentDetail(pid);
         paymentDTO.setPcheck(0);
         paymentService.modifyPayment(paymentDTO);
 
+        model.addAttribute("user", customUser);
         model.addAttribute("mid", paymentDTO.getMid());
 
         return "redirect:userlist";
@@ -147,7 +155,8 @@ public class PaymentController {
     public String adminPaymentList(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO, 
             @RequestParam(value = "mid") long mid,
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size) {
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @AuthenticationPrincipal CustomUser customUser) {
         log.info("PaymentList");
         filterDTO.setMinptotalprice("");
         filterDTO.setMaxptotalprice("");
@@ -158,6 +167,7 @@ public class PaymentController {
         PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
         pageDTO.setPaging();
 
+        model.addAttribute("user", customUser);
         model.addAttribute("mid", mid);
         model.addAttribute("filter", paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), pageDTO.getSize()));
         model.addAttribute("page", pageDTO);
@@ -175,13 +185,15 @@ public class PaymentController {
     public String adminPaymentListFilter(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO,
             @RequestParam(value = "mid") long mid,
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size) {
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @AuthenticationPrincipal CustomUser customUser) {
         log.info("PaymentListFilter : ");
 
         List<FilterDTO> filterList = paymentService.getAllPaymentFilter(filterDTO);
         PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
         pageDTO.setPaging();
 
+        model.addAttribute("user", customUser);
         model.addAttribute("mid", mid);
         model.addAttribute("filter", paymentService.getPaymentFilterList(filterDTO, pageDTO.getSkip(), pageDTO.getSize()));
         model.addAttribute("page", pageDTO);
@@ -195,13 +207,14 @@ public class PaymentController {
      * 기능 : 승인 처리
      */
     @PostMapping("/adminsuccess")
-    public String adminPaymentsuccess(Model model, long pid) {
+    public String adminPaymentsuccess(Model model, long pid, @AuthenticationPrincipal CustomUser customUser) {
         log.info("AdminManage");
         log.info("============  pid : " + pid);
         PaymentDTO paymentDTO = paymentService.getPaymentDetail(pid);
         paymentDTO.setSid(1L);
         paymentService.modifyPayment(paymentDTO);
 
+        model.addAttribute("user", customUser);
         model.addAttribute("mid", paymentDTO.getMid());
         model.addAttribute("pid", pid);
 
@@ -212,23 +225,25 @@ public class PaymentController {
 
     /*
      * 만든사람 : 이은성(2022-08-10)
-     * 최종수정 : 이은성(2022-08-10)
+     * 최종수정 : 정문경(2022-08-18)
      * 기능 : /payment/regist로 접속하면 regist.html페이지 연결
      */
     @GetMapping("/regist")
-    public String getPaymentRegist() {
+    public String getPaymentRegist(Model model, @AuthenticationPrincipal CustomUser customUser) {
         log.info("paymentRegist");
+        model.addAttribute("user", customUser);
+
         return "payment/regist";
     }
 
     /*
      * 만든사람 : 이은성(2022-08-11)
-     * 최종수정 : 이은성(2022-08-11)
+     * 최종수정 : 정문경(2022-08-18)
      * 기능 : API에서 JSON 데이터를 받아서 regist페이지 입력칸에 채우는 기능
      */
     @PostMapping("/regist")
-    public String PostPaymentRegist(Model model, PaymentDTO paymentDTO, TimeDTO timeDTO) {
-        log.info("PostPaymentRegist");
+    public String PostPaymentRegist(Model model, PaymentDTO paymentDTO, TimeDTO timeDTO, @AuthenticationPrincipal CustomUser customUser) {
+        log.info("PostPaymentRegist===================== ");
         paymentDTO = paymentService.getPaymentDetail(1);
         timeDTO.setYear("2022");
         timeDTO.setMonth("08");
@@ -237,8 +252,10 @@ public class PaymentController {
         timeDTO.setMin("22");
         timeDTO.setSec("12");
         log.info(timeDTO.toString());
+
         model.addAttribute("paymentDTO", paymentDTO);
         model.addAttribute("timeDTO", timeDTO);
+        model.addAttribute("user", customUser);
         return "payment/regist";
     }
 
@@ -249,7 +266,7 @@ public class PaymentController {
      */
 
     @PostMapping("/registadd")
-    public String postPaymentRegistAdd(PaymentDTO paymentDTO, TimeDTO timeDTO) {
+    public String postPaymentRegistAdd(Model model, PaymentDTO paymentDTO, TimeDTO timeDTO, @AuthenticationPrincipal CustomUser customUser) {
 
         LocalDateTime t = LocalDateTime.parse(timeDTO.getTime());
         paymentDTO.setPtime(t);
@@ -263,6 +280,7 @@ public class PaymentController {
 
         log.info(paymentDTO);
         paymentService.registPayment(paymentDTO);
+        model.addAttribute("user", customUser);
 
         return "redirect:/payment/regist";
 
@@ -457,14 +475,15 @@ public class PaymentController {
 
     /*
      * 만든 사람 : 김예림(2022-08-10)
-     * 최종 수정 : 김예림(2022-08-12)
+     * 최종 수정 : 정문경(2022-08-18)
      * 기능 : 본인 소속의 모든 직원 영수증 내역 조회
      */
     @GetMapping("/adminmanage")
     @PreAuthorize("hasAnyRole('팀장', '담당', '본부장', '관리자')")
     public String adminlist(Model model, @RequestParam(value = "mid") long mid,
         @RequestParam(value = "page", defaultValue = "1") int page,
-        @RequestParam(value = "size", defaultValue = "10") int size) {
+        @RequestParam(value = "size", defaultValue = "10") int size,
+        @AuthenticationPrincipal CustomUser customUser) {
         log.info("adminManage");
 
         List<PaymentDTO> paymentList = paymentService.getAuthList(mid);
@@ -474,18 +493,19 @@ public class PaymentController {
         model.addAttribute("mid", mid);
         model.addAttribute("adminpaymentList", paymentService.getAuthPage(mid, pageDTO.getSkip(), size));
         model.addAttribute("page", pageDTO);
+        model.addAttribute("user", customUser);
 
         return "payment/adminmanage";
     }
 
     /*
      * 만든 사람 : 정문경 (2022-08-12)
-     * 최종 수정 : 정문경 (2022-08-12)
+     * 최종 수정 : 정문경 (2022-08-18)
      * 기능 : detail에서 작성한 모달의 결과를 저장하고 adminmanage 페이지 반환
      */
     @PostMapping("/adminmanage")
     @PreAuthorize("hasAnyRole('팀장', '담당', '본부장', '관리자')")
-    public String adminManageComment(Model model, @ModelAttribute("commentDTO") CommentDTO commentDTO) {
+    public String adminManageComment(Model model, @ModelAttribute("commentDTO") CommentDTO commentDTO, @AuthenticationPrincipal CustomUser customUser) {
         log.info("adminManageComment");
         commentDTO.setCregdate(LocalDateTime.now());
         commentDTO.setCmoddate(LocalDateTime.now());
@@ -499,21 +519,23 @@ public class PaymentController {
 
         model.addAttribute("adminpaymentList", paymentService.getAuthList(commentDTO.getMid()));
         model.addAttribute("pid", commentDTO.getPid());
+        model.addAttribute("user", customUser);
 
         return "redirect:admindetail";
     }
 
     /*
      * 만든 사람 : 정문경 (2022-08-12)
-     * 최종 수정 : 정문경 (2022-08-12)
+     * 최종 수정 : 정문경 (2022-08-18)
      * 기능 : pid로 유저의 영수증 상세 페이지 조회
      */
     @GetMapping("/userdetail")
-    public String userDetail(Model model, @RequestParam(value = "pid") long pid) {
+    public String userDetail(Model model, @RequestParam(value = "pid") long pid, @AuthenticationPrincipal CustomUser customUser) {
         log.info("UserDetail");
 
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
         model.addAttribute("comments", commentService.getCommentsByPid(pid));
+        model.addAttribute("user", customUser);
         log.info(commentService.getCommentsByPid(pid));
 
         return "payment/userdetail";
@@ -521,16 +543,17 @@ public class PaymentController {
 
     /*
      * 만든 사람 : 정문경 (2022-08-12)
-     * 최종 수정 : 정문경 (2022-08-12)
+     * 최종 수정 : 정문경 (2022-08-18)
      * 기능 : pid로 관리자의 영수증 상세 페이지 조회
      */
     @GetMapping("/admindetail")
     @PreAuthorize("hasAnyRole('팀장', '담당', '본부장', '관리자')")
-    public String adminDetail(Model model, @RequestParam(value = "pid") long pid) {
+    public String adminDetail(Model model, @RequestParam(value = "pid") long pid, @AuthenticationPrincipal CustomUser customUser) {
         log.info("AdminDetail-------------------------------------");
         
         model.addAttribute("payment", paymentService.getPaymentDetail(pid));
         model.addAttribute("comments", commentService.getCommentsByPid(pid));
+        model.addAttribute("user", customUser);
         log.info("result-------------------------------------");
         log.info(commentService.getCommentsByPid(pid));
 
@@ -539,13 +562,13 @@ public class PaymentController {
 
     /*
      * 만든 사람 : 정문경 (2022-08-16)
-     * 최종 수정 : 정문경 (2022-08-16)
+     * 최종 수정 : 정문경 (2022-08-18)
      * 기능 : csv download
      */
     @ResponseBody
     @GetMapping(value = "downloadcsv")
     @PreAuthorize("hasAnyRole('팀장', '담당', '본부장', '관리자')")
-    public ResponseEntity<String> downloadCSV(Model model, @ModelAttribute("filterDTO") FilterDTO filterDTO) {
+    public ResponseEntity<String> downloadCSV(@ModelAttribute("filterDTO") FilterDTO filterDTO, @AuthenticationPrincipal CustomUser customUser) {
 		log.info("downloadCSV");
 		
 		List<FilterDTO> filterList = paymentService.getPaymentFilterList(filterDTO, 0, 100000);
@@ -553,7 +576,6 @@ public class PaymentController {
 		HttpHeaders header = new HttpHeaders();
 		header.add("Content-Type", "text/csv; charset=MS949");
 		header.add("Content-Disposition", "attachment; filename=\""+LocalDate.now()+".csv"+"\"");
-		
 				
 		return new ResponseEntity<String>(setCSVContent(filterList), header, HttpStatus.CREATED);
 	}

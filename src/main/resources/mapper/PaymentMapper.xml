@@ -56,7 +56,7 @@
       <if test="filter.mname != ''">
         AND m_name LIKE concat('%', #{filter.mname}, '%')
       </if>
-      AND (#{filter.pcardtype} = 2 OR p_cardtype = #{filter.pcardtype})
+        AND (#{filter.pcardtype} = 2 OR p_cardtype = #{filter.pcardtype})
       <if test="filter.pname != ''">
         AND p_name LIKE concat('%', #{filter.pname}, '%')
       </if>

@@ -12,8 +12,8 @@
 
                 <!-- Topbar Search -->
                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">님 방가방가</span>
+                    <div sec:authorize="isAuthenticated()" class="input-group">
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"><b>[[${user.member.mname}]]</b>님 안녕하세요</span>
                     </div>
                 </form>
 
