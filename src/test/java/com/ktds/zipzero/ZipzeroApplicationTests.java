@@ -26,6 +26,14 @@ import org.json.JSONObject;
 @Log4j2
 class ZipzeroApplicationTests {
 
+	@Test
+	void jsontest(){
+		
+	}
+
+
+
+
 	@Value("${com.ktds.api_key}")
 	private String key;
 

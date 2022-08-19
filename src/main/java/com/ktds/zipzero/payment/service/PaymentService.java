@@ -112,4 +112,17 @@ import com.ktds.zipzero.payment.dto.PaymentDTO;
     public List<PaymentDTO> getMyPaymentsForMain(Long mid);
 
 
+          /*
+     * 만든 사람 : 김예림(2022-08-17)
+     * 최종 수정 : 김예림(2022-08-19)
+     * 기능 : 차트 데이터 조회 및 출력
+     */
+  public List<PaymentDTO> getHqBarChartData(PaymentDTO paymentDTO);
+  public List<PaymentDTO> getDeptBarChartData(PaymentDTO paymentDTO);
+  public List<PaymentDTO> getHqPieChartData(PaymentDTO paymentDTO);
+  public List<PaymentDTO>  getDeptPieChartData(PaymentDTO paymentDTO);
+  public List<PaymentDTO>  getTeamPieChartData(PaymentDTO paymentDTO);
+  
+ 
+
 }

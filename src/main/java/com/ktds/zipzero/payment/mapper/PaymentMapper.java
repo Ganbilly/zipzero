@@ -76,6 +76,19 @@ public interface PaymentMapper {
      * 최종 수정 : 이은성(2022-18-18)
      * 기능 : 메인페이지에서 관리 리스트 5개 출력(최신순으로 정렬)
      */
+    public void registComment(@Param("comment") CommentDTO commentDTO);
+
+
+     /*
+     * 만든사람 : 김예림(2022-08-17)
+     * 최종수정 : 김예림(2022-08-19)
+     * 기능 : 막대차트 및 파이차트 출력
+     */
+    public List<PaymentDTO>getHqBarChartData(PaymentDTO paymentDTO);
+    public List<PaymentDTO>getDeptBarChartData(PaymentDTO paymentDTO);
+    public List<PaymentDTO>getHqPieChartData(PaymentDTO paymentDTO);
+    public List<PaymentDTO>getDeptPieChartData(PaymentDTO paymentDTO);
+    public List<PaymentDTO>getTeamPieChartData(PaymentDTO paymentDTO);
     public List<PaymentDTO> getAdminPaymentsForMain(Long mid);
     
     /*

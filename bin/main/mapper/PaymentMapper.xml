@@ -255,7 +255,6 @@
     where p_id = #{pid}
   </select>
 
-
   <!-- 본인 소속의 모든 직원들 영수증 내역 조회 쿼리문 -->
   <!-- <select id="getMidListByAuth" resultType="com.ktds.zipzero.payment.dto.PaymentDTO"> -->
   <select id="getMidListByAuth" resultType="PaymentDTO">
@@ -472,6 +471,114 @@
       p_moddate desc
     limit 5
   </select>
+
+
+  <!-- 본부별 사용유형 막대차트 데이터 -->
+  <select id="getHqBarChartData" resultType="PaymentDTO">
+  SELECT hqID, ptype_name as ptypename, pcode2, SUM(c) as cnt
+    FROM
+      (
+      SELECT
+        hqID, pttt.ptype_name , pttt.ptype_code pcode2, ttee.ptype_code pcode1, cnt, if(pttt.ptype_code !=ttee.ptype_code, 0,cnt) c
+      FROM 
+        tbl_paytype pttt CROSS JOIN 
+        (
+        SELECT 
+        hqID, ptype_code, COUNT(p_id) cnt
+        FROM 
+          (
+          SELECT 
+            p_id,
+            pay.ptype_code,
+            (SELECT hq_id FROM tbl_member m WHERE  m.m_id = pay.m_id) hqID 
+          FROM tbl_payment pay 
+          ) temp
+        GROUP BY hqID, ptype_code) ttee
+      ) tmp
+    GROUP BY hqID, ptype_name
+  </select>
+  <!-- 담당별 사용 유형 막대 차트 -->
+  <select id="getDeptBarChartData" resultType="PaymentDTO">
+  SELECT deptID, ptype_name as ptypename, pcode2, SUM(c) as cnt
+    FROM
+      (
+      SELECT
+        deptID, pttt.ptype_name , pttt.ptype_code pcode2, ttee.ptype_code pcode1, cnt, if(pttt.ptype_code !=ttee.ptype_code, 0,cnt) c
+      FROM 
+        tbl_paytype pttt CROSS JOIN 
+        (
+        SELECT 
+        deptID, ptype_code, COUNT(p_id) cnt
+        FROM 
+          (
+          SELECT 
+            p_id,
+            pay.ptype_code,
+            (SELECT dept_id FROM tbl_member m WHERE  m.m_id = pay.m_id) deptID
+          FROM tbl_payment pay 
+          ) temp
+        GROUP BY deptID, ptype_code) ttee
+      ) tmp
+    GROUP BY deptID, ptype_name
+    HAVING deptID IS NOT null
+  </select>
+
+    <!-- 파이차트 데이터 -->
+    <!-- 본부별 총 금액 조회 -->
+   <select id="getHqPieChartData" resultType="PaymentDTO"> 
+  	SELECT 
+		 hqID as hqid, COUNT(p_id) cnt , sum(price) as pt
+		FROM 
+		  (
+			SELECT 
+			  p_id,
+				pay.p_totalprice price,
+			  (SELECT hq_id FROM tbl_member m WHERE  m.m_id = pay.m_id) hqID
+			FROM tbl_payment pay 
+		  ) temp
+		GROUP BY hqID
+  </select>
+  <!-- 담당별 총 금액 조회 -->
+   <select id="getDeptPieChartData" resultType="PaymentDTO"> 
+   	SELECT 
+		 deID as deptid , sum(price) pt
+		FROM 
+		  (
+			SELECT 
+			  p_id,
+				pay.p_totalprice price,
+			  (SELECT dept_id FROM tbl_member m WHERE  m.m_id = pay.m_id) deID
+			FROM tbl_payment pay 
+		  ) temp
+		GROUP BY deID
+		HAVING deID IS NOT NULL
+    </select>
+      <!-- 팀별 총 금액 조회 -->
+     <select id="getTeamPieChartData" resultType="PaymentDTO"> 
+   		SELECT 
+		 teamID as teamid, sum(price) as pt 
+		FROM 
+		  (
+			SELECT 
+			  p_id,
+				pay.p_totalprice price,
+			  (SELECT team_id FROM tbl_member m WHERE  m.m_id = pay.m_id) teamID
+			FROM tbl_payment pay 
+		  ) temp
+		GROUP BY teamID
+		HAVING teamID IS NOT NULL
+    </select>
+
+
+
+
+
+
+
+
+
+
+
 
 
 </mapper>

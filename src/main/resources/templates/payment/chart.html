@@ -1,6 +1,317 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{layout/layout}">
+<<<<<<< HEAD
+
+<body id="page-top">
+
+    <th:block layout:fragment="content">
+        <!-- Begin Page Content -->
+        <div style="float:right; margin-top:70px;margin-right:110px;width:100%;max-width:700px;">
+            <canvas id="myChart" style="margin-bottom:170px;" ></canvas>
+    
+            <canvas id="myChart2" ></canvas>
+       
+        </div>
+        <div style="float:left;margin-top:70px;width:100%;max-width:400px;margin-left:200px;">
+            <canvas id="myChart3" style="margin-bottom:90px;width:23vw ; " ></canvas>
+          
+            <canvas id="myChart4" style="margin-bottom:90px;width:23vw ;"></canvas>
+
+            <canvas id="myChart5" style="margin-bottom:100px;width:25vw ;"></canvas>
+        </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script th:inline="javascript">
+        
+        
+        var hqbarChart=document.getElementById("myChart")
+        var debarChart=document.getElementById("myChart2")
+        var hqpieChart=document.getElementById("myChart3")
+        var deptpieChart=document.getElementById("myChart4")
+        var teampieChart=document.getElementById("myChart5")
+
+        function getBarChartByhq(){
+
+            // 본부 별 거래 유형 막대 차트
+            axios.get("http://localhost:8080/payment/chartJSON").then(res => {
+                    
+                data=res.data
+                console.log(data)
+
+                var hq_barxValues =[]
+                var hq1_baryValues =[]
+                var hq2_baryValues = []
+
+              
+
+                for(i=0;i<5;i++){
+                    hq_barxValues.push(data[0][i]['type'])
+                    hq1_baryValues.push(data[0][i]['count'])
+                }
+                for(i=5;i<10;i++){
+                    hq2_baryValues.push(data[0][i]['count'])
+                }
+     
+                var barColors3=["#F47C7C"]
+                var barColors4=["#6C5B7C"]
+
+                new Chart(hqbarChart, {
+                type: "bar",
+                plugins: [ChartDataLabels],
+                data: {
+                    labels: hq_barxValues,
+                    datasets: [
+                    {
+                    label:"고객서비스본부",
+                    backgroundColor: barColors3,
+                    data: hq1_baryValues
+                    },
+                    {
+                    label:"플랫폼서비스본부",
+                    backgroundColor: barColors4, 
+                    data:  hq2_baryValues
+                    }
+
+                ]
+                },
+                options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: '본부별 사용 유형',
+                                font: {
+                                        size: 18,
+                                        }
+                                    } }
+                                }
+            });
+               
+                data=res.data
+            })
+        }
+        function getBarChartByDept(){
+            // 담당 별 거래 유형 막대 차트
+            axios.get("http://localhost:8080/payment/chartJSON").then(res => {
+                    
+                data=res.data
+                var de_barxValues =[]
+                var de1_baryValues =[]
+                var de2_baryValues = []
+                var de3_baryValues = []
+                var de4_baryValues = []
+                
+                console.log()
+
+                for(i=0;i<5;i++){
+                    de_barxValues.push(data[1][i]['type'])
+                    de1_baryValues.push(data[1][i]['count'])
+                }
+                for(i=5;i<10;i++){
+                    de2_baryValues.push(data[1][i]['count'])
+                }
+                for(i=10;i<15;i++){
+                    de3_baryValues.push(data[1][i]['count'])
+                }
+                for(i=15;i<20;i++){
+                    de4_baryValues.push(data[1][i]['count'])
+                }
+
+                var barColors1=["#EAE3D2"];
+                var barColors2=["#607EAA"];
+                var barColors3=["#B2C8DF"];
+                var barColors4=["#1C3879"];
+
+                new Chart(debarChart, {
+                type: "bar",
+                plugins: [ChartDataLabels],
+                data: {
+                    labels: de_barxValues,
+                    datasets: [
+                    {
+                    label: "CRM",
+                    backgroundColor: barColors1,
+                    data: de1_baryValues
+                    },
+                    {
+                    label:"빌링",
+                    backgroundColor: barColors2, 
+                    data:  de2_baryValues
+                    },
+                    {
+                    label:"플랫폼서비스",
+                    backgroundColor: barColors3, 
+                    data:  de3_baryValues
+                    },
+                    {
+                    label:"DIGICO서비스",
+                    backgroundColor:  barColors4, 
+                    data:  de4_baryValues
+                    }
+                ]
+                },
+                options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: '담당별 사용 유형',
+                                font: {
+                                        size: 18,
+                                        }
+                                    }
+                                    }
+                                }
+            });
+            })
+}
+
+        function getHqpieChart(){
+            // 본부별 총 금액 파이차트
+            axios.get("http://localhost:8080/payment/chartJSON").then(res => {
+    
+                data=res.data
+                
+                var hq_piexValues =["고객서비스본부","플랫폼서비스본부"]
+                var hq_pieyValues = []
+        
+                
+                for(j=0;j<data[2].length;j++){
+                    hq_pieyValues.push(data[2][j]['totalprice'])
+                }
+        
+                var pieColors = ["#F4BFBF","#FFD9C0","#FAF0D7", "#8CC0DE","#A5BECC","#243A73","#ECCCB2","#F5E8C7"];
+        
+                new Chart(hqpieChart, {
+                    type: "pie",
+                    plugins: [ChartDataLabels],
+                    data: {
+                        labels: hq_piexValues,
+                        datasets: [{
+                        backgroundColor: pieColors,
+                        data: hq_pieyValues
+
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: '본부별 사용 총 금액',
+                                font: {
+                                        size: 18,
+                                        }
+                                    }
+                                    }
+                                }
+                });
+
+            })
+        }
+
+        function getDeptpieChart(){
+            // 담당별 총 금액 파이차트
+            axios.get("http://localhost:8080/payment/chartJSON").then(res => {
+    
+                data=res.data
+                
+                var de_piexValues =["CRM","빌링","플랫폼서비스","DIGICO서비스"]
+                var de_pieyValues = []
+
+                for(j=0;j<data[3].length;j++){
+                    de_pieyValues.push(data[3][j]['totalprice'])
+                }
+                
+                var pieColors = ["#F4BFBF","#FFD9C0","#FAF0D7", "#8CC0DE","#A5BECC","#243A73","#ECCCB2","#F5E8C7"];
+                
+                new Chart(deptpieChart, {
+                    type: "pie",
+                    plugins: [ChartDataLabels],
+                    data: {
+                        labels: de_piexValues,
+                        datasets: [{
+                        backgroundColor: pieColors,
+                        data: de_pieyValues
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: '담당별 사용 총 금액',
+                                font: {
+                                        size: 18,
+                                        }
+                                    }
+                                    }
+                                }
+                    });
+            })
+        }
+
+        function getTeampieChart(){
+            // 팀별 총 금액 파이차트
+            axios.get("http://localhost:8080/payment/chartJSON").then(res => {
+    
+                data=res.data
+                
+                var team_piexValues =["CRM사업","DX솔루션","빌링운영","빌링개발",
+                "인증DX플랫폼","금융결제DX플랫폼","미디어플랫폼","AI서비스"]
+                var team_pieyValues = []
+
+                for(j=0;j<data[4].length;j++){
+                    team_pieyValues.push(data[4][j]['totalprice'])
+                
+                }
+        
+                var pieColors = ["#F4BFBF","#FFD9C0","#FAF0D7", "#8CC0DE","#A5BECC","#243A73","#ECCCB2","#F5E8C7"];
+        
+                new Chart(teampieChart, {
+                    type: "pie",
+                    plugins: [ChartDataLabels],
+                    data: {
+                        labels: team_piexValues,
+                        datasets: [{
+                        backgroundColor: pieColors,
+                        data: team_pieyValues
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: '팀별 사용 총 금액',
+                                font: {
+                                        size: 18,
+                                        }
+                                    }
+                                    }
+                                }
+                    });
+            })
+        }
+
+        getBarChartByhq(); 
+        getBarChartByDept();
+        getHqpieChart();
+        getDeptpieChart();
+        getTeampieChart();
+        
+
+    </script>
+ 
+    </th:block>
+
+
+   
+    
+
+</body>
+
+=======
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -77,4 +388,5 @@
 </script>
 </body>
 </html>
+>>>>>>> main
 </html>

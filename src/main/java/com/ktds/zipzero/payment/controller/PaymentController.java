@@ -2,6 +2,7 @@ package com.ktds.zipzero.payment.controller;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.Console;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -16,6 +17,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -42,6 +44,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.ktds.zipzero.all.dto.PageDTO;
 import com.ktds.zipzero.all.dto.TimeDTO;
 import com.ktds.zipzero.comment.dto.CommentDTO;
@@ -572,6 +577,112 @@ public class PaymentController {
 
         return "payment/admindetail";
     }
+    
+       /*
+     * 만든 사람 : 김예림 (2022-08-17)
+     * 최종 수정 : 김예림 (2022-08-19)
+     * 기능 : 거래 유형 막대 차트 및 파이차트 출력
+     */
+    
+    @GetMapping("/chartJSON")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('관리자')")
+    public String drawChart(Model model,PaymentDTO paymentDTO) {
+        List<PaymentDTO> chartList = paymentService.getHqBarChartData( paymentDTO);
+        List<PaymentDTO> chartList2 = paymentService.getDeptBarChartData( paymentDTO);
+        List<PaymentDTO> chartList3 = paymentService.getHqPieChartData( paymentDTO);
+        List<PaymentDTO> chartList4 = paymentService.getDeptPieChartData( paymentDTO);
+        List<PaymentDTO> chartList5 = paymentService.getTeamPieChartData( paymentDTO);
+
+
+        Gson gson = new Gson();
+        JsonArray jArray = new JsonArray();
+        JsonArray jArray2 = new JsonArray();
+        JsonArray jArray3 = new JsonArray();
+        JsonArray jArray4 = new JsonArray();
+        JsonArray jArray5 = new JsonArray();
+        JsonArray jArrayfinal = new JsonArray();
+        
+
+        Iterator<PaymentDTO> it = chartList.iterator();
+        Iterator<PaymentDTO> it2 = chartList2.iterator();
+        Iterator<PaymentDTO> it3 = chartList3.iterator();
+        Iterator<PaymentDTO> it4 = chartList4.iterator();
+        Iterator<PaymentDTO> it5 = chartList5.iterator();
+        
+        while(it.hasNext()) {
+            PaymentDTO ls = it.next();
+            JsonObject object = new JsonObject();
+            String ptypename = ls.getPtypename();
+            int cnt = ls.getCnt();
+            
+            object.addProperty("type",ptypename);
+            object.addProperty("count", cnt);
+            jArray.add(object);
+        }
+        while(it2.hasNext()) {
+            PaymentDTO ls2 = it2.next();
+            JsonObject object = new JsonObject();
+            String ptypename = ls2.getPtypename();
+            int cnt = ls2.getCnt();
+            
+            object.addProperty("type",ptypename);
+            object.addProperty("count", cnt);
+            jArray2.add(object);
+        }
+        while(it3.hasNext()) {
+            PaymentDTO ls3 = it3.next();
+            JsonObject object = new JsonObject();
+            Long hqid= ls3.getHqid();
+            Long pt=ls3.getPt();
+            
+            object.addProperty("hqid",hqid);
+            object.addProperty("totalprice", pt);
+            jArray3.add(object);
+        }
+        while(it4.hasNext()) {
+            PaymentDTO ls4 = it4.next();
+            JsonObject object = new JsonObject();
+            Long deptid= ls4.getDeptid();
+            Long pt=ls4.getPt();
+            
+            object.addProperty("deptid",deptid);
+            object.addProperty("totalprice", pt);
+            jArray4.add(object);
+        }
+        while(it5.hasNext()) {
+            PaymentDTO ls5 = it5.next();
+            JsonObject object = new JsonObject();
+            Long teamid= ls5.getTeamid();
+            Long pt=ls5.getPt();
+            
+            object.addProperty("teamid",teamid);
+            object.addProperty("totalprice", pt);
+            jArray5.add(object);
+        }
+        jArrayfinal.add(jArray);
+        jArrayfinal.add(jArray2);
+        jArrayfinal.add(jArray3);
+        jArrayfinal.add(jArray4);
+        jArrayfinal.add(jArray5);
+        
+        log.info(jArrayfinal);
+        String json = gson.toJson(jArrayfinal);
+        model.addAttribute("json", json);
+        
+
+        return json;
+    }
+
+
+    @GetMapping("/chart")
+    @PreAuthorize("hasAnyRole('관리자')")
+    public String chart(Model model, @AuthenticationPrincipal CustomUser customUser){
+        
+        model.addAttribute("user", customUser);
+        return "payment/chart";
+    }
+    
 
     /*
      * 만든 사람 : 정문경 (2022-08-16)
@@ -613,10 +724,5 @@ public class PaymentController {
 		return data;
 	}
 
-    /*
-     * 만든 사람 : 정문경 (2022-08-16)
-     * 최종 수정 : 정문경 (2022-08-16)
-     * 기능 : 차트 (시각화)
-     */
 
 }

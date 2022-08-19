@@ -111,6 +111,33 @@ public class PaymentServiceImpl implements PaymentService {
 
     }
 
+        /*
+     * 만든 사람 : 김예림(2022-08-17)
+     * 최종 수정 : 김예림(2022-08-19)
+     * 기능 : 차트 데이터 조회 및 출력
+     */
+    @Override
+    public List<PaymentDTO>getHqBarChartData(PaymentDTO paymentDTO) {
+        return paymentMapper.getHqBarChartData(paymentDTO);
+    }
+    @Override
+    public List<PaymentDTO>getDeptBarChartData(PaymentDTO paymentDTO) {
+        return paymentMapper.getDeptBarChartData(paymentDTO);
+    }
+
+    @Override
+    public List<PaymentDTO>getHqPieChartData(PaymentDTO paymentDTO) {
+        return paymentMapper.getHqPieChartData(paymentDTO);
+    }
+    @Override
+    public List<PaymentDTO>  getDeptPieChartData(PaymentDTO paymentDTO){
+        return paymentMapper.getDeptPieChartData(paymentDTO);
+    };
+    @Override
+    public List<PaymentDTO>getTeamPieChartData(PaymentDTO paymentDTO){    
+           return paymentMapper.getTeamPieChartData(paymentDTO);
+    };
+    
 
     /*
     * 만든 사람 : 정문경(2022-08-12)
