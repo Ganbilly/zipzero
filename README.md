@@ -42,7 +42,6 @@
 
 ### 6. DB ERD
 ---
-><p align="center"><img src="https://user-images.githubusercontent.com/72778887/185543585-6e608b96-e018-4d9a-9ccc-360dd80138fe.png" width="700" height="400"></p>
-### 7. 개발 환경
----
+<p align="center"><img src="https://user-images.githubusercontent.com/72778887/185543585-6e608b96-e018-4d9a-9ccc-360dd80138fe.png" width="700" height="400"></p>
+
 
