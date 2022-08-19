@@ -85,7 +85,7 @@
 
                                 <div th:if="${user.member.authid >= payment.pcurstate}" style="margin: auto;display: flex; justify-content: center; margin-top: 20px;">
                                     <form th:action="@{/payment/adminsuccess}" method="post">
-                                        <input type="submit" value="승인" class="btn btn-success"
+                                        <input th:if="${payment.sid != 1}" type="submit" value="승인" class="btn btn-success"
                                             style="width: 150px; margin:20px;">
                                         <input type="hidden" name="pid" th:value="${payment.pid}">
                                     </form>
