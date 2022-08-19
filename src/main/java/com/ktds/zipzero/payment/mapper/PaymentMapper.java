@@ -76,7 +76,6 @@ public interface PaymentMapper {
      * 최종 수정 : 이은성(2022-18-18)
      * 기능 : 메인페이지에서 관리 리스트 5개 출력(최신순으로 정렬)
      */
-<<<<<<< HEAD
     public void registComment(@Param("comment") CommentDTO commentDTO);
 
 
@@ -90,7 +89,6 @@ public interface PaymentMapper {
     public List<PaymentDTO>getHqPieChartData(PaymentDTO paymentDTO);
     public List<PaymentDTO>getDeptPieChartData(PaymentDTO paymentDTO);
     public List<PaymentDTO>getTeamPieChartData(PaymentDTO paymentDTO);
-=======
     public List<PaymentDTO> getAdminPaymentsForMain(Long mid);
     
     /*
@@ -99,7 +97,6 @@ public interface PaymentMapper {
      * 기능 : 메인페이지에서 내 payment 5개 출력(최신순으로 정렬)
      */
     public List<PaymentDTO> getMyPaymentsForMain(Long mid);
->>>>>>> main
 
 }
 

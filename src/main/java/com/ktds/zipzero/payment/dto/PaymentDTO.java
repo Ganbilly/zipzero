@@ -36,7 +36,6 @@ public class PaymentDTO {
     private Long mid;
     private String mname;
     private Long ptypecode;
-<<<<<<< HEAD
     private String ptypename;
     private Long hqid;
     private Long deptid;
@@ -44,7 +43,5 @@ public class PaymentDTO {
 
     private int cnt;
     private Long pt;
-=======
     private String empno;
->>>>>>> main
 }

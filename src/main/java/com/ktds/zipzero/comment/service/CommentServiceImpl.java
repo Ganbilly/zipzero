@@ -8,14 +8,15 @@ import org.springframework.stereotype.Service;
 import com.ktds.zipzero.comment.dto.CommentDTO;
 import com.ktds.zipzero.comment.mapper.CommentMapper;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @Service
 @Log4j2
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService{
 
-    @Autowired
-    private CommentMapper commentMapper;
+    private final CommentMapper commentMapper;
 
     /*
      * 만든 사람 : 정문경(2022-08-12)

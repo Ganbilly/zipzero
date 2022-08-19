@@ -111,7 +111,6 @@ public class PaymentServiceImpl implements PaymentService {
 
     }
 
-<<<<<<< HEAD
         /*
      * 만든 사람 : 김예림(2022-08-17)
      * 최종 수정 : 김예림(2022-08-19)
@@ -139,7 +138,6 @@ public class PaymentServiceImpl implements PaymentService {
            return paymentMapper.getTeamPieChartData(paymentDTO);
     };
     
-=======
 
     /*
     * 만든 사람 : 정문경(2022-08-12)
@@ -179,5 +177,4 @@ public class PaymentServiceImpl implements PaymentService {
     public List<PaymentDTO> getMyPaymentsForMain(Long mid) {
         return paymentMapper.getMyPaymentsForMain(mid);
     }
->>>>>>> main
 }

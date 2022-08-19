@@ -17,11 +17,8 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-<<<<<<< HEAD
 import java.util.Iterator;
-=======
 import java.util.Date;
->>>>>>> main
 import java.util.List;
 import java.util.UUID;
 
@@ -583,16 +580,16 @@ public class PaymentController {
 
         return "payment/admindetail";
     }
-
-<<<<<<< HEAD
+    
        /*
      * 만든 사람 : 김예림 (2022-08-17)
      * 최종 수정 : 김예림 (2022-08-19)
      * 기능 : 거래 유형 막대 차트 및 파이차트 출력
-    */
-
+     */
+    
     @GetMapping("/chartJSON")
     @ResponseBody
+    @PreAuthorize("hasAnyRole('관리자')")
     public String drawChart(Model model,PaymentDTO paymentDTO) {
         List<PaymentDTO> chartList = paymentService.getHqBarChartData( paymentDTO);
         List<PaymentDTO> chartList2 = paymentService.getDeptBarChartData( paymentDTO);
@@ -608,14 +605,14 @@ public class PaymentController {
         JsonArray jArray4 = new JsonArray();
         JsonArray jArray5 = new JsonArray();
         JsonArray jArrayfinal = new JsonArray();
-   
+        
 
         Iterator<PaymentDTO> it = chartList.iterator();
         Iterator<PaymentDTO> it2 = chartList2.iterator();
         Iterator<PaymentDTO> it3 = chartList3.iterator();
         Iterator<PaymentDTO> it4 = chartList4.iterator();
         Iterator<PaymentDTO> it5 = chartList5.iterator();
-
+        
         while(it.hasNext()) {
             PaymentDTO ls = it.next();
             JsonObject object = new JsonObject();
@@ -675,18 +672,21 @@ public class PaymentController {
         log.info(jArrayfinal);
         String json = gson.toJson(jArrayfinal);
         model.addAttribute("json", json);
-
+        
 
         return json;
     }
 
 
     @GetMapping("/chart")
-    public void chart(){
+    @PreAuthorize("hasAnyRole('관리자')")
+    public String chart(Model model, @AuthenticationPrincipal CustomUser customUser){
+        
+        model.addAttribute("user", customUser);
+        return "payment/chart";
     }
     
 
-=======
     /*
      * 만든 사람 : 정문경 (2022-08-16)
      * 최종 수정 : 정문경 (2022-08-18)
@@ -727,11 +727,5 @@ public class PaymentController {
 		return data;
 	}
 
-    /*
-     * 만든 사람 : 정문경 (2022-08-16)
-     * 최종 수정 : 정문경 (2022-08-16)
-     * 기능 : 차트 (시각화)
-     */
->>>>>>> main
 
 }
