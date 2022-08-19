@@ -84,12 +84,8 @@ public class PaymentController {
         
         if(customUser.getMember().getMid() == mid) {
             List<PaymentDTO> filterList = paymentService.getAllPaymentList(mid);
-            PageDTO pageDTO;
-            if(filterList.size() == 0) {
-                pageDTO = PageDTO.builder().page(page).size(10).total(1).build();
-            } else {
-                pageDTO = PageDTO.builder().page(page).size(10).total(filterList.size()).build();
-            }
+            int listsize = filterList.size();
+            PageDTO pageDTO = PageDTO.builder().page(page).size(10).total(listsize == 0 ? 1 : listsize).build();
             pageDTO.setPaging();
     
             model.addAttribute("user", customUser);
@@ -171,10 +167,10 @@ public class PaymentController {
         if(filterDTO.getMinptotalprice() == null) filterDTO.setMinptotalprice("");
         if(filterDTO.getMaxptotalprice() == null) filterDTO.setMaxptotalprice("");
         if(filterDTO.getMid() == null) filterDTO.setMid("");
-        // if(filterDTO.getStartTime().getYear() < 1001) filterDTO.setStartTime(null);
 
         List<FilterDTO> filterList = paymentService.getAllPaymentFilter(filterDTO);
-        PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(filterList.size()).build();
+        int listsize = filterList.size();
+        PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(listsize == 0 ? 1 : listsize).build();
         pageDTO.setPaging();
 
         model.addAttribute("user", customUser);
@@ -501,7 +497,8 @@ public class PaymentController {
         log.info("adminManage");
 
         List<PaymentDTO> paymentList = paymentService.getAuthList(mid);
-        PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(paymentList.size()).build();
+        int listsize = paymentList.size();
+        PageDTO pageDTO = PageDTO.builder().page(page).size(size).total(listsize == 0 ? 1 : listsize).build();
         pageDTO.setPaging();
 
         model.addAttribute("mid", mid);
