@@ -12,7 +12,7 @@
     from
       tbl_payment
     where
-      m_id = #{mid}
+      m_id = #{mid} and p_check = 1
     order by
       p_moddate desc
     limit

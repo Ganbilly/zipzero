@@ -84,7 +84,12 @@ public class PaymentController {
         
         if(customUser.getMember().getMid() == mid) {
             List<PaymentDTO> filterList = paymentService.getAllPaymentList(mid);
-            PageDTO pageDTO = PageDTO.builder().page(page).size(10).total(filterList.size()).build();
+            PageDTO pageDTO;
+            if(filterList.size() == 0) {
+                pageDTO = PageDTO.builder().page(page).size(10).total(1).build();
+            } else {
+                pageDTO = PageDTO.builder().page(page).size(10).total(filterList.size()).build();
+            }
             pageDTO.setPaging();
     
             model.addAttribute("user", customUser);
