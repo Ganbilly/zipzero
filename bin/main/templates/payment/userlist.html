@@ -19,32 +19,6 @@
                 <!-- Card Body -->
                 <div class="card-body">
                     <p style="font-size : 13px ;">영수증 신청 후 상태를 확인하십시오.</p>
-                    <hr style="padding:3px">
-                    <div class="text-md-end dataTables_filter" id="dataTable_filter"
-                        style="float: right; margin-bottom: 10px;">
-                        <select>
-                            <option value='' selected>검색</option>
-                            <option value="title">제목</option>
-                            <option value="state">상태</option>
-                            <option value="classfication">분류</option>
-                        </select>
-
-                        <label class="form-label"><input type="search" class="form-control form-control-sm"
-                                aria-controls="dataTable" placeholder="Search">
-                        </label>
-
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> 검색 </a>
-
-                    </div>
-
-                    <!-- 스피너 start -->
-                    <div id="loader">
-                        <div style="font-size: 10px; color:rgb(11, 255, 214);">
-                            <i class="fas fa-spinner fa-10x fa-spin fa-spinner"></i>
-                        </div>
-                    </div>
-                    <!-- 스피너 end -->
-
 
                     <div class="table-responsive table mt-2" id="dataTable" role="grid"
                         aria-describedby="dataTable_info" style="margin-bottom:50px">
@@ -52,7 +26,6 @@
                             style="margin: auto; text-align: center; width: 1550px;">
                             <thead>
                                 <tr>
-                                    <th style="width: 50px">번호</th>
                                     <th width="100">결제카드 유형</th>
                                     <th width="10">결제 내역</th>
                                     <th width="10">결제 날짜</th>
@@ -61,25 +34,24 @@
                             </thead>
                             <tbody>
                                 <tr th:if="${not #lists.isEmpty(paymentList)}" th:each="l,state:${paymentList}">
-                                    <td th:text="${state.size-state.index}"></td>
                                     <!-- 0 법인 1개인 -->
-                                    <td th:if="${l.pcardtype} == 0" th:text="법인"></td>
-                                    <td th:if="${l.pcardtype} == 1" th:text="개인"></td>
+                                    <td th:if="${l.pcardtype} == 0" th:text="법인" width="100"></td>
+                                    <td th:if="${l.pcardtype} == 1" th:text="개인" width="100"></td>
 
                                     <td>
-                                        <a href="#" th:href="@{userdetail(pid=${l.pid})}" th:text="${l.pname}"></a>
+                                        <a href="#" th:href="@{userdetail(pid=${l.pid})}" th:text="${l.pname}" width="10"></a>
                                     </td>
-                                    <td th:text="${l.ptime}"></td>
+                                    <td th:text="${l.pmoddate}" width="10"></td>
 
                                     <!-- 결제 상태 -->
                                     <!-- 1 승인 2 반려 3 대기 4 취소  -->
-                                    <td th:if="${l.sid == 1}" th:text="승인"></td>
-                                    <td th:if="${l.sid == 2}" th:text="반려"></td>
-                                    <td th:if="${l.sid == 3}" th:text="대기"></td>
-                                    <td th:if="${l.sid == 4}" th:text="취소"></td>
+                                    <td th:if="${l.sid}== 1" th:text="승인" width="50"></td>
+                                    <td th:if="${l.sid}== 2" th:text="반려" width="50"></td>
+                                    <td th:if="${l.sid}== 3" th:text="대기" width="50"></td>
+                                    <td th:if="${l.sid}== 4" th:text="취소" width="50"></td>
                                 </tr>
-                                <tr th:unless="${not #lists.isEmpty(paymentList)}">
-                                    <td colspan="7">등록된 회원의 글이 없습니다.</td>
+                                <tr th:unless="${not #lists.isEmpty(paymentList)}" style="text-align: center;">
+                                    <td colspan="5">등록된 회원의 글이 없습니다.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -90,22 +62,25 @@
                     </div> -->
 
                     <div class="row">
-                        <div class="form-group row" style="width: 600px;">
-                            <label class="col-lg-3 col-form-label form-control-label">상호</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="text" name="pstorename" />
-                            </div>
-                        </div>
-                        
                         <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers"
                             style="margin: auto; text-align: center;">
                             <ul class="pagination">
-                                <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span
-                                            aria-hidden="true">«</span></a></li>
+                                <li th:if="${page.prev}" class="page-item">
+                                    <a class="page-link" aria-label="Previous" th:data-num="${page.start - 1}">
+                                        <span aria-hidden="true">«</span>
+                                    </a>
+                                </li>
+                                <th:block th:each="i: ${#numbers.sequence(page.start, page.end)}">
+                                    <li th:class="${page.page == i} ? 'page-item active' : 'page-item'">
+                                        <a class="page-link" th:data-num="${i}">[[${i}]]</a>
+                                    </li>
+                                </th:block>
 
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span
-                                            aria-hidden="true">»</span></a></li>
+                                <li th:if="${page.next}" class="page-item">
+                                    <a class="page-link" aria-label="Next" th:data-num="${page.end + 1}">
+                                        <span aria-hidden="true">»</span>
+                                    </a>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -114,5 +89,25 @@
             </div>
 
         </div>
+        <script layout:fragment="script" th:inline="javascript">
+            const values = [[${paymentList}]]
+        
+            document.querySelector(".pagination").addEventListener("click", function (e) {
+                e.preventDefault()
+                e.stopPropagation()
+        
+                const target = e.target
+        
+                const num = target.getAttribute("data-num")
+        
+                const formObj = document.querySelector("form")
+        
+                formObj.innerHTML += `<input type='hidden' name='page' value=` + num + `>`
+                formObj.innerHTML += `<input type='hidden' name='mid' value='[[${mid}]]'>`
+        
+                formObj.submit();
+        
+            }, false)
+        </script>
     </th:block>
 </body>

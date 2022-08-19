@@ -57,6 +57,15 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public void modifyPayment(PaymentDTO paymentDTO) {
+        if(paymentDTO.getPtotalprice() <= 100000){
+            paymentDTO.setPfinstate(2L);
+        }
+        else if(paymentDTO.getPtotalprice() <= 500000){
+            paymentDTO.setPfinstate(3L);
+        }
+        else{
+            paymentDTO.setPfinstate(4L);
+        }
         paymentMapper.modifyPayment(paymentDTO);
     }
 
@@ -67,6 +76,15 @@ public class PaymentServiceImpl implements PaymentService {
      */
     @Override
     public void registPayment(PaymentDTO paymentDTO) {
+        if(paymentDTO.getPtotalprice() <= 100000){
+            paymentDTO.setPfinstate(2L);
+        }
+        else if(paymentDTO.getPtotalprice() <= 500000){
+            paymentDTO.setPfinstate(3L);
+        }
+        else{
+            paymentDTO.setPfinstate(4L);
+        }
         paymentMapper.registPayment(paymentDTO);
     }
 
@@ -81,17 +99,19 @@ public class PaymentServiceImpl implements PaymentService {
         return adminpaymentList;
 
     }
-
     /*
-     * 만든 사람 : 정문경(2022-08-12)
-     * 최종 수정 : 정문경(2022-08-12)
-     * 기능 : 댓글 등록
+     * 만든 사람 : 정문경(2022-08-16)
+     * 최종 수정 : 정문경(2022-08-16)
+     * 기능 : 본인 소속의 모든 직원 영수증 내역 조회
      */
     @Override
-    public void registComment(CommentDTO commentDTO) {
-        paymentMapper.registComment(commentDTO);
+    public List<PaymentDTO> getAuthPage(long mid, int skip, int size) {
+        List<PaymentDTO> adminpaymentList = paymentMapper.getMidPageByAuth(mid, skip, size);
+        return adminpaymentList;
+
     }
 
+<<<<<<< HEAD
         /*
      * 만든 사람 : 김예림(2022-08-17)
      * 최종 수정 : 김예림(2022-08-19)
@@ -119,4 +139,45 @@ public class PaymentServiceImpl implements PaymentService {
            return paymentMapper.getTeamPieChartData(paymentDTO);
     };
     
+=======
+
+    /*
+    * 만든 사람 : 정문경(2022-08-12)
+    * 최종 수정 : 정문경(2022-08-12)
+    * 기능 : 필터링된 영수증 전체 목록
+    */
+    @Override
+    public List<FilterDTO> getAllPaymentFilter(FilterDTO filterDTO) {
+        return paymentMapper.getAllAdminPage(filterDTO);
+    }
+
+    /*
+    * 만든 사람 : 정문경(2022-08-16)
+    * 최종 수정 : 정문경(2022-08-16)
+    * 기능 : 본인 영수증 전체 목록
+    */
+    public List<PaymentDTO> getAllPaymentList(long mid) {
+        return paymentMapper.getAllUserPage(mid);
+    }
+
+    /*
+     * 만든 사람 : 이은성(2022-08-18)
+     * 최종 수정 : 이은성(2022-18-18)
+     * 기능 : 메인페이지에서 관리 리스트 5개 출력(최신순으로 정렬)
+     */
+    @Override
+    public List<PaymentDTO> getAdminPaymentsForMain(Long mid) {
+        return paymentMapper.getAdminPaymentsForMain(mid);
+    }
+
+    /*
+     * 만든 사람 : 이은성(2022-08-18)
+     * 최종 수정 : 이은성(2022-18-18)
+     * 기능 : 메인페이지에서 내 payment 5개 출력(최신순으로 정렬)
+     */
+    @Override
+    public List<PaymentDTO> getMyPaymentsForMain(Long mid) {
+        return paymentMapper.getMyPaymentsForMain(mid);
+    }
+>>>>>>> main
 }

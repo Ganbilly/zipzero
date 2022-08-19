@@ -13,6 +13,8 @@ public class CommentDTO {
     private LocalDateTime cmoddate;
     private int ccheck;
 
+    private String mname;
+
     private Long mid;
     private Long pid;
 }

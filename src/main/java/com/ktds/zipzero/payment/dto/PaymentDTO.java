@@ -26,12 +26,17 @@ public class PaymentDTO {
     private String dname;
     private String tname;
     private String m_id;
-    private String mname;
+    private String sname;
     private Long tprice;
-
+    
+    private String preceiptmonth;
+    private String preceiptdate;
+    
     private Long sid;
     private Long mid;
+    private String mname;
     private Long ptypecode;
+<<<<<<< HEAD
     private String ptypename;
     private Long hqid;
     private Long deptid;
@@ -39,4 +44,7 @@ public class PaymentDTO {
 
     private int cnt;
     private Long pt;
+=======
+    private String empno;
+>>>>>>> main
 }
