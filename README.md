@@ -38,6 +38,8 @@
 
 ### 5. 시스템 구성도
 ---
+<img src="https://user-images.githubusercontent.com/72778887/185549902-ce23454a-208e-4db7-879e-0a5d78d2d7bd.png">
+
 ### 6. DB ERD
 ---
 ><p align="center"><img src="https://user-images.githubusercontent.com/72778887/185543585-6e608b96-e018-4d9a-9ccc-360dd80138fe.png" width="700" height="400"></p>
