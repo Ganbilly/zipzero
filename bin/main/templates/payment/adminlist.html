@@ -21,7 +21,7 @@
                     <div class="form-group row" style="width: 100%;">
                         <label class="col-lg-1 col-form-label form-control-label" style="width: 100%; text-align: center;">유형</label>
                         <div class="col-lg-2">
-                            <select id="pcardtype" name="pcardtype" form="listForm" style="width: 150px;" class="form-control">
+                            <select id="pcardtype" name="pcardtype" form="listForm" style="width: 150px;" th:value="${filterDTO.pcardtype}" class="form-control">
                                 <option value="2">전체</option>
                                 <option value="0">법인</option>
                                 <option value="1">개인</option>
@@ -218,6 +218,8 @@
             const filterDTO = [[${filterDTO}]]
             console.log(filterDTO)
             
+            var selectlist = document.getElementById("pcardtype")
+            selectlist.value = filterDTO.pcardtype
         
             document.querySelector(".pagination").addEventListener("click", function (e) {
                 e.preventDefault()
