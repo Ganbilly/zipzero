@@ -41,7 +41,7 @@
       p_time as ptime, 
       p_totalprice as ptotalprice, 
       s_name as sname,tbl_payment.s_id as sid,
-      p_moddate as pmoddate, m1.m_empno as empno
+      p_moddate as pmoddate
     from
       tbl_payment
     join
@@ -116,7 +116,7 @@
 
   <select id="getAllAdminPage" resultType="FilterDTO">
     select
-      tbl_member.m_empno as empno, tbl_payment.m_id as mid, hq_name as hq, dept_name as dept, team_name as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice, s_name as sname,tbl_payment.s_id as sid
+      tbl_member.m_empno as empno, tbl_payment.m_id as mid, hq_name as hq, dept_name as dept, team_name as team, m_name as mname, p_cardtype as pcardtype, p_name as pname, p_time as ptime, p_totalprice as ptotalprice, s_name as sname,tbl_payment.s_id as sid, tbl_member.m_empno as empno
     from
       tbl_payment
     join
