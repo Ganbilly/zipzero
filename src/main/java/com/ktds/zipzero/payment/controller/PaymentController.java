@@ -523,7 +523,7 @@ public class PaymentController {
         commentDTO.setCregdate(LocalDateTime.now());
         commentDTO.setCmoddate(LocalDateTime.now());
         commentDTO.setCcheck(1);
-        commentDTO.setMid(paymentService.getMidByPid(commentDTO.getPid()));
+        commentDTO.setMid(customUser.getMember().getMid());
         commentService.registComment(commentDTO);
 
         PaymentDTO paymentDTO = paymentService.getPaymentDetail(commentDTO.getPid());
