@@ -74,6 +74,19 @@ public interface PaymentMapper {
      * 기능 : 댓글 등록
      */
     public void registComment(@Param("comment") CommentDTO commentDTO);
+
+
+     /*
+     * 만든사람 : 김예림(2022-08-17)
+     * 최종수정 : 김예림(2022-08-19)
+     * 기능 : 막대차트 및 파이차트 출력
+     */
+    public List<PaymentDTO>getHqBarChartData(PaymentDTO paymentDTO);
+    public List<PaymentDTO>getDeptBarChartData(PaymentDTO paymentDTO);
+    public List<PaymentDTO>getHqPieChartData(PaymentDTO paymentDTO);
+    public List<PaymentDTO>getDeptPieChartData(PaymentDTO paymentDTO);
+    public List<PaymentDTO>getTeamPieChartData(PaymentDTO paymentDTO);
+
 }
 
    

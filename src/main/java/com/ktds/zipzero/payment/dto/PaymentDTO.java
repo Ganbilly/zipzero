@@ -32,4 +32,11 @@ public class PaymentDTO {
     private Long sid;
     private Long mid;
     private Long ptypecode;
+    private String ptypename;
+    private Long hqid;
+    private Long deptid;
+    private Long teamid;
+
+    private int cnt;
+    private Long pt;
 }

@@ -158,47 +158,46 @@
 
     <!-- 본인 소속의 모든 직원들 영수증 내역 조회 쿼리문 -->
      <select id="getMidListByAuth" resultType="PaymentDTO">
-     SELECT p_id as pid, p_cardtype as pcardtype, p_name as pname,
-      p_time as ptime, s_id AS sid, team_name AS tname, hq_name AS hname, dept_name AS dname,
-      p1.m_id AS m_id, m1.m_name AS mname, p1.p_totalprice AS tprice
-      
+     
+    SELECT p_id as pid, p_cardtype as pcardtype, p_name as pname,
+          p_time as ptime, s_id as sid, team_name AS tname, hq_name AS hname, dept_name AS dname,
+          p1.m_id AS m_id, m1.m_name AS mname,p1.p_totalprice As tprice
+            FROM 
+          (
+        tbl_payment p1
+          JOIN tbl_member m1 ON m1.m_id =p1.m_id
+          JOIN tbl_team t1 ON t1.team_id= m1.m_id
+          JOIN tbl_headquarter h1 ON h1.hq_id = m1.hq_id
+          JOIN tbl_department d1 ON d1.dept_id=m1.dept_id
+      )
+        WHERE p1.M_ID 
+        IN (
+        SELECT target2.M_ID m_id
         FROM 
-       (
-    tbl_payment p1
-      JOIN tbl_member m1 ON m1.m_id =p1.m_id
-      JOIN tbl_team t1 ON t1.team_id= m1.m_id
-      JOIN tbl_headquarter h1 ON h1.hq_id = m1.hq_id
-      JOIN tbl_department d1 ON d1.dept_id=m1.dept_id
-   )
-    WHERE p1.M_ID 
-    IN (
-    SELECT target2.M_ID m_id
-    FROM 
-      (
-      SELECT 
-        m1.m_id m_id, 
-        if(gubun='T', target.team_id = m1.team_id, false) tResult, 
-        if(gubun='D', target.dept_id = m1.dept_id, false) dResult,
-        if(gubun='H', target.hq_id = m1.hq_id, false) hResult
-      FROM tbl_member m1 
-      LEFT OUTER JOIN (SELECT m_id, auth_id, hq_id, dept_id, team_id,
-        (case 
-          when auth_id = 2 then team_id
-          when auth_id = 3 then dept_id
-          when auth_id = 4 then hq_id
-        END) num,
-        (case 
-          when auth_id = 2 then 'T'
-          when auth_id = 3 then 'D'
-          when auth_id = 4 then 'H'
-        END) 
-          gubun   
-        FROM tbl_member WHERE m_id = 9) target ON m1.m_id = target.m_id OR m1.m_id != target.m_id
-        ) target2
-    WHERE tResult + dResult + hResult = 1
-    )   
-    ;
-
+          (
+          SELECT 
+            m1.m_id m_id, 
+            if(gubun='T', target.team_id = m1.team_id, false) tResult, 
+            if(gubun='D', target.dept_id = m1.dept_id, false) dResult,
+            if(gubun='H', target.hq_id = m1.hq_id, false) hResult
+          FROM tbl_member m1 
+          LEFT OUTER JOIN (SELECT m_id, auth_id, hq_id, dept_id, team_id,
+            (case 
+              when auth_id = 2 then team_id
+              when auth_id = 3 then dept_id
+              when auth_id = 4 then hq_id
+            END) num,
+            (case 
+              when auth_id = 2 then 'T'
+              when auth_id = 3 then 'D'
+              when auth_id = 4 then 'H'
+            END) 
+              gubun   
+            FROM tbl_member WHERE m_id = 9) target ON m1.m_id = target.m_id OR m1.m_id != target.m_id
+            ) target2
+        WHERE tResult + dResult + hResult = 1
+        )   
+        ;
 
 
    </select>
@@ -229,5 +228,113 @@
     INSERT INTO tbl_comment (c_content, c_regdate, c_moddate, p_id, m_id, c_check)
     VALUES (#{comment.ccontent}, #{comment.cregdate}, #{comment.cmoddate}, #{comment.pid}, #{comment.mid}, #{comment.ccheck})
   </insert>
+
+  <!-- 본부별 사용유형 막대차트 데이터 -->
+  <select id="getHqBarChartData" resultType="PaymentDTO">
+  SELECT hqID, ptype_name as ptypename, pcode2, SUM(c) as cnt
+    FROM
+      (
+      SELECT
+        hqID, pttt.ptype_name , pttt.ptype_code pcode2, ttee.ptype_code pcode1, cnt, if(pttt.ptype_code !=ttee.ptype_code, 0,cnt) c
+      FROM 
+        tbl_paytype pttt CROSS JOIN 
+        (
+        SELECT 
+        hqID, ptype_code, COUNT(p_id) cnt
+        FROM 
+          (
+          SELECT 
+            p_id,
+            pay.ptype_code,
+            (SELECT hq_id FROM tbl_member m WHERE  m.m_id = pay.m_id) hqID 
+          FROM tbl_payment pay 
+          ) temp
+        GROUP BY hqID, ptype_code) ttee
+      ) tmp
+    GROUP BY hqID, ptype_name
+  </select>
+  <!-- 담당별 사용 유형 막대 차트 -->
+  <select id="getDeptBarChartData" resultType="PaymentDTO">
+  SELECT deptID, ptype_name as ptypename, pcode2, SUM(c) as cnt
+    FROM
+      (
+      SELECT
+        deptID, pttt.ptype_name , pttt.ptype_code pcode2, ttee.ptype_code pcode1, cnt, if(pttt.ptype_code !=ttee.ptype_code, 0,cnt) c
+      FROM 
+        tbl_paytype pttt CROSS JOIN 
+        (
+        SELECT 
+        deptID, ptype_code, COUNT(p_id) cnt
+        FROM 
+          (
+          SELECT 
+            p_id,
+            pay.ptype_code,
+            (SELECT dept_id FROM tbl_member m WHERE  m.m_id = pay.m_id) deptID
+          FROM tbl_payment pay 
+          ) temp
+        GROUP BY deptID, ptype_code) ttee
+      ) tmp
+    GROUP BY deptID, ptype_name
+    HAVING deptID IS NOT null
+  </select>
+
+    <!-- 파이차트 데이터 -->
+    <!-- 본부별 총 금액 조회 -->
+   <select id="getHqPieChartData" resultType="PaymentDTO"> 
+  	SELECT 
+		 hqID as hqid, COUNT(p_id) cnt , sum(price) as pt
+		FROM 
+		  (
+			SELECT 
+			  p_id,
+				pay.p_totalprice price,
+			  (SELECT hq_id FROM tbl_member m WHERE  m.m_id = pay.m_id) hqID
+			FROM tbl_payment pay 
+		  ) temp
+		GROUP BY hqID
+  </select>
+  <!-- 담당별 총 금액 조회 -->
+   <select id="getDeptPieChartData" resultType="PaymentDTO"> 
+   	SELECT 
+		 deID as deptid , sum(price) pt
+		FROM 
+		  (
+			SELECT 
+			  p_id,
+				pay.p_totalprice price,
+			  (SELECT dept_id FROM tbl_member m WHERE  m.m_id = pay.m_id) deID
+			FROM tbl_payment pay 
+		  ) temp
+		GROUP BY deID
+		HAVING deID IS NOT NULL
+    </select>
+      <!-- 팀별 총 금액 조회 -->
+     <select id="getTeamPieChartData" resultType="PaymentDTO"> 
+   		SELECT 
+		 teamID as teamid, sum(price) as pt 
+		FROM 
+		  (
+			SELECT 
+			  p_id,
+				pay.p_totalprice price,
+			  (SELECT team_id FROM tbl_member m WHERE  m.m_id = pay.m_id) teamID
+			FROM tbl_payment pay 
+		  ) temp
+		GROUP BY teamID
+		HAVING teamID IS NOT NULL
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>
